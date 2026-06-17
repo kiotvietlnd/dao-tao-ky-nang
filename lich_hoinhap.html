@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lịch Hội Nhập 2026 | Cloud Sync</title>
+    <title>Hệ Thống Lịch Kỹ Năng 2026 | Cloud Sync</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -15,19 +15,26 @@
         
         /* Grid Calendar */
         .calendar-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
-        .day-header { text-align: center; font-size: 11px; font-weight: 700; color: #10b981; padding-bottom: 8px; }
-        .date-cell { aspect-ratio: 1; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; color: #475569; position: relative; border: 1px solid transparent;}
-        .empty { pointer-events: none; }
-        .weekend { color: #cbd5e1; background-color: #f8fafc; border-color: #f1f5f9; }
+        .day-header { text-align: center; font-size: 11px; font-weight: 700; color: #64748b; padding-bottom: 8px; }
+        .date-cell { min-height: 100px; border-radius: 6px; display: flex; flex-direction: column; padding: 4px; background: white; border: 1px solid #e2e8f0; position: relative; }
+        .date-num { font-size: 13px; font-weight: 700; color: #475569; margin-bottom: 4px; text-align: right; }
+        .empty { pointer-events: none; background: transparent; border-color: transparent; }
+        .weekend { background-color: #f1f5f9; }
+        .weekend .date-num { color: #94a3b8; }
         
-        /* Colors GV */
-        .bg-trang { background-color: #ef4444 !important; color: #ffffff !important; box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3); border-radius: 4px;}
-        .bg-phuong { background-color: #10b981 !important; color: #ffffff !important; box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3); border-radius: 4px;}
+        /* Event Badges (Khối lịch) */
+        .event-badge { font-size: 10px; font-weight: 700; padding: 4px 6px; border-radius: 4px; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
+        .bg-trang { background-color: #ef4444; color: #ffffff; border-left: 3px solid #b91c1c; } /* Màu Đỏ - Trang */
+        .bg-phuong { background-color: #10b981; color: #ffffff; border-left: 3px solid #047857; } /* Màu Xanh - Phương */
 
         .tab-btn { padding: 8px 16px; font-weight: 600; font-size: 14px; border-radius: 8px; cursor: pointer; transition: all 0.2s;}
         .tab-btn.active { background-color: #2563eb; color: white; }
         .tab-btn.inactive { background-color: #f1f5f9; color: #64748b; }
         .tab-btn.inactive:hover { background-color: #e2e8f0; color: #1e293b; }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
     </style>
 </head>
 <body class="p-4 md:p-8">
@@ -36,48 +43,105 @@
         <!-- HEADER & TABS -->
         <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4 bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
             <div>
-                <h1 class="text-2xl font-bold text-slate-800"><i class="far fa-calendar-alt text-blue-600 mr-2"></i> Lịch Hội Nhập 2026</h1>
+                <h1 class="text-2xl font-bold text-slate-800"><i class="far fa-calendar-check text-blue-600 mr-2"></i> Lịch Đào Tạo Kỹ Năng 2026</h1>
                 <p id="sync-status" class="text-xs font-semibold text-slate-500 mt-1 flex items-center gap-1"><i class="fas fa-spinner fa-spin"></i> Đang tải dữ liệu...</p>
             </div>
             <div class="flex gap-2 bg-slate-100 p-1 rounded-lg">
                 <button onclick="switchTab('calendar')" id="btn-calendar" class="tab-btn active"><i class="fas fa-th-large mr-1"></i> Xem Lịch</button>
-                <button onclick="switchTab('settings')" id="btn-settings" class="tab-btn inactive"><i class="fas fa-cog mr-1"></i> Cài Đặt</button>
+                <button onclick="switchTab('settings')" id="btn-settings" class="tab-btn inactive"><i class="fas fa-cog mr-1"></i> Cài Đặt Khóa & Lịch</button>
             </div>
         </div>
 
-        <!-- VIEW LỊCH (CALENDAR TAB) -->
+        <!-- ================= VIEW LỊCH ================= -->
         <div id="view-calendar" class="block">
-            <div class="flex flex-wrap gap-4 items-center justify-end mb-6 bg-slate-50 p-3 rounded-lg border border-slate-200">
-                <span class="text-xs font-bold text-slate-500 uppercase">Giảng viên:</span>
-                <div class="flex items-center gap-2"><span class="w-5 h-5 rounded bg-red-500 shadow-sm"></span><span class="font-bold text-sm text-red-600">Mrs. Trang</span></div>
-                <div class="flex items-center gap-2"><span class="w-5 h-5 rounded bg-emerald-500 shadow-sm"></span><span class="font-bold text-sm text-emerald-600">Mrs. Phương</span></div>
-                <div class="w-px h-6 bg-slate-300 mx-2"></div>
-                <button onclick="loadDataFromCloud()" class="text-xs font-bold text-blue-600 hover:underline"><i class="fas fa-sync-alt"></i> Làm mới Lịch</button>
-            </div>
-            <div id="calendar-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
-        </div>
-
-        <!-- VIEW CÀI ĐẶT (SETTINGS TAB) -->
-        <div id="view-settings" class="hidden max-w-3xl mx-auto">
-            <div class="saas-card p-6 mb-6 border-blue-200 bg-blue-50/50">
-                <h3 class="font-bold text-blue-800 mb-2"><i class="fas fa-cloud text-blue-600 mr-2"></i>Link API Đồng Bộ (Google Sheets)</h3>
-                <p class="text-xs text-blue-600 mb-3">Dán link Google Apps Script vào đây để mọi người cùng xem chung 1 lịch. Nếu để trống, lịch chỉ lưu tạm trên máy bạn.</p>
-                <input type="text" id="api-url-input" class="saas-input border-blue-300 font-mono text-xs" placeholder="https://script.google.com/macros/s/..../exec">
-            </div>
-
-            <div class="saas-card p-6">
-                <div class="flex justify-between items-center border-b border-slate-200 pb-4 mb-6">
-                    <h2 class="text-lg font-bold">Cấu hình Giảng Viên theo Tháng</h2>
-                    <select id="monthSelect" onchange="loadSettingsView()" class="saas-input w-40 font-bold text-blue-600 cursor-pointer">
+            <div class="flex flex-wrap gap-4 items-center justify-between mb-6 bg-slate-50 p-4 rounded-lg border border-slate-200">
+                <div class="flex gap-4">
+                    <span class="text-xs font-bold text-slate-500 uppercase mt-1">Giảng viên:</span>
+                    <div class="flex items-center gap-2"><span class="w-5 h-5 rounded bg-red-500 shadow-sm"></span><span class="font-bold text-sm text-red-600">Mrs. Trang</span></div>
+                    <div class="flex items-center gap-2"><span class="w-5 h-5 rounded bg-emerald-500 shadow-sm"></span><span class="font-bold text-sm text-emerald-600">Mrs. Phương</span></div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <select id="calMonthSelect" onchange="renderCalendar()" class="saas-input w-40 font-bold text-blue-600 py-1.5 cursor-pointer">
                         <option value="1">Tháng 1</option><option value="2">Tháng 2</option><option value="3">Tháng 3</option><option value="4">Tháng 4</option><option value="5">Tháng 5</option><option value="6">Tháng 6</option><option value="7">Tháng 7</option><option value="8">Tháng 8</option><option value="9">Tháng 9</option><option value="10">Tháng 10</option><option value="11">Tháng 11</option><option value="12">Tháng 12</option>
                     </select>
+                    <button onclick="loadDataFromCloud()" class="text-xs font-bold text-blue-600 hover:underline border border-blue-200 bg-white px-3 py-2 rounded-lg"><i class="fas fa-sync-alt"></i> Làm mới Lịch</button>
                 </div>
+            </div>
+            
+            <div class="saas-card p-6">
+                <div id="calendar-container"></div>
+            </div>
+        </div>
+
+        <!-- ================= VIEW CÀI ĐẶT ================= -->
+        <div id="view-settings" class="hidden grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <!-- Cột trái: Quản lý Khóa & API -->
+            <div class="flex flex-col gap-6">
+                <!-- 1. API Cloud -->
+                <div class="saas-card p-5 border-blue-200 bg-blue-50/50">
+                    <h3 class="font-bold text-blue-800 text-sm mb-2"><i class="fas fa-cloud text-blue-600 mr-2"></i>Link API (Google Sheets)</h3>
+                    <input type="text" id="api-url-input" class="saas-input border-blue-300 font-mono text-xs" placeholder="https://script.google.com/macros/s/..../exec">
+                    <button onclick="saveApiUrl()" class="mt-2 w-full bg-blue-600 text-white text-xs font-bold py-2 rounded hover:bg-blue-700">Lưu API</button>
+                </div>
+
+                <!-- 2. Quản lý Tên Khóa Học -->
+                <div class="saas-card p-5">
+                    <h3 class="font-bold text-slate-800 text-sm mb-4 border-b border-slate-100 pb-2"><i class="fas fa-book-open text-purple-500 mr-2"></i>Danh sách Khóa Học</h3>
+                    <div class="flex gap-2 mb-4">
+                        <input type="text" id="new-course-name" class="saas-input" placeholder="Nhập tên khóa (VD: KN Giao tiếp)">
+                        <button onclick="addCourse()" class="bg-slate-800 text-white px-3 rounded-lg hover:bg-slate-900"><i class="fas fa-plus"></i></button>
+                    </div>
+                    <div id="course-list" class="space-y-2 max-h-48 overflow-y-auto pr-2">
+                        <!-- Danh sách khóa học render bằng JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cột phải: Lên Lịch -->
+            <div class="md:col-span-2 saas-card p-6">
+                <h3 class="font-bold text-slate-800 text-lg mb-4 border-b border-slate-100 pb-2"><i class="fas fa-calendar-plus text-emerald-500 mr-2"></i>Lên Lịch Giảng Dạy Mới</h3>
                 
-                <div class="space-y-3" id="weeks-container"></div>
-                
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <div class="col-span-2 md:col-span-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Chọn Khóa Học</label>
+                        <select id="sel-course" class="saas-input font-semibold"></select>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Từ ngày</label>
+                        <input type="date" id="sel-start" class="saas-input">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Đến ngày</label>
+                        <input type="date" id="sel-end" class="saas-input">
+                    </div>
+                    <div class="col-span-2 md:col-span-1">
+                        <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Giảng viên</label>
+                        <select id="sel-trainer" class="saas-input font-bold">
+                            <option value="trang" class="text-red-600">Mrs. Trang (Đỏ)</option>
+                            <option value="phuong" class="text-emerald-600">Mrs. Phương (Xanh)</option>
+                        </select>
+                    </div>
+                    <div class="col-span-2 md:col-span-4 flex justify-end mt-2">
+                        <button onclick="addEvent()" class="bg-emerald-600 text-white font-bold px-6 py-2 rounded-lg hover:bg-emerald-700 shadow-sm"><i class="fas fa-check mr-2"></i>Thêm vào Lịch</button>
+                    </div>
+                </div>
+
+                <div class="mt-8">
+                    <div class="flex justify-between items-center border-b border-slate-100 pb-2 mb-4">
+                        <h3 class="font-bold text-slate-800 text-sm">Các Lịch đã tạo</h3>
+                        <select id="filterMonthSelect" onchange="renderEventList()" class="saas-input w-32 py-1 text-xs">
+                            <option value="all">Tất cả</option><option value="1">Tháng 1</option><option value="2">Tháng 2</option><option value="3">Tháng 3</option><option value="4">Tháng 4</option><option value="5">Tháng 5</option><option value="6">Tháng 6</option><option value="7">Tháng 7</option><option value="8">Tháng 8</option><option value="9">Tháng 9</option><option value="10">Tháng 10</option><option value="11">Tháng 11</option><option value="12">Tháng 12</option>
+                        </select>
+                    </div>
+                    <div id="event-list" class="space-y-2 max-h-80 overflow-y-auto pr-2">
+                        <!-- Lịch đã lên render ở đây -->
+                    </div>
+                </div>
+
                 <div class="mt-6 pt-4 border-t border-slate-200 flex justify-end">
                     <button onclick="saveDataToCloud()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-6 rounded-lg shadow-md transition-colors flex items-center gap-2">
-                        <i class="fas fa-save"></i> Lưu Lịch Lên Hệ Thống
+                        <i class="fas fa-cloud-upload-alt"></i> Lưu Dữ Liệu Lên Đám Mây
                     </button>
                 </div>
             </div>
@@ -87,177 +151,243 @@
 
     <script>
         const year = 2026;
-        const monthNames = ["THÁNG 1", "THÁNG 2", "THÁNG 3", "THÁNG 4", "THÁNG 5", "THÁNG 6", "THÁNG 7", "THÁNG 8", "THÁNG 9", "THÁNG 10", "THÁNG 11", "THÁNG 12"];
         const dayNames = ["T2", "T3", "T4", "T5", "T6", "T7", "CN"];
         
-        let allCalendarData = {};
+        // Cấu trúc Data mới hỗ trợ mọi loại khóa học
+        let globalData = {
+            courses: ["Đào tạo Hội nhập"], // Danh sách khóa mặc định
+            events: [] // Danh sách các lịch đã cài ({ id, course, start, end, trainer })
+        };
 
         // --- ĐIỀU HƯỚNG TABS ---
         function switchTab(tab) {
             document.getElementById('view-calendar').classList.toggle('hidden', tab !== 'calendar');
             document.getElementById('view-settings').classList.toggle('hidden', tab !== 'settings');
-            
             document.getElementById('btn-calendar').className = tab === 'calendar' ? 'tab-btn active' : 'tab-btn inactive';
             document.getElementById('btn-settings').className = tab === 'settings' ? 'tab-btn active' : 'tab-btn inactive';
+            if(tab === 'calendar') renderCalendar();
         }
 
-        // --- XỬ LÝ DỮ LIỆU ĐÁM MÂY (CLOUD) ---
-        async function loadDataFromCloud() {
-            const apiUrl = localStorage.getItem('kv_onboard_api') || "";
-            document.getElementById('api-url-input').value = apiUrl;
-            const statusEl = document.getElementById('sync-status');
+        // --- QUẢN LÝ KHÓA HỌC ---
+        function addCourse() {
+            const val = document.getElementById('new-course-name').value.trim();
+            if(!val) return alert("Vui lòng nhập tên khóa!");
+            if(globalData.courses.includes(val)) return alert("Khóa này đã tồn tại!");
+            
+            globalData.courses.push(val);
+            document.getElementById('new-course-name').value = '';
+            refreshCourseUI();
+        }
 
-            if (apiUrl) {
-                statusEl.innerHTML = '<i class="fas fa-sync fa-spin text-blue-500"></i> <span class="text-blue-500">Đang đồng bộ dữ liệu Cloud...</span>';
-                try {
-                    const response = await fetch(apiUrl);
-                    const data = await response.json();
-                    allCalendarData = data;
-                    localStorage.setItem('kv_onboard_calendar', JSON.stringify(data));
-                    statusEl.innerHTML = '<i class="fas fa-cloud-check text-emerald-500"></i> <span class="text-emerald-600">Đã đồng bộ với hệ thống chung (Google Sheets)</span>';
-                } catch (e) {
-                    allCalendarData = JSON.parse(localStorage.getItem('kv_onboard_calendar')) || {};
-                    statusEl.innerHTML = '<i class="fas fa-exclamation-triangle text-amber-500"></i> <span class="text-amber-600">Lỗi mạng, đang dùng dữ liệu cũ trên máy</span>';
-                }
-            } else {
-                allCalendarData = JSON.parse(localStorage.getItem('kv_onboard_calendar')) || {};
-                statusEl.innerHTML = '<i class="fas fa-hdd text-slate-400"></i> <span class="text-slate-500">Chưa có Link API. Dữ liệu chỉ lưu trên máy cá nhân.</span>';
+        function removeCourse(index) {
+            if(confirm("Xóa khóa học này? Lịch cũ của khóa này vẫn sẽ được giữ lại.")) {
+                globalData.courses.splice(index, 1);
+                refreshCourseUI();
             }
-            renderCalendar();
-            loadSettingsView();
         }
 
-        async function saveDataToCloud() {
-            const apiUrl = document.getElementById('api-url-input').value.trim();
-            localStorage.setItem('kv_onboard_api', apiUrl);
+        function refreshCourseUI() {
+            // Render list in settings
+            const list = document.getElementById('course-list');
+            list.innerHTML = globalData.courses.map((c, i) => `
+                <div class="flex justify-between items-center bg-slate-50 p-2 rounded border border-slate-100">
+                    <span class="text-xs font-semibold text-slate-700">${c}</span>
+                    <button onclick="removeCourse(${i})" class="text-rose-500 hover:text-rose-700"><i class="fas fa-times"></i></button>
+                </div>
+            `).join('');
 
-            const month = document.getElementById('monthSelect').value;
-            const key = `${year}-${month}`;
-            const monthData = [];
+            // Render dropdown in event form
+            const sel = document.getElementById('sel-course');
+            sel.innerHTML = globalData.courses.map(c => `<option value="${c}">${c}</option>`).join('');
+        }
 
-            for(let i = 1; i <= 5; i++) {
-                monthData.push({
-                    date: document.getElementById(`date-w${i}`).value,
-                    trainer: document.getElementById(`trainer-w${i}`).value
+        // --- QUẢN LÝ SỰ KIỆN (LỊCH DẠY) ---
+        function addEvent() {
+            const course = document.getElementById('sel-course').value;
+            const start = document.getElementById('sel-start').value;
+            let end = document.getElementById('sel-end').value;
+            const trainer = document.getElementById('sel-trainer').value;
+
+            if(!course) return alert("Vui lòng tạo khóa học trước!");
+            if(!start) return alert("Vui lòng chọn ngày bắt đầu!");
+            if(!end) end = start; // Nếu không chọn ngày kết thúc, mặc định là 1 ngày
+
+            if(new Date(end) < new Date(start)) return alert("Ngày kết thúc không được nhỏ hơn ngày bắt đầu!");
+
+            const newEvent = {
+                id: Date.now().toString(),
+                course: course,
+                start: start,
+                end: end,
+                trainer: trainer
+            };
+
+            globalData.events.push(newEvent);
+            
+            // Xóa rỗng form
+            document.getElementById('sel-start').value = '';
+            document.getElementById('sel-end').value = '';
+            
+            renderEventList();
+        }
+
+        function removeEvent(id) {
+            if(confirm("Xóa lịch dạy này?")) {
+                globalData.events = globalData.events.filter(e => e.id !== id);
+                renderEventList();
+            }
+        }
+
+        function renderEventList() {
+            const list = document.getElementById('event-list');
+            const filterM = document.getElementById('filterMonthSelect').value;
+            
+            let filtered = globalData.events;
+            // Lọc theo tháng (Dựa vào startDate)
+            if(filterM !== 'all') {
+                filtered = filtered.filter(e => {
+                    const m = parseInt(e.start.split('-')[1]);
+                    return m === parseInt(filterM);
                 });
             }
-            allCalendarData[key] = monthData;
-            localStorage.setItem('kv_onboard_calendar', JSON.stringify(allCalendarData));
 
-            if (apiUrl) {
-                document.getElementById('sync-status').innerHTML = '<i class="fas fa-sync fa-spin text-blue-500"></i> <span class="text-blue-500">Đang lưu lên hệ thống chung...</span>';
-                try {
-                    await fetch(apiUrl, { method: 'POST', body: JSON.stringify(allCalendarData), headers: {'Content-Type': 'text/plain;charset=utf-8'} });
-                    alert('Đã lưu thành công lên hệ thống chung! Mọi người đã có thể thấy lịch mới.');
-                    loadDataFromCloud();
-                    switchTab('calendar');
-                } catch (e) {
-                    alert('Lỗi kết nối. Lịch tạm thời được lưu ở máy bạn.');
-                }
-            } else {
-                alert('Đã lưu vào máy cá nhân! (Hãy thêm Link API để đồng bộ chung)');
-                loadDataFromCloud();
-                switchTab('calendar');
+            // Sort theo ngày gần nhất
+            filtered.sort((a, b) => new Date(a.start) - new Date(b.start));
+
+            if(filtered.length === 0) {
+                list.innerHTML = `<div class="text-center text-xs text-slate-400 py-4">Chưa có lịch dạy nào</div>`;
+                return;
             }
+
+            list.innerHTML = filtered.map(e => {
+                const sDate = new Date(e.start).toLocaleDateString('vi-VN');
+                const eDate = new Date(e.end).toLocaleDateString('vi-VN');
+                const dateStr = sDate === eDate ? sDate : `${sDate} đến ${eDate}`;
+                const tName = e.trainer === 'trang' ? '<span class="text-red-600">Trang</span>' : '<span class="text-emerald-600">Phương</span>';
+                
+                return `
+                <div class="flex items-center justify-between bg-white p-3 rounded-lg border border-slate-200 shadow-sm">
+                    <div>
+                        <p class="font-bold text-slate-800 text-sm">${e.course}</p>
+                        <p class="text-xs text-slate-500 mt-1"><i class="far fa-calendar-alt mr-1"></i> ${dateStr} • GV: ${tName}</p>
+                    </div>
+                    <button onclick="removeEvent('${e.id}')" class="w-8 h-8 rounded bg-rose-50 text-rose-500 hover:bg-rose-100 flex items-center justify-center shrink-0"><i class="fas fa-trash-alt text-xs"></i></button>
+                </div>
+            `}).join('');
         }
 
-        // --- RENDER GIAO DIỆN CÀI ĐẶT ---
-        function renderSettingsInputs() {
-            const container = document.getElementById('weeks-container');
-            container.innerHTML = '';
-            for(let i = 1; i <= 5; i++) {
-                container.innerHTML += `
-                    <div class="flex items-center gap-4 bg-slate-50 p-3 rounded-lg border border-slate-100">
-                        <div class="w-16 font-bold text-slate-500 text-xs">Tuần ${i}</div>
-                        <div class="flex-1">
-                            <label class="text-[10px] uppercase font-bold text-slate-400 mb-1 block">Ngày bắt đầu (Thứ 2)</label>
-                            <input type="date" id="date-w${i}" class="saas-input cursor-pointer py-1.5">
-                        </div>
-                        <div class="flex-1">
-                            <label class="text-[10px] uppercase font-bold text-slate-400 mb-1 block">Phân công GV</label>
-                            <select id="trainer-w${i}" class="saas-input cursor-pointer font-semibold py-1.5">
-                                <option value="">-- Trống (Không dạy) --</option>
-                                <option value="trang" class="text-red-600 font-bold">Trần Linh Trang (Đỏ)</option>
-                                <option value="phuong" class="text-emerald-600 font-bold">Nguyễn T. Thu Phương (Xanh)</option>
-                            </select>
+        // --- RENDER VIEW LỊCH (CALENDAR) ---
+        function renderCalendar() {
+            const month = parseInt(document.getElementById('calMonthSelect').value);
+            const container = document.getElementById('calendar-container');
+            
+            let html = `<div class="calendar-grid mb-2">`;
+            dayNames.forEach(day => { html += `<div class="day-header">${day}</div>`; });
+            html += `</div><div class="calendar-grid">`;
+
+            const daysInMonth = new Date(year, month, 0).getDate();
+            const firstDayIndex = new Date(year, month - 1, 1).getDay();
+            const offset = firstDayIndex === 0 ? 6 : firstDayIndex - 1;
+
+            for (let i = 0; i < offset; i++) { html += `<div class="date-cell empty"></div>`; }
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                const currentDayIndex = (offset + day - 1) % 7;
+                const isWeekend = currentDayIndex === 5 || currentDayIndex === 6; 
+                
+                // Set giờ về 0 để so sánh chuẩn
+                const cellDate = new Date(year, month - 1, day);
+                cellDate.setHours(0,0,0,0);
+                const cellTime = cellDate.getTime();
+                
+                // Tìm các event diễn ra trong ngày này
+                let eventsHtml = '';
+                globalData.events.forEach(e => {
+                    const eStart = new Date(e.start); eStart.setHours(0,0,0,0);
+                    const eEnd = new Date(e.end); eEnd.setHours(0,0,0,0);
+                    
+                    if(cellTime >= eStart.getTime() && cellTime <= eEnd.getTime()) {
+                        const bgClass = e.trainer === 'trang' ? 'bg-trang' : 'bg-phuong';
+                        eventsHtml += `<div class="event-badge ${bgClass}" title="${e.course}">${e.course}</div>`;
+                    }
+                });
+
+                html += `
+                    <div class="date-cell ${isWeekend ? 'weekend' : ''}">
+                        <div class="date-num">${day}</div>
+                        <div class="flex-grow flex flex-col gap-1 custom-scrollbar overflow-y-auto">
+                            ${eventsHtml}
                         </div>
                     </div>
                 `;
             }
+
+            html += `</div>`;
+            container.innerHTML = html;
         }
 
-        function loadSettingsView() {
-            const month = document.getElementById('monthSelect').value;
-            const key = `${year}-${month}`;
-            const data = allCalendarData[key] || [];
-            for(let i = 1; i <= 5; i++) {
-                const weekData = data[i-1] || { date: '', trainer: '' };
-                document.getElementById(`date-w${i}`).value = weekData.date;
-                document.getElementById(`trainer-w${i}`).value = weekData.trainer;
+        // --- XỬ LÝ DỮ LIỆU ĐÁM MÂY (CLOUD) ---
+        function saveApiUrl() {
+            localStorage.setItem('kv_skills_api', document.getElementById('api-url-input').value.trim());
+            alert("Đã lưu Link API!");
+        }
+
+        async function loadDataFromCloud() {
+            const apiUrl = localStorage.getItem('kv_skills_api') || "";
+            document.getElementById('api-url-input').value = apiUrl;
+            const statusEl = document.getElementById('sync-status');
+
+            if (apiUrl) {
+                statusEl.innerHTML = '<i class="fas fa-sync fa-spin text-blue-500"></i> <span class="text-blue-500">Đang đồng bộ...</span>';
+                try {
+                    const response = await fetch(apiUrl);
+                    const data = await response.json();
+                    if(data.courses && data.events) {
+                        globalData = data;
+                        localStorage.setItem('kv_skills_data', JSON.stringify(globalData));
+                        statusEl.innerHTML = '<i class="fas fa-cloud-check text-emerald-500"></i> <span class="text-emerald-600">Đã đồng bộ Cloud</span>';
+                    } else throw new Error("Data rỗng");
+                } catch (e) {
+                    loadLocalData();
+                    statusEl.innerHTML = '<i class="fas fa-exclamation-triangle text-amber-500"></i> <span class="text-amber-600">Đang dùng dữ liệu Local</span>';
+                }
+            } else {
+                loadLocalData();
+                statusEl.innerHTML = '<i class="fas fa-hdd text-slate-400"></i> <span class="text-slate-500">Dữ liệu lưu trên máy</span>';
             }
+            
+            refreshCourseUI();
+            renderEventList();
+            renderCalendar();
         }
 
-        // --- RENDER GIAO DIỆN LỊCH ---
-        function getHighlightedDays(monthData) {
-            const activeDays = {};
-            monthData.forEach(week => {
-                if(week.date && week.trainer) {
-                    const startDate = new Date(week.date);
-                    for(let i = 0; i < 5; i++) {
-                        const targetDate = new Date(startDate);
-                        targetDate.setDate(startDate.getDate() + i);
-                        const dateStr = `${targetDate.getFullYear()}-${String(targetDate.getMonth()+1).padStart(2, '0')}-${String(targetDate.getDate()).padStart(2, '0')}`;
-                        activeDays[dateStr] = week.trainer;
-                    }
-                }
-            });
-            return activeDays;
+        function loadLocalData() {
+            const local = JSON.parse(localStorage.getItem('kv_skills_data'));
+            if(local && local.courses && local.events) globalData = local;
         }
 
-        function renderCalendar() {
-            const container = document.getElementById('calendar-container');
-            container.innerHTML = '';
+        async function saveDataToCloud() {
+            const apiUrl = document.getElementById('api-url-input').value.trim();
+            localStorage.setItem('kv_skills_data', JSON.stringify(globalData));
 
-            for (let month = 1; month <= 12; month++) {
-                const monthKey = `${year}-${month}`;
-                const monthData = allCalendarData[monthKey] || [];
-                const activeDays = getHighlightedDays(monthData);
-
-                const monthCard = document.createElement('div');
-                monthCard.className = 'saas-card p-4';
-                
-                let html = `<h2 class="text-center font-bold text-slate-800 text-sm mb-3">${monthNames[month - 1]}</h2>`;
-                html += `<div class="calendar-grid mb-1">`;
-                dayNames.forEach(day => { html += `<div class="day-header">${day}</div>`; });
-                html += `</div><div class="calendar-grid">`;
-
-                const daysInMonth = new Date(year, month, 0).getDate();
-                const firstDayIndex = new Date(year, month - 1, 1).getDay();
-                const offset = firstDayIndex === 0 ? 6 : firstDayIndex - 1;
-
-                for (let i = 0; i < offset; i++) { html += `<div class="date-cell empty"></div>`; }
-
-                for (let day = 1; day <= daysInMonth; day++) {
-                    const currentDayIndex = (offset + day - 1) % 7;
-                    const isWeekend = currentDayIndex === 5 || currentDayIndex === 6; 
-                    const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-                    
-                    let bgClass = '';
-                    if(activeDays[dateStr]) { bgClass = activeDays[dateStr] === 'trang' ? 'bg-trang' : 'bg-phuong'; }
-
-                    html += `<div class="date-cell ${isWeekend && !bgClass ? 'weekend' : ''} ${bgClass}">${day}</div>`;
+            if (apiUrl) {
+                document.getElementById('sync-status').innerHTML = '<i class="fas fa-sync fa-spin text-blue-500"></i> <span class="text-blue-500">Đang lưu lên hệ thống...</span>';
+                try {
+                    await fetch(apiUrl, { method: 'POST', body: JSON.stringify(globalData), headers: {'Content-Type': 'text/plain;charset=utf-8'} });
+                    alert('Đã đồng bộ thành công lên Google Sheets!');
+                    statusEl.innerHTML = '<i class="fas fa-cloud-check text-emerald-500"></i> <span class="text-emerald-600">Đã đồng bộ Cloud</span>';
+                } catch (e) {
+                    alert('Lỗi kết nối. Đã lưu ở máy bạn.');
                 }
-
-                html += `</div>`;
-                monthCard.innerHTML = html;
-                container.appendChild(monthCard);
+            } else {
+                alert('Đã lưu thành công vào máy cá nhân!');
             }
         }
 
         // --- KHỞI ĐỘNG ---
         window.onload = () => {
-            renderSettingsInputs();
-            document.getElementById('monthSelect').value = new Date().getMonth() + 1;
+            document.getElementById('calMonthSelect').value = new Date().getMonth() + 1;
+            document.getElementById('filterMonthSelect').value = new Date().getMonth() + 1;
             loadDataFromCloud();
         };
     </script>
