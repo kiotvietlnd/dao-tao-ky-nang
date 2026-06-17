@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kỹ năng Tiếp nhận & Xử lý vấn đề triệt để</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Các thư viện Core: Load tuần tự để tránh lỗi Undefined -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            blue: '#1e3a8a',
+                            orange: '#f97316',
+                            sky: '#e0f2fe',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        * { font-family: 'Inter', sans-serif !important; }
+
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: linear-gradient(-45deg, #e0f2fe, #bae6fd, #fed7aa, #ffedd5, #e0e7ff);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .orb-1 {
+            position: absolute; top: -10%; left: -10%; width: 50vw; height: 50vw;
+            background: radial-gradient(circle, rgba(249,115,22,0.15) 0%, transparent 70%);
+            border-radius: 50%; filter: blur(60px); animation: float 12s ease-in-out infinite; z-index: 0;
+        }
+        .orb-2 {
+            position: absolute; bottom: -20%; right: -10%; width: 60vw; height: 60vw;
+            background: radial-gradient(circle, rgba(30,58,138,0.1) 0%, transparent 70%);
+            border-radius: 50%; filter: blur(80px); animation: float 15s ease-in-out infinite reverse; z-index: 0;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-30px) scale(1.05); }
+            100% { transform: translateY(0) scale(1); }
+        }
+
+        .slide-content {
+            width: 1280px;
+            height: 720px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 1.5rem;
+            box-shadow: 0 30px 60px -12px rgba(30, 58, 138, 0.15), 0 0 40px rgba(255,255,255,0.5) inset;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            padding: 40px 60px;
+        }
+
+        .title-slide-content {
+            background: linear-gradient(135deg, #1e3a8a 0%, #172554 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.4);
+            color: white;
+            padding: 60px;
+        }
+
+        .logo-container {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            z-index: 50;
+        }
+        .logo-img { height: 40px; width: auto; transition: all 0.3s ease; }
+        .logo-invert { filter: brightness(0) invert(1) drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
+    </style>
+</head>
+<body>
+    <div class="orb-1"></div>
+    <div class="orb-2"></div>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        // Khai báo an toàn
+        const { motion, AnimatePresence } = window.Motion;
+
+        // ĐÃ FIX LỖI CRASH REACT: Bọc icon vào thẻ span để React không bị nhầm lẫn khi Lucide render SVG
+        const Icon = ({ name, size = 24, className = "" }) => {
+            const iconRef = React.useRef(null);
+            
+            React.useEffect(() => {
+                if (window.lucide && iconRef.current) {
+                    iconRef.current.innerHTML = ''; 
+                    const i = document.createElement('i');
+                    i.setAttribute('data-lucide', name);
+                    i.setAttribute('class', className);
+                    i.style.width = size + 'px';
+                    i.style.height = size + 'px';
+                    iconRef.current.appendChild(i);
+                    window.lucide.createIcons({ root: iconRef.current });
+                }
+            }, [name, size, className]);
+
+            return <span ref={iconRef} className="inline-flex items-center justify-center shrink-0"></span>;
+        };
+
+        const Logo = ({ isTitle }) => (
+            <div className="logo-container">
+                <img 
+                    src="https://logo.kiotviet.vn/KiotViet-Logo-Horizontal.svg" 
+                    alt="KiotViet Logo" 
+                    className={`logo-img ${isTitle ? 'logo-invert' : ''}`}
+                    referrerPolicy="no-referrer"
+                />
+            </div>
+        );
+
+        const Slide = ({ children, className = "", isTitle = false }) => (
+            <div className={`slide-content ${isTitle ? 'title-slide-content' : ''} ${className}`}>
+                <Logo isTitle={isTitle} />
+                {!isTitle && (
+                    <>
+                        <div className="absolute -top-12 -right-12 w-48 h-48 bg-orange-500/10 rounded-full blur-3xl pointer-events-none" />
+                        <div className="absolute -bottom-24 -left-24 w-72 h-72 bg-blue-900/5 rounded-full blur-3xl pointer-events-none" />
+                    </>
+                )}
+                <div className="relative z-10 flex flex-col h-full w-full">
+                    {children}
+                </div>
+            </div>
+        );
+
+        const SlideTitle = ({ children }) => (
+            <h2 className="text-3xl font-extrabold mb-6 text-brand-blue uppercase border-l-8 border-brand-orange pl-4 tracking-tight shrink-0 whitespace-nowrap">
+                {children}
+            </h2>
+        );
+
+        const Presentation = () => {
+            const [currentSlide, setCurrentSlide] = React.useState(0);
+            
+            const slides = [
+                // Slide 1
+                <Slide key="1" isTitle={true}>
+                    <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+                        <div className="absolute top-10 left-10 w-64 h-64 bg-white rounded-full blur-3xl" />
+                        <div className="absolute bottom-10 right-10 w-96 h-96 bg-brand-orange rounded-full blur-3xl" />
+                    </div>
+                    <div className="flex flex-col justify-center items-center h-full relative z-10 text-center">
+                        <motion.h1 
+                            initial={{ opacity: 0, y: -50 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="text-[52px] font-black leading-tight uppercase mb-8 drop-shadow-lg"
+                        >
+                            Kỹ năng<br />
+                            Tiếp nhận & xử lý vấn đề triệt để
+                        </motion.h1>
+                        <motion.p 
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.3 }}
+                            className="text-3xl text-blue-100 mb-12 font-medium"
+                        >
+                            Dành cho Nhân viên DVKH Hotline
+                        </motion.p>
+                        <div className="mt-8">
+                            <span className="bg-gradient-to-r from-brand-orange to-orange-500 text-white px-8 py-3.5 rounded-full font-bold text-xl flex items-center gap-3 w-fit mx-auto shadow-xl shadow-orange-500/30 whitespace-nowrap">
+                                <Icon name="graduation-cap" /> Learning and Development Department
+                            </span>
+                        </div>
+                    </div>
+                </Slide>,
+
+                // Slide 2
+                <Slide key="2">
+                    <SlideTitle>Mục Tiêu Bài Học</SlideTitle>
+                    <div className="grid grid-cols-2 gap-10 flex-grow items-center">
+                        <div>
+                            <p className="text-2xl font-bold text-brand-blue mb-6">Giúp nhân viên DVKH nâng cao khả năng:</p>
+                            <ul className="space-y-6">
+                                <li className="bg-white/50 p-5 rounded-2xl shadow-sm border border-white">
+                                    <strong className="text-brand-orange block text-xl mb-1">Tiếp nhận đúng vấn đề</strong>
+                                    <span className="italic text-slate-700 text-lg">Lắng nghe và xác định chính xác cốt lõi thông tin.</span>
+                                </li>
+                                <li className="bg-white/50 p-5 rounded-2xl shadow-sm border border-white">
+                                    <strong className="text-brand-orange block text-xl mb-1">Phân loại & Xử lý hiệu quả</strong>
+                                    <span className="italic text-slate-700 text-lg">Áp dụng quy trình chuẩn để giải quyết triệt để.</span>
+                                </li>
+                            </ul>
+                            <div className="mt-6 p-5 bg-blue-50/80 border-l-4 border-brand-orange rounded-r-xl shadow-sm">
+                                <p className="text-lg text-brand-blue"><strong>Đích đến:</strong> Đảm bảo chỉ số hài lòng khách hàng (CSAT/NPS) ở mức cao nhất.</p>
+                            </div>
+                        </div>
+                        <div className="rounded-2xl overflow-hidden shadow-2xl h-[400px] border-4 border-white">
+                            <img 
+                                src="https://images.unsplash.com/photo-1552581234-26160f608093?auto=format&fit=crop&q=80&w=800" 
+                                alt="Target" 
+                                className="w-full h-full object-cover"
+                            />
+                        </div>
+                    </div>
+                </Slide>,
+
+                // Slide 3
+                <Slide key="3">
+                    <SlideTitle>Nguyên Tắc Tham Gia</SlideTitle>
+                    <div className="flex flex-col flex-grow justify-center w-full">
+                        <div className="grid grid-cols-3 gap-8 w-full h-fit">
+                            {[
+                                { icon: "hand-metal", title: "Chủ động & Chia sẻ", desc: "Không có câu trả lời đúng hay sai, chỉ có cách giải quyết phù hợp trong từng tình huống." },
+                                { icon: "rotate-ccw", title: "Thực hành & Phản hồi", desc: "Tích cực tham gia Roleplay. Đúc kết kinh nghiệm qua từng trải nghiệm thực tế cùng đồng nghiệp." },
+                                { icon: "ear", title: "Tôn trọng & Lắng nghe", desc: "Xây dựng một môi trường học tập an toàn, cởi mở và tôn trọng mọi ý kiến đóng góp." }
+                            ].map((item, i) => (
+                                <div key={i} className="bg-white/60 backdrop-blur-md border border-white rounded-2xl p-8 flex flex-col items-center text-center shadow-lg hover:-translate-y-2 transition-transform duration-300 h-full justify-center">
+                                    <div className="w-20 h-20 bg-gradient-to-br from-orange-100 to-orange-50 rounded-full flex items-center justify-center text-brand-orange mb-6 shadow-inner shrink-0">
+                                        <Icon name={item.icon} size={40} />
+                                    </div>
+                                    <h3 className="text-xl font-bold text-brand-blue mb-4 whitespace-nowrap">{item.title}</h3>
+                                    <p className="text-base text-slate-700 leading-relaxed">{item.desc}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </Slide>,
+
+                // Slide 4
+                <Slide key="4">
+                    <SlideTitle>Quy Trình 5 Bước Cuộc Gọi Hotline</SlideTitle>
+                    <div className="flex-grow flex flex-col justify-center relative w-full pt-4">
+                        <div className="relative w-full h-[280px] flex items-center">
+                            <div className="absolute top-[78px] left-[5%] right-[5%] h-3 bg-blue-100 rounded-full shadow-inner" />
+                            <div className="absolute top-[78px] left-[5%] w-[35%] h-3 bg-gradient-to-r from-brand-orange to-orange-400 rounded-full shadow-[0_0_15px_rgba(249,115,22,0.4)]" />
+                            <div className="flex justify-between relative z-10 w-full px-4">
+                                {[
+                                    { step: "Bước 1", title: "Chào hỏi.", active: false },
+                                    { step: "Bước 2", title: "Khai thác vấn đề\nvà hỗ trợ.", active: true },
+                                    { step: "Bước 3", title: "Xác nhận\nhỗ trợ xong.", active: false },
+                                    { step: "Bước 4", title: "Chào kết thúc.", active: false },
+                                    { step: "Bước 5", title: "Tạo ticket ghi nhận\ntrên hệ thống.", active: false }
+                                ].map((item, i) => (
+                                    <div key={i} className="flex flex-col items-center w-[19%] relative group">
+                                        <div className={`w-[76px] h-[76px] rounded-full border-[5px] flex items-center justify-center font-bold text-[15px] whitespace-nowrap z-10 shadow-lg transition-transform duration-300 group-hover:-translate-y-2 ${item.active ? 'bg-brand-orange border-white text-white scale-110 shadow-orange-500/50' : 'bg-white border-brand-blue text-brand-blue'}`}>
+                                            {item.step}
+                                        </div>
+                                        <div className={`w-4 h-4 rotate-45 mt-4 -mb-2 z-0 ${item.active ? 'bg-brand-orange' : 'bg-white'}`}></div>
+                                        <div className={`p-4 rounded-xl text-center w-full h-[100px] flex items-center justify-center shadow-md border ${item.active ? 'bg-orange-50 border-orange-200' : 'bg-white border-slate-100'}`}>
+                                            <p className={`text-[15px] font-bold leading-snug whitespace-pre-line ${item.active ? 'text-brand-orange' : 'text-slate-800'}`}>
+                                                {item.title}
+                                            </p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="mt-14 w-full flex justify-center">
+                            <p className="font-bold text-white text-[22px] flex items-center justify-center gap-3 bg-gradient-to-r from-brand-orange to-orange-500 px-8 py-4 rounded-full shadow-xl shadow-orange-500/30 whitespace-nowrap">
+                                <Icon name="star" className="text-yellow-200" size={28} /> Highlight: Bài học hôm nay đi sâu vào kỹ năng xử lý tại Bước 2.
+                            </p>
+                        </div>
+                    </div>
+                </Slide>,
+
+                // Slide 5
+                <Slide key="5">
+                    <SlideTitle>1.1 Lắng Nghe Hiệu Quả - Quản Trị Cảm Xúc</SlideTitle>
+                    <div className="flex flex-col flex-grow justify-center max-w-3xl mx-auto w-full">
+                        <p className="text-xl mb-8 text-center text-slate-700 font-medium">Nhận diện cảm xúc của chính mình trước khi xử lý vấn đề của khách hàng.</p>
+                        <div className="bg-white/80 p-8 rounded-3xl border border-white shadow-xl">
+                            <h3 className="text-2xl font-extrabold text-brand-orange mb-6 flex items-center justify-center gap-2">
+                                <Icon name="timer" size={28} /> Kỹ thuật 3-3-1
+                            </h3>
+                            <ul className="space-y-4 mb-8 max-w-md mx-auto">
+                                <li className="flex items-center gap-4 text-xl font-bold text-brand-blue bg-blue-50/50 p-4 rounded-xl">
+                                    <div className="bg-white p-2 rounded-lg shadow-sm shrink-0"><Icon name="wind" className="text-brand-blue" size={20} /></div> Hít sâu 3 giây
+                                </li>
+                                <li className="flex items-center gap-4 text-xl font-bold text-brand-blue bg-blue-50/50 p-4 rounded-xl">
+                                    <div className="bg-white p-2 rounded-lg shadow-sm shrink-0"><Icon name="leaf" className="text-green-500" size={20} /></div> Thở chậm 3 giây
+                                </li>
+                                <li className="flex items-center gap-4 text-xl font-bold text-brand-blue bg-blue-50/50 p-4 rounded-xl">
+                                    <div className="bg-white p-2 rounded-lg shadow-sm shrink-0"><Icon name="brain" className="text-brand-orange" size={20} /></div> Gọi tên 1 cảm xúc xuất hiện
+                                </li>
+                            </ul>
+                            <div className="pt-6 border-t-2 border-dashed border-slate-200 text-center">
+                                <p className="text-brand-blue font-bold text-[17px] leading-relaxed italic bg-blue-50 inline-block px-5 py-2 rounded-full whitespace-nowrap">
+                                    Gọi tên cảm xúc = Kích hoạt tư duy logic = Ngắt phản xạ "xù lông"
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </Slide>,
+
+                // Slide 6
+                <Slide key="6">
+                    <h2 className="text-3xl font-extrabold mb-[20px] text-[#1a4f4c] text-left w-full drop-shadow-sm shrink-0">
+                        Bạn Đang Cảm Thấy Thế Nào?
+                    </h2>
+                    <div className="flex-grow flex flex-col items-center justify-center w-full">
+                        <div className="grid grid-cols-4 grid-rows-2 gap-8 w-full max-w-5xl h-[360px]">
+                            {[
+                                { text: "Căng thẳng", icon: "😬" }, 
+                                { text: "Bực bội/ức chế", icon: "😤" },
+                                { text: "Bối rối", icon: "😵‍💫" }, 
+                                { text: "Kiệt sức", icon: "😩" },
+                                { text: "Bình tĩnh", icon: "😌" }, 
+                                { text: "Tự hào", icon: "😎" },
+                                { text: "Nhẹ nhõm", icon: "😮‍💨" }, 
+                                { text: "Vui vẻ", icon: "😄" },
+                            ].map((emotion, idx) => (
+                                <div key={idx} className="bg-white/90 backdrop-blur-sm rounded-3xl border-[2px] border-[#5faea9]/30 flex flex-col items-center justify-center p-6 text-center transition-all hover:scale-110 hover:shadow-lg hover:border-[#5faea9] cursor-default">
+                                    <span className="text-[#1e3f3d] text-[18px] font-bold tracking-wide mb-4 uppercase whitespace-nowrap">
+                                        {emotion.text}
+                                    </span>
+                                    <span className="text-[64px] leading-none filter drop-shadow-sm">{emotion.icon}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </Slide>,
+
+                // Slide 7
+                <Slide key="7">
+                    <SlideTitle>Tư Duy Dịch Vụ - 3 Kỳ Vọng Của Khách Hàng</SlideTitle>
+                    <div className="flex flex-col flex-grow justify-center w-full">
+                        <div className="grid grid-cols-3 gap-8 w-full items-stretch h-[320px]">
+                            {[
+                                { icon: "brain", title: "Có người HIỂU vấn đề", desc: "Khách hàng muốn trình bày và được lắng nghe trọn vẹn, không bị ngắt lời hay phán xét sai/đúng ngay từ đầu." },
+                                { icon: "shield-check", title: "Có người CHỊU TRÁCH NHIỆM", desc: "Khách hàng cần một đại diện từ công ty nhận lỗi hoặc ghi nhận sự cố thay vì đùn đẩy trách nhiệm." },
+                                { icon: "handshake", title: "Có người XỬ LÝ CÙNG", desc: "Khách hàng mong muốn một giải pháp cụ thể và sự đồng hành cho đến khi sự việc được giải quyết triệt để." }
+                            ].map((item, i) => (
+                                <div key={i} className="bg-white/70 border border-white rounded-2xl p-8 flex flex-col items-center text-center shadow-lg h-full justify-center hover:-translate-y-1 transition-transform">
+                                    <div className="w-20 h-20 bg-brand-orange/10 rounded-full flex items-center justify-center text-brand-orange mb-6 shadow-inner shrink-0">
+                                        <Icon name={item.icon} size={36} />
+                                    </div>
+                                    <h3 className="text-[24px] font-bold text-brand-blue mb-4 leading-tight">
+                                        {item.title.split(' ').map((word, idx) => ['HIỂU', 'CHỊU', 'TRÁCH', 'NHIỆM', 'XỬ', 'LÝ', 'CÙNG'].includes(word) ? <span key={idx} className="text-brand-orange">{word} </span> : word + ' ')}
+                                    </h3>
+                                    <p className="text-slate-700 text-[19px] leading-relaxed">{item.desc}</p>
+                                </div>
+                            ))}
+                        </div>
+                        <div className="mt-8 bg-gradient-to-r from-brand-blue to-[#2a4365] p-5 rounded-2xl text-center shadow-xl border border-blue-400/30 shrink-0 w-full">
+                            <p className="text-white text-[26px] font-extrabold flex items-center justify-center gap-4 tracking-wide whitespace-nowrap">
+                                <Icon name="quote" className="text-brand-orange rotate-180" size={28} /> 
+                                THẤU HIỂU TRƯỚC - GIẢI THÍCH SAU 
+                                <Icon name="quote" className="text-brand-orange" size={28} />
+                            </p>
+                        </div>
+                    </div>
+                </Slide>,
+
+                // Slide 8
+                <Slide key="8">
+                    <SlideTitle>Điều Chỉnh Giọng Nói - "Xoa Dịu" Cảm Xúc</SlideTitle>
+                    <div className="grid grid-cols-2 gap-8 flex-grow h-full overflow-hidden">
+                        <div className="bg-white/80 rounded-2xl p-8 border border-white shadow-lg flex flex-col justify-center">
+                            <h3 className="text-[26px] font-bold text-brand-blue mb-6 border-b-2 border-slate-100 pb-3 shrink-0">3 Yếu Tố Tác Động</h3>
+                            <ul className="space-y-6">
+                                <li>
+                                    <strong className="text-brand-blue text-[22px] flex items-center gap-3 mb-1">
+                                        <div className="bg-orange-100 p-2 rounded-lg"><Icon name="gauge" className="text-brand-orange" size={24}/></div> Tốc độ:
+                                    </strong>
+                                    <p className="text-[20px] text-slate-700 pl-14 leading-tight">Vừa phải, rõ ràng<br /><span className="italic text-slate-500 text-[17px]">(Tuyệt đối không cuốn theo nhịp điệu gấp gáp của khách).</span></p>
+                                </li>
+                                <li>
+                                    <strong className="text-brand-blue text-[22px] flex items-center gap-3 mb-1">
+                                        <div className="bg-orange-100 p-2 rounded-lg"><Icon name="volume-2" className="text-brand-orange" size={24}/></div> Âm lượng:
+                                    </strong>
+                                    <p className="text-[20px] text-slate-700 pl-14 leading-tight">Ổn định, trầm ấm<br /><span className="italic text-slate-500 text-[17px]">(Không nâng tone giọng dù khách hàng có lớn tiếng).</span></p>
+                                </li>
+                                <li>
+                                    <strong className="text-brand-blue text-[22px] flex items-center gap-3 mb-1">
+                                        <div className="bg-orange-100 p-2 rounded-lg"><Icon name="message-square" className="text-brand-orange" size={24}/></div> Ngôn từ:
+                                    </strong>
+                                    <p className="text-[20px] text-slate-700 pl-14">Tích cực, hướng tới giải pháp.</p>
+                                </li>
+                            </ul>
+                        </div>
+                        <div className="bg-gradient-to-br from-orange-50 to-orange-100/50 rounded-2xl p-8 border border-orange-200 shadow-lg flex flex-col justify-center">
+                            <h3 className="text-[26px] font-bold text-orange-800 mb-6 flex items-center gap-2 border-b-2 border-orange-200/50 pb-3 shrink-0">
+                                <div className="bg-orange-200 p-2 rounded-lg"><Icon name="lightbulb" className="text-orange-600" size={24}/></div> Tip Box
+                            </h3>
+                            <div className="space-y-6">
+                                <div>
+                                    <p className="font-bold text-green-700 text-[22px] mb-3 flex items-center gap-2 whitespace-nowrap">
+                                        <Icon name="circle-check" size={24} /> Nên dùng:
+                                    </p>
+                                    <ul className="list-disc pl-8 text-[20px] font-medium text-slate-700 space-y-2">
+                                        <li>"Để em kiểm tra chi tiết cho anh/chị..."</li>
+                                        <li>"Dạ, em hiểu sự bất tiện này rồi ạ."</li>
+                                        <li>"Em sẽ hỗ trợ mình xử lý bước này..."</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <p className="font-bold text-red-600 text-[22px] mb-3 flex items-center gap-2 whitespace-nowrap">
+                                        <Icon name="circle-x" size={24} /> Tránh dùng:
+                                    </p>
+                                    <ul className="list-disc pl-8 text-[20px] font-medium text-slate-700 space-y-2">
+                                        <li>"Em đã nói với anh rồi mà..."</li>
+                                        <li>"Cái này do anh thao tác sai rồi."</li>
+                                        <li>"Bên em không có lỗi trong chuyện này."</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </Slide>,
+
+                // Slide 9
+                <Slide key="9">
+                    <SlideTitle>1.2 Xác Nhận Đúng Vấn Đề - 3 Tầng Thông Tin</SlideTitle>
+                    <div className="grid grid-cols-2 gap-10 flex-grow items-center">
+                        <div className="space-y-5">
+                            <div className="bg-white/80 p-5 rounded-xl border-l-8 border-slate-400 shadow-sm">
+                                <strong className="text-brand-blue text-xl block mb-1">Tầng 1: Sự việc</strong>
+                                <p className="text-base text-slate-700">Điều gì đang thực sự xảy ra với khách hàng?</p>
+                            </div>
+                            <div className="bg-blue-50/80 p-5 rounded-xl border-l-8 border-brand-blue shadow-sm">
+                                <strong className="text-brand-blue text-xl block mb-1">Tầng 2: Tác động</strong>
+                                <p className="text-base text-slate-700">Sự việc này ảnh hưởng thế nào đến công việc/trải nghiệm của họ?</p>
+                            </div>
+                            <div className="bg-red-50/80 p-5 rounded-xl border-l-8 border-brand-orange shadow-md transform scale-105 ml-2">
+                                <strong className="text-brand-orange text-xl block mb-1">Tầng 3: Mối lo ngại (Quan trọng nhất)</strong>
+                                <p className="text-base text-slate-700">Điều gì khiến khách hàng cảm thấy lo sợ nhất đằng sau sự việc?</p>
+                            </div>
+                            <p className="font-bold text-green-700 text-center pt-4 text-lg bg-green-50 rounded-xl p-3 border border-green-100">
+                                <Icon name="key" className="inline text-brand-orange mr-2" size={20} /> Giải quyết được "Mối lo ngại" = Khách hàng hài lòng.
+                            </p>
+                        </div>
+                        <div className="h-[400px] flex items-center justify-center p-2">
+                            <img 
+                                src="https://pitel.vn/wp-content/uploads/2025/01/1-Khong-chi-tra-loi-cau-hoi-tong-dai-vien-con-la-cau-noi-giua-thuong-hieu-va-khach-hang.png" 
+                                alt="Call Center Bridge" 
+                                className="rounded-2xl shadow-xl h-full object-cover border-4 border-white"
+                            />
+                        </div>
+                    </div>
+                </Slide>,
+
+                // Slide 10
+                <Slide key="10">
+                    <SlideTitle>Tips Lắng Nghe Chủ Động</SlideTitle>
+                    <div className="flex flex-col flex-grow justify-center w-full">
+                        <div className="grid grid-cols-3 gap-8 w-full items-stretch h-[420px]">
+                            {[
+                                { icon: "timer", title: "Quy tắc 60-90s", desc: "Tuyệt đối không ngắt lời khách hàng trong 60-90 giây đầu tiên. Đây là \"thời gian vàng\" để khách hàng được xả cảm xúc và trình bày sự việc." },
+                                { icon: "message-square", title: "Duy trì tương tác", desc: "Thể hiện bạn vẫn đang tập trung bằng các câu đệm ngắn gọn: \"À, dạ em hiểu\", \"Dạ em đang nghe anh ạ\", \"Vâng, em đang ghi nhận ạ\"" },
+                                { icon: "handshake", title: "Kỹ thuật ghi chú", desc: "Hãy gạch đầu dòng bằng các Từ khóa tương ứng với 3 tầng thông tin: Sự việc - Tác động - Mối lo ngại." }
+                            ].map((item, i) => (
+                                <div key={i} className="bg-white/80 border border-white rounded-2xl p-8 flex flex-col items-center justify-center text-center shadow-lg h-full hover:-translate-y-1 transition-transform">
+                                    <div className="w-20 h-20 bg-brand-orange/10 rounded-full flex items-center justify-center text-brand-orange mb-6 shrink-0">
+                                        <Icon name={item.icon} size={36} />
+                                    </div>
+                                    <h3 className="text-[24px] font-bold text-brand-blue mb-4 whitespace-nowrap">{item.title}</h3>
+                                    <p className="text-[19px] text-slate-700 leading-relaxed">{item.desc}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </Slide>,
+
+                // Slide 11
+                <Slide key="11">
+                    <SlideTitle>Cấu Trúc Xác Nhận Hiệu Quả - Công Thức Chuẩn</SlideTitle>
+                    <div className="flex-grow flex flex-col justify-center max-w-4xl mx-auto w-full">
+                        <div className="bg-gradient-to-r from-brand-blue to-blue-800 p-8 rounded-3xl text-center mb-10 shadow-2xl border border-blue-400/20">
+                            <p className="text-white font-extrabold text-[26px] flex flex-row flex-nowrap justify-center items-center gap-2 whitespace-nowrap w-full">
+                                Xác nhận = 
+                                <span className="text-brand-orange bg-white/10 px-3 py-1.5 rounded-lg shrink-0">[Vấn đề]</span> + 
+                                <span className="text-brand-orange bg-white/10 px-3 py-1.5 rounded-lg shrink-0">[Tác động]</span> + 
+                                <span className="text-brand-orange bg-white/10 px-3 py-1.5 rounded-lg shrink-0">[Mối lo ngại]</span>
+                            </p>
+                        </div>
+                        <div className="space-y-6">
+                            <h4 className="text-brand-orange text-2xl font-bold flex items-center gap-2 whitespace-nowrap">
+                                <Icon name="lightbulb" size={28} /> Ví dụ mẫu:
+                            </h4>
+                            <div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-xl relative overflow-hidden">
+                                <div className="absolute top-0 left-0 w-2 h-full bg-brand-orange"></div>
+                                <p className="text-[22px] italic leading-relaxed text-slate-700">
+                                    "Dạ <strong className="text-brand-blue">chị Trang</strong>, em xác nhận lại là <strong className="text-brand-orange underline decoration-2 underline-offset-4">bill báo bếp không in được</strong> (Vấn đề), khiến việc <strong className="text-brand-orange underline decoration-2 underline-offset-4">phục vụ đang lộn xộn</strong> (Tác động), và chị đang rất lo <strong className="text-brand-orange underline decoration-2 underline-offset-4">khách phàn nàn bỏ về</strong> đúng không ạ?" (Mối lo ngại)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </Slide>,
+
+                // Slide 12
+                <Slide key="12">
+                    <SlideTitle>2.1 Bốn Nhóm Vấn Đề Thường Gặp</SlideTitle>
+                    <div className="flex-grow flex flex-col justify-center h-full overflow-hidden">
+                        <table className="w-full border-collapse rounded-xl overflow-hidden shadow-lg bg-white">
+                            <thead>
+                                <tr className="bg-brand-blue text-white text-left">
+                                    <th className="p-5 text-xl font-bold w-1/4 border-r border-blue-700/50"><Icon name="layers" className="inline mr-2" size={24} /> Nhóm Vấn Đề</th>
+                                    <th className="p-5 text-xl font-bold"><Icon name="stethoscope" className="inline mr-2" size={24} /> Bảng Chẩn Đoán Nhanh & Dấu Hiệu</th>
+                                </tr>
+                            </thead>
+                            <tbody className="text-lg text-slate-700">
+                                <tr className="border-b border-slate-100 hover:bg-slate-50 transition-colors">
+                                    <td className="p-5 font-bold text-brand-blue whitespace-nowrap">1. Lỗi kỹ thuật</td>
+                                    <td className="p-5 leading-snug">Hệ thống không phản hồi, phần mềm bị văng (crash), lỗi kết nối mạng, thiết bị phần cứng không hoạt động.</td>
+                                </tr>
+                                <tr className="bg-slate-50/50 border-b border-slate-100 hover:bg-slate-50 transition-colors">
+                                    <td className="p-5 font-bold text-brand-blue whitespace-nowrap">2. Hướng dẫn sử dụng</td>
+                                    <td className="p-5 leading-snug">Khách hàng chưa biết cách thao tác một tính năng mới, quên mật khẩu, không tìm thấy nút chức năng.</td>
+                                </tr>
+                                <tr className="border-b border-slate-100 hover:bg-slate-50 transition-colors">
+                                    <td className="p-5 font-bold text-brand-blue whitespace-nowrap">3. Khiếu nại</td>
+                                    <td className="p-5 leading-snug">Phàn nàn về thái độ nhân viên, không hài lòng với chính sách công ty, chất lượng dịch vụ không như cam kết.</td>
+                                </tr>
+                                <tr className="bg-slate-50/50 hover:bg-slate-50 transition-colors">
+                                    <td className="p-5 font-bold text-brand-blue whitespace-nowrap">4. Yêu cầu hỗ trợ</td>
+                                    <td className="p-5 leading-snug">Cần thay đổi thông tin hợp đồng, thêm phân quyền tài khoản mới, yêu cầu setup lại hệ thống chi nhánh.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </Slide>,
+
+                // Slide 13
+                <Slide key="13">
+                    <SlideTitle>Các Lỗi Thường Gặp Khi Hướng Dẫn Khách Hàng</SlideTitle>
+                    <div className="flex flex-col flex-grow justify-center w-full max-w-4xl mx-auto space-y-8">
+                        {[
+                            { icon: "languages", title: "Dùng thuật ngữ chuyên môn gây khó hiểu" },
+                            { icon: "fast-forward", title: "Trình bày 1 lèo liên tục các thao tác" },
+                            { icon: "help-circle", title: "Không xác nhận trạng thái của khách hàng" }
+                        ].map((item, i) => (
+                            <div key={i} className="bg-white/90 p-8 rounded-2xl border border-red-100 flex items-center gap-8 shadow-md hover:shadow-lg transition-all hover:translate-x-3">
+                                <div className="w-20 h-20 bg-red-50 rounded-full flex items-center justify-center text-red-500 shrink-0 border border-red-100 shadow-inner">
+                                    <Icon name={item.icon} size={40} />
+                                </div>
+                                <h3 className="text-[28px] font-bold text-brand-blue">{item.title}</h3>
+                            </div>
+                        ))}
+                    </div>
+                </Slide>,
+
+                // Slide 14
+                <Slide key="14">
+                    <SlideTitle>Minh Họa Lỗi Mắc Phải</SlideTitle>
+                    <div className="flex-grow flex flex-col gap-10 justify-center h-full">
+                        <div className="bg-white p-8 rounded-3xl border-l-8 border-red-500 shadow-xl relative shrink-0">
+                            <Icon name="quote" className="absolute -top-6 -left-6 text-red-200 w-12 h-12 rotate-180 bg-white rounded-full" />
+                            <p className="text-[22px] italic leading-relaxed text-slate-700">
+                                "Dạ để <strong className="text-red-600 underline decoration-red-200 underline-offset-4">fix</strong> tồn kho bị lệch thì chị phải <strong className="text-red-600 underline decoration-red-200 underline-offset-4">clear</strong> hết các phiếu kiểm kho đang ở <strong className="text-red-600 underline decoration-red-200 underline-offset-4">status</strong> Tạm đi nhé, không là nó khóa <strong className="text-red-600 underline decoration-red-200 underline-offset-4">data</strong> không <strong className="text-red-600 underline decoration-red-200 underline-offset-4">update</strong> được đâu. Chị vào <strong className="text-red-600 underline decoration-red-200 underline-offset-4">tab</strong> Hàng hóa, mở phần Kiểm kho rồi <strong className="text-red-600 underline decoration-red-200 underline-offset-4">filter</strong> các phiếu tạm ra xóa hết đi nha. Xong bước đó thì chị <strong className="text-red-600 underline decoration-red-200 underline-offset-4">export</strong> <strong className="text-red-600 underline decoration-red-200 underline-offset-4">list</strong> hàng hóa ra file Excel, <strong className="text-red-600 underline decoration-red-200 underline-offset-4">input</strong> số tồn thực tế vào cột tồn kho rồi <strong className="text-red-600 underline decoration-red-200 underline-offset-4">import</strong> file đó ngược lại hệ thống là số nó tự nhảy."
+                            </p>
+                        </div>
+                        <div className="grid grid-cols-2 gap-8 flex-grow">
+                            <div className="bg-orange-50 p-6 rounded-2xl border border-orange-200 flex gap-4 shadow-sm hover:-translate-y-1 transition-transform">
+                                <div className="shrink-0 mt-1">
+                                    <Icon name="alert-triangle" className="text-brand-orange" size={28} />
+                                </div>
+                                <div>
+                                    <strong className="text-xl text-brand-orange block mb-3">Lạm dụng từ chuyên môn</strong>
+                                    <p className="text-[17px] text-slate-700 leading-snug">Các từ in đậm (fix, clear, status, data, v.v.) là ngôn ngữ kỹ thuật, khiến khách hàng phổ thông cảm thấy bối rối và khó làm theo.</p>
+                                </div>
+                            </div>
+                            <div className="bg-red-50 p-6 rounded-2xl border border-red-200 flex gap-4 shadow-sm hover:-translate-y-1 transition-transform">
+                                <div className="shrink-0 mt-1">
+                                    <Icon name="x-circle" className="text-red-500" size={28} />
+                                </div>
+                                <div>
+                                    <strong className="text-xl text-red-600 block mb-3">Không chia bước & Không xác nhận</strong>
+                                    <p className="text-[17px] text-slate-700 leading-snug">Hướng dẫn gộp cả quy trình dọn dẹp phiếu tạm và quy trình xuất nhập Excel. DVKH không xác nhận khách đã xóa xong phiếu tạm chưa mà đã chuyển sang làm Excel.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </Slide>,
+
+                // Slide 15
+                <Slide key="15">
+                    <SlideTitle>2.2 Kỹ Năng Xử Lý Vấn Đề Hiệu Quả</SlideTitle>
+                    <div className="grid grid-cols-2 gap-10 flex-grow items-center h-full overflow-hidden">
+                        <div>
+                            <p className="text-[32px] font-extrabold text-brand-blue mb-8">Nguyên Tắc Truyền Đạt Hướng Dẫn</p>
+                            <div className="space-y-6">
+                                {[
+                                    { icon: "message-square", title: "Nói ngôn ngữ của khách hàng", desc: "Chuyển đổi các thuật ngữ chuyên môn IT phức tạp thành từ ngữ thông dụng, dễ hiểu." },
+                                    { icon: "list-ordered", title: "Chia nhỏ quy trình", desc: "Không trình bày một lèo liên tục 5 bước.\nHãy hướng dẫn: Bước 1 -> Bước 2." },
+                                    { icon: "check-check", title: "Xác nhận từng nấc", desc: "Khi khách hàng xác nhận đã làm được bước 1, mới tiếp tục hướng dẫn sang bước 2." }
+                                ].map((item, i) => (
+                                    <div key={i} className="bg-white/90 p-6 rounded-2xl border border-slate-100 flex gap-5 shadow-sm hover:shadow-md transition-shadow">
+                                        <div className="text-brand-orange shrink-0 bg-orange-50 p-3 rounded-full h-fit"><Icon name={item.icon} size={32} /></div>
+                                        <div>
+                                            <strong className="text-[22px] block mb-2 text-brand-blue whitespace-nowrap">{item.title}</strong>
+                                            <p className="text-[19px] text-slate-600 leading-snug whitespace-pre-line">{item.desc}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="h-[460px] rounded-2xl overflow-hidden shadow-xl border-4 border-white">
+                            <img 
+                                src="https://images.unsplash.com/photo-1507208773393-40d9fc670acf?auto=format&fit=crop&q=80&w=800" 
+                                alt="Step by step" 
+                                className="w-full h-full object-cover"
+                            />
+                        </div>
+                    </div>
+                </Slide>,
+
+                // Slide 16
+                <Slide key="16">
+                    <SlideTitle>Checklist Tiếp Nhận & Xử Lý</SlideTitle>
+                    <div className="flex flex-col flex-grow justify-center w-full">
+                        <div className="grid grid-cols-2 gap-8 w-full items-stretch h-[400px]">
+                            {[
+                                { title: "1. Kiểm Soát Cảm Xúc", desc: "Giữ vững kỹ thuật 3-3-1, duy trì giọng điệu âm lượng ổn định và ngôn từ tích cực." },
+                                { title: "2. Lắng Nghe Đủ 3 Tầng", desc: "Áp dụng quy tắc 60-90s, tìm ra Sự việc, Tác động và Mối lo ngại cốt lõi." },
+                                { title: "3. Xác Nhận Trước Khi Làm", desc: "Sử dụng công thức tóm tắt ngắn gọn, đảm bảo cả 2 bên đang hiểu chung 1 vấn đề." },
+                                { title: "4. Chẩn Đoán & Trình Bày", desc: "Phân loại đúng nhóm lỗi, chia nhỏ quy trình và hướng dẫn bằng ngôn ngữ đơn giản." }
+                            ].map((item, i) => (
+                                <div key={i} className="bg-white/90 p-8 rounded-2xl border border-white flex gap-5 items-center shadow-lg h-full hover:-translate-y-1 transition-transform">
+                                    <div className="bg-green-100 p-2 rounded-full shrink-0">
+                                        <Icon name="circle-check" className="text-green-600" size={40} />
+                                    </div>
+                                    <div>
+                                        <strong className="text-[24px] block mb-2 text-brand-blue whitespace-nowrap">{item.title}</strong>
+                                        <p className="text-[19px] text-slate-600 leading-relaxed">{item.desc}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </Slide>,
+
+                // Slide 17
+                <Slide key="17">
+                    <SlideTitle>Roleplay - Tình Huống Thực Tế</SlideTitle>
+                    <div className="flex-grow flex flex-col justify-center">
+                        <div className="bg-white p-10 rounded-3xl border border-slate-100 shadow-xl relative mt-6">
+                            <div className="absolute -top-6 left-10 bg-gradient-to-r from-brand-orange to-orange-500 text-white px-6 py-2.5 rounded-full font-bold flex items-center gap-2 shadow-md text-base whitespace-nowrap">
+                                <Icon name="building-2" size={20} /> Bối cảnh: Quản lý nhà hàng giờ cao điểm - App xoay mòng mòng - Không in được bill.
+                            </div>
+                            <blockquote className="text-[22px] italic leading-relaxed text-slate-700 relative pt-4">
+                                <Icon name="quote" className="absolute -top-0 -left-6 text-brand-orange/20 w-16 h-16 rotate-180" />
+                                "Alo tổng đài phải không? Em ơi kiểm tra ngay cho anh cái phần mềm, làm ăn chán quá! Đang giờ cao điểm khách đông nghẹt mà app trên máy tính bảng cứ xoay mòng mòng, bấm thanh toán không được. Rồi bill báo bếp cũng không in ra luôn! Giờ nhân viên của anh cứ phải chạy lên chạy xuống hét order vào bếp, mệt đứt cả hơi mà đồ ăn thì lên sai bét nhè. Khách người ta đang chửi ầm lên kia kìa. Cứ cái kiểu này là mất hết khách, thất thoát doanh thu ai đền cho anh? Bên em giải quyết ngay đi, nhanh lên!"
+                                <Icon name="quote" className="absolute -bottom-4 right-0 text-brand-orange/20 w-16 h-16" />
+                            </blockquote>
+                            <div className="mt-8 pt-6 border-t-2 border-slate-100 text-center">
+                                <p className="text-slate-500 font-bold uppercase tracking-widest text-[15px] bg-slate-50 inline-block px-5 py-2 rounded-full whitespace-nowrap">Lời thoại mở đầu (Trút giận liên tục trong 1 phút)</p>
+                            </div>
+                        </div>
+                    </div>
+                </Slide>,
+
+                // Slide 18
+                <Slide key="18">
+                    <SlideTitle>Đúc Kết Cá Nhân (Mô Hình 3-2-1)</SlideTitle>
+                    <div className="flex flex-col flex-grow justify-center w-full">
+                        <div className="grid grid-cols-3 gap-8 w-full items-stretch h-[380px]">
+                            {[
+                                { num: "3", color: "text-brand-orange", bg: "bg-orange-50", label: "Điều Quan Trọng Nhất", desc: "Đã học được từ buổi đào tạo hôm nay về kỹ năng tiếp nhận & Xử lý vấn đề triệt để." },
+                                { num: "2", color: "text-brand-blue", bg: "bg-blue-50", label: "Lỗi Thường Mắc Phải", desc: "Bản thân hay gặp khi tiếp nhận và xử lý sự cố cho khách hàng qua điện thoại." },
+                                { num: "1", color: "text-green-600", bg: "bg-green-50", label: "Hành Động Thay Đổi", desc: "Cam kết thực hiện ngay vào ca làm việc ngày mai để cải thiện chất lượng cuộc gọi." }
+                            ].map((item, i) => (
+                                <div key={i} className="bg-white border border-white rounded-2xl p-8 flex flex-col items-center text-center shadow-lg h-full justify-center hover:-translate-y-1 transition-transform">
+                                    <div className={`text-[90px] font-black leading-none mb-4 ${item.color} drop-shadow-sm`}>{item.num}</div>
+                                    <h3 className={`text-[22px] font-bold mb-4 ${item.color} ${item.bg} px-4 py-2 rounded-full w-full whitespace-nowrap`}>{item.label}</h3>
+                                    <p className="text-[18px] text-slate-600 leading-relaxed mt-2">{item.desc}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </Slide>,
+
+                // Slide 19
+                <Slide key="19" isTitle={true}>
+                    <img 
+                        src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1200" 
+                        alt="Teamwork" 
+                        className="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-40"
+                    />
+                    <div className="relative z-10 text-center max-w-[1150px] p-8 mx-auto h-full flex flex-col justify-center items-center">
+                        <motion.h2 
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            className="text-[64px] font-black text-white mb-10 uppercase tracking-wider drop-shadow-2xl whitespace-nowrap"
+                        >
+                            Ghi nhớ
+                        </motion.h2>
+                        <div className="bg-white/10 backdrop-blur-md border border-white/20 p-10 rounded-3xl shadow-2xl mb-10 w-fit mx-auto px-16">
+                            <p className="font-extrabold text-brand-orange text-2xl mb-8 text-center tracking-wide uppercase whitespace-nowrap">Tổng kết hành động</p>
+                            <ul className="grid grid-cols-2 gap-x-12 gap-y-6 w-fit mx-auto">
+                                {[
+                                    "Kiểm soát cảm xúc & giọng nói",
+                                    "Lắng nghe và xác nhận đủ 3 tầng thông tin",
+                                    "Phân loại đúng vấn đề",
+                                    "Trình bày phương án xử lý mạch lạc"
+                                ].map((item, i) => (
+                                    <li key={i} className="text-white text-[22px] flex items-center gap-4 font-medium whitespace-nowrap">
+                                        <div className="bg-brand-orange rounded-full p-1 shadow-lg shrink-0"><Icon name="check" className="text-white" size={20} /></div> 
+                                        {item}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                        <div className="w-full flex justify-center">
+                            <p className="text-[36px] font-bold text-white italic whitespace-nowrap drop-shadow-lg w-full text-center">
+                                "Chúc các bạn tự tin <span className="text-brand-orange">chinh phục khách hàng!</span>"
+                            </p>
+                        </div>
+                    </div>
+                </Slide>
+            ];
+
+            const nextSlide = React.useCallback(() => {
+                setCurrentSlide(p => Math.min(p + 1, slides.length - 1));
+            }, [slides.length]);
+
+            const prevSlide = React.useCallback(() => {
+                setCurrentSlide(p => Math.max(p - 1, 0));
+            }, []);
+
+            React.useEffect(() => {
+                const handleKeyDown = (e) => {
+                    if (e.key === 'ArrowRight' || e.key === ' ') {
+                        if (e.key === ' ') e.preventDefault(); 
+                        nextSlide();
+                    } else if (e.key === 'ArrowLeft') {
+                        prevSlide();
+                    }
+                };
+                window.addEventListener('keydown', handleKeyDown);
+                return () => window.removeEventListener('keydown', handleKeyDown);
+            }, [nextSlide, prevSlide]);
+
+            return (
+                <div className="relative w-screen h-screen flex items-center justify-center">
+                    <AnimatePresence mode="wait">
+                        <motion.div
+                            key={currentSlide}
+                            initial={{ opacity: 0, x: 30, filter: 'blur(5px)' }}
+                            animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+                            exit={{ opacity: 0, x: -30, filter: 'blur(5px)' }}
+                            transition={{ duration: 0.4, ease: "easeOut" }}
+                            className="absolute inset-0 w-full h-full flex items-center justify-center"
+                        >
+                            {slides[currentSlide]}
+                        </motion.div>
+                    </AnimatePresence>
+
+                    <div className="fixed bottom-6 right-8 flex items-center gap-3 z-50">
+                        <button 
+                            onClick={(e) => { e.preventDefault(); e.currentTarget.blur(); prevSlide(); }}
+                            disabled={currentSlide === 0}
+                            className={`w-8 h-8 flex items-center justify-center rounded-full transition-all backdrop-blur-sm border border-white/40 shadow-sm ${currentSlide === 0 ? 'opacity-30 cursor-not-allowed bg-slate-100 text-slate-500' : 'bg-white/60 text-brand-blue hover:bg-brand-orange hover:text-white hover:border-brand-orange'}`}
+                        >
+                            <Icon name="chevron-left" size={18} />
+                        </button>
+                        <div className="text-sm font-semibold text-slate-600 bg-white/50 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/40 shadow-sm min-w-[60px] text-center">
+                            {currentSlide + 1} / {slides.length}
+                        </div>
+                        <button 
+                            onClick={(e) => { e.preventDefault(); e.currentTarget.blur(); nextSlide(); }}
+                            disabled={currentSlide === slides.length - 1}
+                            className={`w-8 h-8 flex items-center justify-center rounded-full transition-all backdrop-blur-sm border border-white/40 shadow-sm ${currentSlide === slides.length - 1 ? 'opacity-30 cursor-not-allowed bg-slate-100 text-slate-500' : 'bg-white/60 text-brand-blue hover:bg-brand-orange hover:text-white hover:border-brand-orange'}`}
+                        >
+                            <Icon name="chevron-right" size={18} />
+                        </button>
+                    </div>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<Presentation />);
+    </script>
+</body>
+</html>
