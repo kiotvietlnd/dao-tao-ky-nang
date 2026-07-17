@@ -64,7 +64,7 @@
             <!-- Hamburger cho Mobile -->
             <button onclick="toggleMobileMenu()" class="md:hidden text-white text-xl p-2 focus:outline-none"><i class="fas fa-bars"></i></button>
             
-            <!-- Logo Box -->
+            <!-- Logo Box KiotViet -->
             <div class="bg-white/95 px-3 py-1.5 rounded-lg shadow-floating flex items-center justify-center border border-blue-200 hover:bg-white transition-colors cursor-pointer" title="KiotViet E-Learning">
                 <img src="https://logo.kiotviet.vn/KiotViet-Logo-Horizontal.svg" alt="KiotViet" class="h-5 md:h-6 w-auto object-contain">
             </div>
@@ -130,7 +130,7 @@
             <!-- Giao diện Chia Cột Mượt mà -->
             <div class="flex-1 flex flex-col md:flex-row overflow-hidden relative">
                 
-                <!-- CỘT TRÁI (Box Vàng & Danh sách) -->
+                <!-- CỘT TRÁI (Box Danh sách) -->
                 <div id="leftPanel" class="w-full md:w-[35%] md:min-w-[320px] bg-slate-50/80 md:border-r border-b md:border-b-0 border-slate-200 relative flex flex-col z-10">
                     <!-- Nút Toggle Ẩn/Hiện Mũi tên bo tròn gradient -->
                     <button onclick="toggleSidePanel()" id="togglePanelBtn" class="hidden md:flex absolute -right-3.5 top-8 w-7 h-7 rounded-full items-center justify-center z-20 border border-slate-200 toggle-btn text-blue-600 focus:outline-none">
@@ -138,23 +138,14 @@
                     </button>
                     
                     <div id="leftPanelContent" class="flex-1 overflow-y-auto p-4 md:p-6 space-y-5">
-                        <!-- Box Vàng (Có Update L&D) -->
-                        <div id="yellowBox" class="bg-gradient-to-br from-[#fffbeb] to-[#fef3c7] border border-amber-200/80 rounded-2xl shadow-soft hidden overflow-hidden">
-                            <div class="px-5 py-3.5 bg-amber-100/40 border-b border-amber-200/50 flex items-center gap-2.5">
-                                <i class="fas fa-lightbulb text-amber-500 text-lg"></i>
-                                <h3 class="font-bold text-amber-800 text-[12px] uppercase tracking-wider">Lưu ý cập nhật L&D</h3>
-                            </div>
-                            <div id="yellowText" class="p-5 text-[13.5px] text-amber-900 leading-relaxed whitespace-pre-wrap font-medium"></div>
-                        </div>
-
                         <!-- Box Xanh (Có Danh sách) -->
                         <div id="greenBox" class="bg-gradient-to-br from-emerald-50 to-teal-50/50 border border-emerald-200/60 rounded-2xl shadow-soft hidden overflow-hidden flex-col">
                             <div class="px-5 py-3.5 bg-emerald-100/30 border-b border-emerald-200/50 flex items-center gap-2.5">
                                 <i class="fas fa-clipboard-list text-emerald-600 text-lg"></i>
                                 <h3 class="font-bold text-emerald-800 text-[12px] uppercase tracking-wider">Danh sách Picklist CRM</h3>
                             </div>
-                            <div class="p-5 flex-1 overflow-y-auto max-h-[40vh]">
-                                <ul id="greenList" class="list-disc pl-4 space-y-2 text-[13px] text-emerald-800 font-medium"></ul>
+                            <div class="p-5 flex-1 overflow-y-auto max-h-[60vh]">
+                                <ul id="greenList" class="list-disc pl-4 space-y-2 text-[13px] text-emerald-800 font-medium leading-relaxed"></ul>
                             </div>
                         </div>
                     </div>
@@ -168,7 +159,7 @@
                 </div>
             </div>
 
-            <!-- THANH ĐIỀU HƯỚNG BOTTOM (Giống thiết kế yêu cầu) -->
+            <!-- THANH ĐIỀU HƯỚNG BOTTOM -->
             <div class="absolute bottom-0 left-0 w-full h-[70px] border-t border-slate-200 bg-white/95 backdrop-blur flex items-center justify-between px-4 md:px-8 z-30 shadow-[0_-5px_15px_rgba(0,0,0,0.03)]">
                 <!-- Nút Prev -->
                 <button onclick="navLesson(-1)" id="btnLPrev" class="px-3 md:px-5 py-2 md:py-2.5 bg-slate-100 border border-slate-200 rounded-lg text-sm font-semibold text-slate-600 hover:bg-slate-200 transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2">
@@ -257,13 +248,12 @@
 
 <script>
 // ==========================================
-// 1. DATA GỐC BẢO TOÀN 100% 
+// 1. DATA GỐC BẢO TOÀN 100% (Đã xóa cột D & fix chính tả)
 // ==========================================
 const masterData = [
     {
         id: "g1", title: "1. Chức năng PM & Dịch vụ gia tăng",
-        changes: `📋 CHI TIẾT THAY ĐỔI SO VỚI BẢN CŨ (Nhóm 1):\n• Đổi tên nhóm nguyên nhân thất bại\n• GIỮ NGUYÊN (không đổi): 1.1–1.16 (16 mục chức năng lõi) 1.17 Employee — nguyên vẹn từ Nhóm 1 cũ.\n• XÓA (trùng lặp): 'Chức năng của FBPos', 'Chức năng của MyKiot' (3 mục ở Nhóm 1 cũ, mục 1.17-1.19 cũ) — đã có sẵn ở Nhóm 3 cũ nên xóa bỏ, không giữ 2 nơi và KiotPro\n• GỘP MỚI (từ Nhóm 3 cũ, nay tô đỏ 1.19-1.25): Shipping -> Kship, MyKiot, Sàn TMĐT, Timesheet, Facebook Pos, Dịch vụ tài chính — Nhóm 3 cũ tự ghi 'Tương tự phần 2' nên gộp thẳng vào luồng xử lý chung này.\n• THÊM MỚI (tô đỏ, mục 1.26): 'Chức năng/dịch vụ khác chưa có trong danh sách' — thay thế Nhóm 2 cũ ('Chức năng chưa đáp ứng', vốn chỉ có hướng dẫn '(Điền tay chức năng thiếu vào Chi tiết)').`,
-        list: ["1.1. Màn hình bán hàng","1.2. Nhập hàng","1.3. Đặt hàng","1.4. Báo cáo","1.5. Đối tác","1.6. Sổ quỹ","1.7. Thiết lập","1.8. Đặt bàn","1.9. Màn hình bếp","1.10. Quản lý khách hàng / tích điểm","1.11. Quản lý khuyến mãi / voucher","1.12. In bếp","1.13. Hoá đơn điện tử","1.14. Tích hợp bán Grab / Shopee Food...","1.15. Phòng / bàn","1.16. Nhân viên","1.17. Chức năng của Employee","1.18. Kship","1.19. MyKiot","1.20. Sàn thương mại điện tử","1.21. Timesheet","1.22. Facebook Pos","1.23. Dịch vụ tài chính","1.24. Chức năng/dịch vụ khác chưa có trong danh sách (điền tay chức năng chưa có vào chi tiết)"],
+        list: ["1.1. Màn hình bán hàng","1.2. Nhập hàng","1.3. Đặt hàng","1.4. Báo cáo","1.5. Đối tác","1.6. Sổ quỹ","1.7. Thiết lập","1.8. Đặt bàn","1.9. Màn hình bếp","1.10. Quản lý khách hàng / tích điểm","1.11. Quản lý khuyến mãi / voucher","1.12. In bếp","1.13. Hoá đơn điện tử","1.14. Tích hợp bán Grab / Shopee Food...","1.15. Phòng / bàn","1.16. Nhân viên","1.17. Chức năng của Employee","1.18. Kship","1.19. MyKiot","1.20. Sàn thương mại điện tử","1.21. Timesheet","1.22. Facebook POS","1.23. Dịch vụ tài chính","1.24. Chức năng/dịch vụ khác chưa có trong danh sách (điền tay chức năng chưa có vào chi tiết)"],
         flows: [
             { cond: "Đã có chức năng nhưng chưa phù hợp", steps: [], note: "Mô tả đầy đủ: Tính năng/dịch vụ nào đang gặp vấn đề (lỗi hoặc chưa đáp ứng) + Lỗi cụ thể như nào / Vì sao không hài lòng, không đáp ứng được việc kinh doanh của cửa hàng + Đã có ticket (TK) hỗ trợ chưa + Đã tạo TK cho khách hàng chưa + Tiến độ xử lý như nào + Phản hồi về việc xử lý từ DVKH/PTSP báo như nào." },
             { cond: "Chưa có chức năng", steps: ["Theo dõi tiếp - chưa có kết quả", "Phản hồi/thông báo kết quả xử lý cho khách", "Không xử lý được", "Không liên hệ được KH - Hẹn thời gian liên hệ lại", "Chọn ngày liên hệ lại"], note: "" }
@@ -271,26 +261,24 @@ const masterData = [
     },
     {
         id: "g2", title: "2. Phần cứng",
-        changes: `🆕 MỞ RỘNG DANH MỤC (toàn bộ cần tạo mới trên CRM):\n• Trước đây chỉ có 4 nhóm chung chung: Máy in hóa đơn / Máy in tem / Máy quét mã vạch / Phần cứng KH.\n• Nay thay bằng ĐẦY ĐỦ 25 model thiết bị thực tế (đánh số 2.1–2.25), thêm phần phần cứng chưa có`,
-        list: ["2.1. Máy quét đa tia Kpos XL-2302","2.2. Màn hình hiển thị QR KV99","2.3. Kpos XL-6500A (Sunlux)","2.4. Máy quét mã vạch KV910","2.5. Máy POS D68 Single","2.6. Máy POS D68 Dual","2.7. Máy POS D10 NFC","2.8. Máy POS D10 Pro","2.9. Máy SoftPOS KV88","2.10. Máy in hóa đơn KV804","2.11. Máy in hóa đơn TP80NL","2.12. Máy in hóa đơn KV838","2.13. Máy in hóa đơn cầm tay KV500","2.14. Máy in hóa đơn để bàn KV505","2.15. Máy in mã vạch 2 tem XP-365B","2.16. Máy in tem sàn 410B","2.17. Máy in mã vạch D35","2.18. Khay đựng tiền CK-405","2.19. Máy chấm công KPOS N308","2.20. Giấy in nhiệt K80x45","2.21. Giấy in nhiệt K80x80","2.22. Decal 2 tem (35x22x30m)","2.23. Decal 1 tem (50x30x30m)","2.24. Decal 1 tem (40x25x30m)","2.25. Loa không dây KV66","2.26. Phần cứng chưa có trong danh sách (điền tay phần cứng thiếu vào chi tiết)"],
+        list: ["2.1. Máy quét đa tia KPOS XL-2302","2.2. Màn hình hiển thị QR KV99","2.3. KPOS XL-6500A (Sunlux)","2.4. Máy quét mã vạch KV910","2.5. Máy POS D68 Single","2.6. Máy POS D68 Dual","2.7. Máy POS D10 NFC","2.8. Máy POS D10 Pro","2.9. Máy SoftPOS KV88","2.10. Máy in hóa đơn KV804","2.11. Máy in hóa đơn TP80NL","2.12. Máy in hóa đơn KV838","2.13. Máy in hóa đơn cầm tay KV500","2.14. Máy in hóa đơn để bàn KV505","2.15. Máy in mã vạch 2 tem XP-365B","2.16. Máy in tem sàn 410B","2.17. Máy in mã vạch D35","2.18. Khay đựng tiền CK-405","2.19. Máy chấm công KPOS N308","2.20. Giấy in nhiệt K80x45","2.21. Giấy in nhiệt K80x80","2.22. Decal 2 tem (35x22x30m)","2.23. Decal 1 tem (50x30x30m)","2.24. Decal 1 tem (40x25x30m)","2.25. Loa không dây KV66","2.26. Phần cứng chưa có trong danh sách (điền tay phần cứng thiếu vào chi tiết)"],
         flows: [
-            { cond: "Chưa có phần cứng", steps: ["Đề xuất khuyến mãi/hỗ trợ trình SM", "Sales điền picklist đề xuất khuyến mãi (Giá, Phần cứng, Thời gian sử dụng, Voucher giao vận, Tính năng)", "Mô tả khuyến mãi đề xuất cụ thể (Ví dụ: Giá: Giảm 200K cho KH)"], note: "Mô tả đầy đủ: Phần cứng bị hỏng/hư hay khách chưa có phần cứng cần phần cứng hỗ trợ việc kinh doanh của cửa hàng + Đã xin chương trình tặng máy cho khách được duyệt chưa + Đã gửi khách và khách chốt chưa hay như nào." },
+            { cond: "Chưa có phần cứng", steps: ["Đề xuất khuyến mãi/hỗ trợ trình SM", "Sales điền picklist đề xuất khuyến mãi: Giá, Phần cứng, Thời gian sử dụng, Voucher giao vận, Tính năng", "Mô tả khuyến mãi đề xuất cụ thể (Ví dụ: Giá: Giảm 200K cho KH)"], note: "Mô tả đầy đủ: Phần cứng bị hỏng/hư hay khách chưa có phần cứng cần phần cứng hỗ trợ việc kinh doanh của cửa hàng + Đã xin chương trình tặng máy cho khách được duyệt chưa + Đã gửi khách và khách chốt chưa hay như nào." },
             { cond: "Đã có phần cứng nhưng lỗi", steps: ["Theo dõi tiếp - chưa có kết quả", "Phản hồi/thông báo kết quả xử lý cho khách", "Không xử lý được", "Không liên hệ được KH - Hẹn thời gian liên hệ lại", "Chọn ngày liên hệ lại"], note: "" }
         ]
     },
     {
         id: "g3", title: "3. CSKH không tốt",
-        changes: "Gộp mục 3 Sales CSKH không tốt và 4 DVKH chăm sóc KH không tốt thành CSKH không tốt",
         nested: [
             { sub: "3.1. Sale chăm sóc không tốt", items: [
-                { name: "3.1.1. Sales ký mới không hướng dẫn KH dùng / không hỗ trợ được vấn đề của KH", note: "Mô tả đầy đủ: Sale Ký mới nào chưa hướng dẫn và hỗ trợ cho khách phần nào, khách vướn phần nào + Tiếp nhận vấn đề có hỗ trợ được cho khách không hay đã tạo ticket cho khách để DVKH hỗ trợ cho khách chưa." },
+                { name: "3.1.1. Sales ký mới không hướng dẫn KH dùng / không hỗ trợ được vấn đề của KH", note: "Mô tả đầy đủ: Sale Ký mới nào chưa hướng dẫn và hỗ trợ cho khách phần nào, khách vướng phần nào + Tiếp nhận vấn đề có hỗ trợ được cho khách không hay đã tạo ticket cho khách để DVKH hỗ trợ cho khách chưa." },
                 { name: "3.1.2. KH muốn được hỗ trợ trực tiếp nhưng sales không đến được", note: "" },
-                { name: "3.1. 3. Sales tái ký chăm sóc khách hàng không tốt", note: "Mô tả đầy đủ: Trường này là bản thân người đang chăm kháh tái ký chưa làm tốt chứ ko phải tái ký cũ - Đang không làm tốt cái gì cho khách hàng." }
+                { name: "3.1. 3. Sales tái ký chăm sóc khách hàng không tốt", note: "Mô tả đầy đủ: Trường này là bản thân người đang chăm khách tái ký chưa làm tốt chứ không phải tái ký cũ - Đang không làm tốt cái gì cho khách hàng." }
             ]},
             { sub: "3.2. DVKH chăm sóc không tốt", items: [
                 { name: "3.2.1. Không liên hệ được tổng đài", note: "Mô tả đầy đủ: Khách liên hệ vào lúc nào thời gian nào theo số tổng đài hay kênh nào - sau khi không liên hệ được tổng đài thì khách hàng có liên hệ lại sale để hỗ trợ không" },
-                { name: "3.2.2. Vấn đề không được tổng đài xử lý triệt để", note: "Mô tả đầy đủ: Khách gặp vấn đề gì - đã yểu cầu hỗ trợ mấy lần + check có bao nhiêu ticket hỗ trợ liên quan + đã có phương án nào khác hỗ trợ khách chưa+ hiện có ảnh hưởng lớn đếnw cửa hàng không." },
-                { name: "3.2.3. Không được chủ động chăm sóc trong quá trình dùng", note: "Mô tả đầy đủ: là không chăm sóc như nào trong quá trình sử dụng, lỗi tính năng liên hệ khôn g hỗ trợ hay như nào" }
+                { name: "3.2.2. Vấn đề không được tổng đài xử lý triệt để", note: "Mô tả đầy đủ: Khách gặp vấn đề gì - đã yêu cầu hỗ trợ mấy lần + check có bao nhiêu ticket hỗ trợ liên quan + đã có phương án nào khác hỗ trợ khách chưa+ hiện có ảnh hưởng lớn đến cửa hàng không." },
+                { name: "3.2.3. Không được chủ động chăm sóc trong quá trình dùng", note: "Mô tả đầy đủ: là không chăm sóc như nào trong quá trình sử dụng, lỗi tính năng liên hệ không hỗ trợ hay như nào" }
             ]}
         ]
     },
@@ -299,7 +287,7 @@ const masterData = [
         verif: [
             { sub: "4.1. KH bỏ hẳn không kinh doanh nữa", note: "Mô tả đầy đủ: Khách ngừng kinh doanh đã check các kênh BI tín hiệu như nào, fanpage, shoppe còn đăng bài không, Đã check thử ký mới chưa, trực tiếp cửa hàng có còn mở cửa không.",
               branches: [
-                  { type: "Xác minh Online (multi-select)", ways: "Xác minh qua google, facebook, shopee, website, tiktok, zalo, instargram, Cổng tra cứu mã số thuế", logic: [
+                  { type: "Xác minh Online (Bắt buộc check tất cả)", ways: "Xác minh qua Google, Facebook, Shopee, Website, TikTok, Zalo, Instagram, Cổng tra cứu mã số thuế", logic: [
                       { stt: "Đúng thông tin khách chia sẻ", steps: ["Không xử lý được"] },
                       { stt: "Sai thông tin khách chia sẻ", steps: ["Tiếp tục thuyết phục KH", "Chọn ngày liên hệ lại", "Điền khi không xác thực được nguyên nhân mới"] }
                   ]},
@@ -315,16 +303,16 @@ const masterData = [
             { sub: "4.3. KH sang nhượng cửa hàng cho người khác", note: "Mô tả đầy đủ: Khách chuyển nhượng lâu chưa, có chuyển nhượng phần mềm không, người mới là ai xin sđt người mới.", branches: [
                 { type: "Xác minh Online & Offline", ways: "(Như 4.1)", logic: [{ stt: "Đúng thông tin khách chia sẻ", steps: ["Không xử lý được"]}, {stt: "Sai thông tin khách chia sẻ", steps: ["Liên hệ KH mới", "Chọn ngày liên hệ lại"]}] }
             ]},
-            { sub: "4.4. Kinh doanh kém, thấy PM không cần thiết", note: "Mô tả đầy đủ: Khách kinh doanh kém như nào tín hiệu BI doanh thu có sụt giảm không, tín hiệu sử dụng ra hoá đơn các kiểu có bị giảm không hay như nào.\nNote sai thông tin: BI cung cấp báo cáo, yêu cầu sales check xác minh thông tin -> nếu sai thông tin -> Sales tạo act mới", branches: [
-                { type: "Xác minh Online & Offline", ways: "(Như 4.1)", logic: [{ stt: "Đúng thông tin khách chia sẻ", steps: ["Không xử lý được"]}, {stt: "Sai thông tin khách chia sẻ", steps: ["Tiếp tục thuyết phục KH", "Chọn ngày liên hệ lại"]}], extra: ["Đề xuất khuyến mãi/hỗ trợ trình SM", "Sales điền picklist đề xuất...", "Mô tả KM"] }
+            { sub: "4.4. Kinh doanh kém, thấy PM không cần thiết", note: "Mô tả đầy đủ: Khách kinh doanh kém như nào tín hiệu BI doanh thu có sụt giảm không, tín hiệu sử dụng ra hoá đơn các kiểu có bị giảm không hay như nào.\nLưu ý: BI cung cấp báo cáo, yêu cầu sales check xác minh thông tin -> nếu sai thông tin -> Sales tạo act mới", branches: [
+                { type: "Xác minh Online & Offline", ways: "(Như 4.1)", logic: [{ stt: "Đúng thông tin khách chia sẻ", steps: ["Không xử lý được"]}, {stt: "Sai thông tin khách chia sẻ", steps: ["Tiếp tục thuyết phục KH", "Chọn ngày liên hệ lại"]}], extra: ["Đề xuất khuyến mãi/hỗ trợ trình SM", "Sales điền picklist đề xuất KM", "Mô tả khuyến mãi đề xuất cụ thể"] }
             ]}
         ]
     },
     {
         id: "g5", title: "5. KH dùng gian hàng khác của KV",
         verif: [
-            { sub: "5.1. KH ký mới GH khác", note: "Mô tả đầy đủ: Khách hàng ký mới GH nào + Có cùng địa chỉ không + có thuộc vào các quy trình khách hàng ký gian hàng khác 90 ngày hay thuộc trường hợp ký mới trùng khách hay khách hàng có nhiều gian hàng tái Ký gộp link gộp chi nhánh. + Nếu thược các trường hợp được xoá op đã báo xoá op điền đoc xoá op chưa, đã được xử lý xoá op chứ", branches: [
-                { type: "Xác minh Online / Offline", ways: "Check Google, FB... / Cửa hàng", logic: [{stt:"Đúng thông tin khách chia sẻ", steps:["Phối hợp xử lý gian hàng (gộp/xoá OPP)", "Chọn gian hàng trùng", "Chuyển QA để QA lọc và check xóa opt"]}, {stt:"Sai thông tin khách chia sẻ", steps:["Tiếp tục thuyết phục KH", "Chọn ngày liên hệ lại"]}] }
+            { sub: "5.1. KH ký mới GH khác", note: "Mô tả đầy đủ: Khách hàng ký mới GH nào + Có cùng địa chỉ không + có thuộc vào các quy trình khách hàng ký gian hàng khác 90 ngày hay thuộc trường hợp ký mới trùng khách hay khách hàng có nhiều gian hàng tái Ký gộp link gộp chi nhánh. + Nếu thuộc các trường hợp được xóa OPP đã báo xóa OPP điền doc xóa OPP chưa, đã được xử lý xóa OPP chưa", branches: [
+                { type: "Xác minh Online / Offline", ways: "Check Google, FB... / Cửa hàng", logic: [{stt:"Đúng thông tin khách chia sẻ", steps:["Phối hợp xử lý gian hàng (gộp/xoá OPP)", "Chọn gian hàng trùng", "Chuyển QA để QA lọc và check xóa OPP"]}, {stt:"Sai thông tin khách chia sẻ", steps:["Tiếp tục thuyết phục KH", "Chọn ngày liên hệ lại"]}] }
             ]},
             { sub: "5.2. KH mua gian hàng thanh lý", note: "Mô tả đầy đủ: Mua ở đâu - mua qua ai-ai giới thiệu hay mua trên web nào.", branches: [
                 { type: "Xác minh Online / Offline", logic: [{stt:"Đúng thông tin khách chia sẻ", steps:["Không xử lý được", "Chọn gian hàng thanh lý mà KH mua"]}, {stt:"Sai thông tin khách chia sẻ", steps:["Tiếp tục thuyết phục KH", "Chọn ngày liên hệ lại"]}] }
@@ -334,7 +322,7 @@ const masterData = [
     {
         id: "g6", title: "6. Không liên hệ được KH",
         verif: [
-            { sub: "6.1. Sai số", note: "Tái ký gửi các case không liên hệ được cho OM -> OM chuyển Retail lấy thông tin SĐT trên hóa đơn -> Tái ký chuyển thông tin cho KMS để check trùng SĐT giữa hóa đơn và CRM -> Nếu không trùng -> Tái ký liên hệ kH", branches: [
+            { sub: "6.1. Sai số", note: "Tái ký gửi các case không liên hệ được cho OM -> OM chuyển Retail lấy thông tin SĐT trên hóa đơn -> Tái ký chuyển thông tin cho KMS để check trùng SĐT giữa hóa đơn và CRM -> Nếu không trùng -> Tái ký liên hệ KH", branches: [
                 { type: "Xác minh", logic: [{stt:"Đúng thông tin KH", steps:["Không xử lý được"]}, {stt:"Sai thông tin KH", steps:["Liên hệ KH theo thông tin mới", "Chọn ngày liên hệ lại"]}] }
             ]},
             { sub: "6.2 Thuê bao / 6.3 Không nghe / 6.6 Tắt máy ngang", note: "", branches: [
@@ -348,12 +336,12 @@ const masterData = [
             ]}
         ]
     },
-    { id: "g7", title: "7. Nguyên nhân về giá", flows: [{cond:"7.1. Nguyên nhân về giá", steps:["Đề xuất khuyến mãi/hỗ trợ trình SM", "Sales điền picklist...", "Mô tả khuyến mãi đề xuất cụ thể"], note:"Mô tả đầy đủ: Khách chê giá như nào+ Đã báo gói nào + Đã báo KM như nào+ thái độ của khách với chương như nào + có chốt được không + Nếu chứ chốt đc đã báo Sm chưa + đề xuất SM KM gì rồi + được duyệt chưa"}] },
-    { id: "g8", title: "8. Mua để đối phó, mua làm quà tặng", flows: [{cond:"8.1. Mua để đối phó, mua làm quà tặng", steps:[], note:"Mô tả đầy đủ: Đối phó cái gì thuế hay gì + Tặng là tặng cho ai + Có kahr năng gia hạn lại không + có đề xuất KM gì không"}] },
-    { id: "g9", title: "9. Không có người dùng / thói quen", verif: [{sub:"9.1. Lớn tuổi ngại dùng / 9.2 Quản lý thủ công / sổ sách", note:"Mô tả đầy đủ: Người lớn tuổi bao tuổi + không có người dùng là không có nhân viên hay như nào + có đi trực tiếp xác nhận chưa", branches:[{type:"Xác minh offline", ways:"Đi trực tiếp cửa hàng / Nhờ ký mới check", logic:[{stt:"Đúng thông tin KH", steps:["Hướng dẫn/đào tạo sử dụng phần mềm cho KH", "Không xử lý được"]}, {stt:"Sai thông tin KH", steps:["Tiếp tục thuyết phục KH", "Chọn ngày liên hệ lại"]}]}]}] },
+    { id: "g7", title: "7. Nguyên nhân về giá", flows: [{cond:"7.1. Nguyên nhân về giá", steps:["Đề xuất khuyến mãi/hỗ trợ trình SM", "Sales điền picklist...", "Mô tả khuyến mãi đề xuất cụ thể"], note:"Mô tả đầy đủ: Khách chê giá như nào+ Đã báo gói nào + Đã báo KM như nào+ thái độ của khách với chương như nào + có chốt được không + Nếu chưa chốt được đã báo SM chưa + đề xuất SM KM gì rồi + được duyệt chưa"}] },
+    { id: "g8", title: "8. Mua để đối phó, mua làm quà tặng", flows: [{cond:"8.1. Mua để đối phó, mua làm quà tặng", steps:[], note:"Mô tả đầy đủ: Đối phó cái gì thuế hay gì + Tặng là tặng cho ai + Có khả năng gia hạn lại không + có đề xuất KM gì không"}] },
+    { id: "g9", title: "9. Không có người dùng / thói quen", verif: [{sub:"9.1. Lớn tuổi ngại dùng / 9.2 Quản lý thủ công / sổ sách", note:"Mô tả đầy đủ: Người lớn tuổi bao tuổi + không có người dùng là không có nhân viên hay như nào + có đi trực tiếp xác nhận chưa", branches:[{type:"Xác minh Offline", ways:"Đi trực tiếp cửa hàng / Nhờ ký mới check", logic:[{stt:"Đúng thông tin KH", steps:["Hướng dẫn/đào tạo sử dụng phần mềm cho KH", "Không xử lý được"]}, {stt:"Sai thông tin KH", steps:["Tiếp tục thuyết phục KH", "Chọn ngày liên hệ lại"]}]}]}] },
     { id: "g10", title: "10. Đang theo dõi / xử lý", flows: [
         {cond:"10.1. Đã báo giá, KH chưa phản hồi", steps:["Đề xuất khuyến mãi/hỗ trợ trình SM..."], note:"Mô tả đầy đủ: Đã báo những giá gì + báo qua đâu + Khách có phản ứng gì không + Phân vân thì phân vân cái gì"},
-        {cond:"10.2. Đã đồng ý gia hạn, chờ thanh toán", steps:["Hẹn lịch liên hệ lại", "Chọn ngày liên hệ lại"], note:"Mô tả đầy đủ: Đồng ý gói nào, gửi Qr chưa + khi nào khách thanh toán"},
+        {cond:"10.2. Đã đồng ý gia hạn, chờ thanh toán", steps:["Hẹn lịch liên hệ lại", "Chọn ngày liên hệ lại"], note:"Mô tả đầy đủ: Đồng ý gói nào, gửi QR chưa + khi nào khách thanh toán"},
         {cond:"10.3. Đang setup / chuyển đổi dữ liệu", steps:["Đề xuất khuyến mãi/hỗ trợ trình SM...", "Tiếp tục thuyết phục KH", "Chọn ngày liên hệ lại"], note:""}
     ] },
     { id: "g11", title: "11. Lo ngại liên quan đến Thuế", verif: [{sub:"11.1 Sợ bị kiểm tra / 11.2 Bị cơ quan thuế chỉ định PM khác", note:"", branches:[{type:"Xác minh Offline", ways:"Đi trực tiếp cửa hàng", logic:[{stt:"Đúng thông tin khách chia sẻ", steps:["Không xử lý được"]}, {stt:"Sai thông tin KH", steps:["Tiếp tục thuyết phục KH", "Chọn ngày liên hệ lại"]}]}]}] },
@@ -361,14 +349,14 @@ const masterData = [
 ];
 
 // ==========================================
-// 2. DATA QUIZ MCQ 
+// 2. DATA QUIZ MCQ (Đã thiết kế lại logic do gỡ bỏ Box Cập Nhật)
 // ==========================================
 const quizData = [
-    { q: 'Trong mục "Chức năng PM", nhóm chức năng nào sau đây ĐƯỢC GỘP MỚI từ Nhóm 3 (cũ) sang Nhóm 1?', opts: ['A. Màn hình bán hàng, Nhập hàng, Đặt hàng', 'B. Kship, MyKiot, Sàn TMĐT, Timesheet, Facebook Pos, Dịch vụ tài chính', 'C. Chức năng của FBPos, Chức năng của MyKiot'], ans: 1, exp: 'Chính xác! Cập nhật mới ghi rõ: GỘP MỚI (từ Nhóm 3 cũ): Shipping -> Kship, MyKiot, Sàn TMĐT... vào thẳng luồng xử lý chung.' },
-    { q: 'Danh mục phần cứng trên CRM hiện tại được mở rộng thành bao nhiêu model thiết bị thực tế?', opts: ['A. 4 nhóm thiết bị chung chung', 'B. 15 model thiết bị', 'C. ĐẦY ĐỦ 25 model thiết bị thực tế'], ans: 2, exp: 'Chính xác! Bản mới đã mở rộng thành ĐẦY ĐỦ 25 model (Ví dụ Kpos XL-2302, KV99...) để có thể picklist chi tiết.' },
+    { q: 'Khi khách hàng gặp vấn đề "Đã có chức năng nhưng chưa phù hợp" (Nhóm 1), thông tin BẮT BUỘC KHÔNG yêu cầu trong Note CRM là gì?', opts: ['A. Lỗi cụ thể như nào / Vì sao không hài lòng', 'B. Doanh thu tháng gần nhất của cửa hàng', 'C. Đã có ticket (TK) hỗ trợ chưa, tiến độ xử lý ra sao'], ans: 1, exp: 'Chính xác! Luồng 1 yêu cầu Note chi tiết về tính năng, lỗi, và tiến độ Ticket (TK) hỗ trợ. Doanh thu không nằm trong kịch bản bắt buộc của nhóm này.' },
+    { q: 'Trong luồng xử lý "Chưa có phần cứng" (Nhóm 2), Sales cần điền picklist đề xuất trình SM gồm những yếu tố nào?', opts: ['A. Giá, Phần cứng, Thời gian sử dụng, Voucher giao vận, Tính năng', 'B. Chỉ cần đề xuất Giá và Thời gian sử dụng', 'C. Giá, Phần cứng và Cước vận chuyển'], ans: 0, exp: 'Chính xác! Kịch bản yêu cầu điền Picklist gồm 5 yếu tố đầy đủ: Giá, Phần cứng, Thời gian sử dụng, Voucher giao vận, và Tính năng.' },
     { q: 'Khi KH phàn nàn "Không liên hệ được tổng đài", Sale cần note những thông tin gì bắt buộc?', opts: ['A. Khách liên hệ vào thời gian nào, theo kênh nào và có liên hệ lại sale không', 'B. Chỉ cần note số điện thoại của khách', 'C. Note lỗi phần mềm mà khách đang gặp phải'], ans: 0, exp: 'Chính xác! Luồng 3.2.1 yêu cầu Note CRM rõ: "Khách liên hệ vào lúc nào thời gian nào... sau đó có liên hệ lại sale không".' },
-    { q: 'Để xác minh KH "Bỏ hẳn không kinh doanh" qua kênh Online, Sale cần check thông tin ở những đâu?', opts: ['A. Chỉ cần check Google và Facebook là đủ', 'B. Bắt buộc check Google, Facebook, Shopee, Website, Tiktok, Zalo, Instargram, Cổng MST', 'C. Không cần check Online, chỉ cần đi trực tiếp cửa hàng'], ans: 1, exp: 'Chính xác! Quy định bắt buộc phải check online đa kênh (multi-select) theo danh sách 8 kênh liệt kê.' },
-    { q: 'Nếu KH ký mới gian hàng khác (Xác minh Đúng thông tin), luồng xử lý Bước 1 là gì?', opts: ['A. Tiếp tục thuyết phục KH', 'B. Không xử lý được, đóng ticket', 'C. Phối hợp xử lý gian hàng (gộp/xoá OPP)'], ans: 2, exp: 'Chính xác! Luồng 5.1 (Đúng thông tin) Bước 1 là: Phối hợp xử lý gian hàng (gộp/xoá OPP) -> Chọn gian hàng trùng -> QA lọc check.' },
+    { q: 'Để xác minh KH "Bỏ hẳn không kinh doanh" qua kênh Online, Sale cần check thông tin ở những đâu?', opts: ['A. Chỉ cần check Google và Facebook là đủ', 'B. Bắt buộc check Google, Facebook, Shopee, Website, TikTok, Zalo, Instagram, Cổng MST', 'C. Không cần check Online, chỉ cần đi trực tiếp cửa hàng'], ans: 1, exp: 'Chính xác! Quy định bắt buộc phải check online đa kênh (multi-select) theo danh sách 8 kênh liệt kê.' },
+    { q: 'Nếu KH ký mới gian hàng khác (Xác minh Đúng thông tin), luồng xử lý Bước 1 là gì?', opts: ['A. Tiếp tục thuyết phục KH', 'B. Không xử lý được, đóng ticket', 'C. Phối hợp xử lý gian hàng (gộp/xoá OPP)'], ans: 2, exp: 'Chính xác! Luồng 5.1 (Đúng thông tin) Bước 1 là: Phối hợp xử lý gian hàng (gộp/xoá OPP) -> Chọn gian hàng trùng -> QA lọc check xóa OPP.' },
     { q: 'Đối với nguyên nhân "Sai số", sau khi OM chuyển Retail lấy SĐT trên hóa đơn, Tái ký cần làm gì tiếp theo?', opts: ['A. Tự động liên hệ khách theo số mới ngay lập tức', 'B. Chuyển thông tin cho KMS để check trùng SĐT giữa hóa đơn và CRM', 'C. Yêu cầu khách gửi lại số đúng qua email'], ans: 1, exp: 'Chính xác! Luồng check chéo ghi rõ: Tái ký chuyển KMS check trùng -> Nếu KHÔNG TRÙNG thì Tái ký mới liên hệ KH.' },
     { q: 'Khi đề xuất KM/hỗ trợ trình SM về Nguyên nhân Giá, Sales cần điền picklist gồm những yếu tố nào?', opts: ['A. Giá, Phần cứng, Thời gian sử dụng, Voucher giao vận, Tính năng', 'B. Chỉ cần điền Giá và Thời gian sử dụng', 'C. Giá, Phần cứng và Voucher giao vận'], ans: 0, exp: 'Chính xác! Luồng 7.1 yêu cầu điền Picklist gồm 5 yếu tố này để trình duyệt.' },
     { q: 'Đối với nguyên nhân "Người lớn tuổi ngại dùng" (Xác minh đúng thông tin), hướng xử lý đúng là?', opts: ['A. Đánh dấu "Không xử lý được" ngay lập tức', 'B. Chuyển cho bộ phận DVKH xử lý', 'C. Hướng dẫn/đào tạo sử dụng phần mềm cho KH'], ans: 2, exp: 'Chính xác! Luồng 9.1 Bước 1 là "Hướng dẫn/đào tạo", sau đó nếu vẫn không được mới chọn "Không xử lý được".' },
@@ -500,34 +488,31 @@ function loadLesson(idx) {
     el('btnLPrev').disabled = (idx === 0);
     el('btnLNext').disabled = (idx === masterData.length - 1);
     el('lessonCounterMobile').innerText = `${idx+1}/12`;
-    renderSidebar(); // Update UI list & dots
+    renderSidebar(); 
     
-    // Đóng Mobile menu nếu đang mở
     if(window.innerWidth <= 768) toggleMobileMenu();
 
-    // AUTO-COLLAPSE LOGIC (Khung bên phải tự động giãn ra nếu ko có Box Vàng/Xanh)
-    const hasLeftData = data.changes || data.list;
+    // AUTO-COLLAPSE LOGIC (Tự động giãn khung nếu không có Danh sách Picklist)
+    const hasLeftData = !!data.list; // Vì đã bỏ Box Vàng, chỉ kiểm tra Box Xanh (list)
     const panel = el('leftPanel');
     const toggleBtn = el('togglePanelBtn');
     
     if(!hasLeftData) {
-        panel.style.display = 'none';
+        panel.style.display = 'none'; // Xóa sổ hoàn toàn cột trái
         toggleBtn.style.display = 'none';
     } else {
         panel.style.display = 'flex';
         toggleBtn.style.display = 'flex';
         if(isLeftPanelOpen && window.innerWidth > 768) {
             panel.style.width = '35%'; panel.style.minWidth = '320px';
+            el('leftPanelContent').style.opacity = '1';
+            toggleBtn.innerHTML = '<i class="fas fa-chevron-left text-[10px]"></i>';
         }
         
-        // Render Box
-        const yBox = el('yellowBox');
-        if(data.changes) { yBox.classList.remove('hidden'); el('yellowText').innerText = data.changes; } 
-        else yBox.classList.add('hidden');
-
+        // Render Box Danh sách
         const gBox = el('greenBox');
-        if(data.list) { gBox.classList.remove('hidden'); el('greenList').innerHTML = data.list.map(item => `<li>${item}</li>`).join(''); } 
-        else gBox.classList.add('hidden');
+        gBox.classList.remove('hidden'); 
+        el('greenList').innerHTML = data.list.map(item => `<li>${item}</li>`).join('');
     }
 
     // Right Panel Content (Flows)
@@ -648,7 +633,7 @@ function loadQuiz(idx) {
     // Reset Options
     for(let i=0; i<3; i++) {
         let btn = el(`btnOpt${i}`);
-        btn.className = "mcq-btn w-full p-4 md:p-5 border-2 border-slate-200 bg-white flex items-center gap-4";
+        btn.className = "mcq-btn w-full p-4 md:p-5 border-2 border-slate-200 bg-white flex items-center gap-4 cursor-pointer";
         btn.disabled = false;
         el(`txtOpt${i}`).innerText = quizData[idx].opts[i].substring(3);
         el(`txtOpt${i}`).previousElementSibling.innerText = quizData[idx].opts[i].substring(0,1);
@@ -670,6 +655,8 @@ function showFeedback(selectedIdx) {
     for(let i=0; i<3; i++) {
         let btn = el(`btnOpt${i}`);
         btn.disabled = true;
+        btn.classList.remove('cursor-pointer');
+        
         if(i === correctIdx) {
             btn.classList.add('mcq-correct');
             btn.classList.remove('border-slate-200', 'bg-white');
