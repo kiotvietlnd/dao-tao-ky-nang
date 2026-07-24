@@ -195,6 +195,11 @@
             </div>
         );
 
+        // Blank component for fill-in-the-blank slides
+        const Blank = ({ text }) => (
+            <span className="inline-block bg-slate-100/80 border border-dashed border-slate-400 text-slate-500 px-2 py-0 rounded mx-1 text-center font-mono tracking-widest text-[16px] shadow-inner">{text}</span>
+        );
+
         const Presentation = () => {
             const [currentSlide, setCurrentSlide] = React.useState(0);
             
@@ -282,8 +287,106 @@
                     </div>
                 </Slide>,
 
-                // Slide 3
+                // 4. Hoạt động 1 (Instructions)
                 <Slide key="3">
+                    <SlideTitle>Hoạt động 1 (8 phút)</SlideTitle>
+                    <div className="flex flex-col flex-grow justify-center items-center h-full">
+                        <div className="bg-white/90 p-12 rounded-3xl border border-white shadow-2xl max-w-4xl w-full text-center hover:-translate-y-2 transition-transform duration-500">
+                            <div className="bg-brand-orange text-white w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-10 shadow-inner shadow-orange-700/30">
+                                <Icon name="users" size={48} />
+                            </div>
+                            <ul className="space-y-8 text-[24px] text-slate-800 text-left w-fit mx-auto font-medium">
+                                <li className="flex gap-5 items-start">
+                                    <Icon name="message-square" className="text-brand-blue shrink-0 mt-1" size={32}/>
+                                    <span className="leading-relaxed">Thảo luận nhóm và hoàn thành mô tả Vai trò, Mục tiêu, Nhiệm vụ của Sale Tái Ký bằng cách <strong className="text-brand-orange">điền từ vào chỗ trống</strong>.</span>
+                                </li>
+                                <li className="flex gap-5 items-center">
+                                    <Icon name="mic" className="text-brand-orange shrink-0" size={32}/>
+                                    <span className="leading-relaxed">Cử đại diện chia sẻ câu trả lời.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </Slide>,
+
+                // 5. Hoạt động 1 (Fill-in-the-blanks)
+                <Slide key="4">
+                    <SlideTitle>Hoạt động 1: Hoàn thành mô tả</SlideTitle>
+                    <div className="grid grid-cols-3 gap-6 flex-grow h-full items-stretch pt-2 pb-6">
+                        {/* Vai trò */}
+                        <div className="bg-white/90 rounded-3xl border border-white shadow-xl flex flex-col overflow-hidden">
+                            <div className="bg-brand-blue text-white p-5 text-center shrink-0">
+                                <Icon name="user-check" size={36} className="mx-auto mb-2 text-blue-200 opacity-80" />
+                                <h3 className="text-[22px] font-bold uppercase tracking-wider">Vai trò</h3>
+                            </div>
+                            <div className="p-5 flex-grow flex items-center">
+                                <ul className="space-y-4">
+                                    <li className="flex gap-3 items-start">
+                                        <Icon name="chevron-right" className="text-brand-orange mt-1 shrink-0" />
+                                        <span className="text-[17px] text-slate-700 font-medium leading-relaxed">
+                                            Chịu trách nhiệm <Blank text="..." /> vướng mắc cho nhóm khách <Blank text="..." /> đã có trải nghiệm sử dụng từ 1 đến nhiều năm để đồng ý <Blank text="..." /> hợp đồng.
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        {/* Mục tiêu */}
+                        <div className="bg-white/90 rounded-3xl border border-white shadow-xl flex flex-col overflow-hidden">
+                            <div className="bg-brand-orange text-white p-5 text-center shrink-0">
+                                <Icon name="target" size={36} className="mx-auto mb-2 text-orange-200 opacity-80" />
+                                <h3 className="text-[22px] font-bold uppercase tracking-wider">Mục tiêu</h3>
+                            </div>
+                            <div className="p-5 flex-grow flex items-center">
+                                <ul className="space-y-4 text-[17px] text-slate-700 font-medium leading-relaxed">
+                                    <li className="flex gap-3 items-start">
+                                        <Icon name="chevron-right" className="text-brand-orange mt-1 shrink-0" />
+                                        <span>
+                                            <Blank text="..." /> khách hàng <Blank text="..." /> thành công càng sớm càng tốt (bất kể trước đó khách hàng hài lòng hay không hài lòng).
+                                        </span>
+                                    </li>
+                                    <li className="flex gap-3 items-start">
+                                        <Icon name="chevron-right" className="text-brand-orange mt-1 shrink-0" />
+                                        <span>
+                                            Kéo khách hàng trở lại, <Blank text="..." /> họ tiếp tục sử dụng phần mềm.
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        {/* Nhiệm vụ */}
+                        <div className="bg-white/90 rounded-3xl border border-white shadow-xl flex flex-col overflow-hidden">
+                            <div className="bg-green-600 text-white p-5 text-center shrink-0">
+                                <Icon name="clipboard-list" size={36} className="mx-auto mb-2 text-green-200 opacity-80" />
+                                <h3 className="text-[22px] font-bold uppercase tracking-wider">Nhiệm vụ</h3>
+                            </div>
+                            <div className="p-5 flex-grow flex flex-col justify-center">
+                                <ul className="space-y-3 text-[17px] text-slate-700 font-medium leading-relaxed">
+                                    <li className="flex gap-3 items-start">
+                                        <Icon name="chevron-right" className="text-brand-orange mt-1 shrink-0" />
+                                        <span>Tiếp nhận khách hàng trước <Blank text="..." /> ngày hết hạn hợp đồng.</span>
+                                    </li>
+                                    <li className="flex gap-3 items-start">
+                                        <Icon name="chevron-right" className="text-brand-orange mt-1 shrink-0" />
+                                        <span>Chăm sóc 100% số lượng khách hàng <Blank text="..." /> được giao, không <Blank text="..." /> bất kỳ khách hàng nào.</span>
+                                    </li>
+                                    <li className="flex gap-3 items-start">
+                                        <Icon name="chevron-right" className="text-brand-orange mt-1 shrink-0" />
+                                        <span>Xử lý <Blank text="..." /> các bất mãn, khó khăn khi sử dụng của khách hàng.</span>
+                                    </li>
+                                    <li className="flex gap-3 items-start">
+                                        <Icon name="chevron-right" className="text-brand-orange mt-1 shrink-0" />
+                                        <span>Cung cấp thêm <Blank text="..." /> xứng đáng với kỳ vọng để khách tiếp tục muốn dùng lại phần mềm.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </Slide>,
+
+                // 6. Vai trò - Mục tiêu - Nhiệm vụ (Completed Version)
+                <Slide key="5">
                     <SlideTitle>Vai trò - Mục tiêu - Nhiệm vụ của Sale Tái Ký</SlideTitle>
                     <div className="grid grid-cols-3 gap-6 flex-grow h-full items-stretch pt-2 pb-6">
                         {/* Vai trò */}
@@ -352,8 +455,8 @@
                     </div>
                 </Slide>,
 
-                // Slide 4
-                <Slide key="4">
+                // 7. Slide 4 (Quy trình 1)
+                <Slide key="6">
                     <SlideTitle>Quy trình tư vấn tái ký</SlideTitle>
                     <div className="mb-4 bg-blue-50/80 border border-blue-200 p-4 rounded-xl text-center w-fit mx-auto shadow-sm">
                         <p className="text-[17px] text-slate-700 font-medium italic">
@@ -363,8 +466,8 @@
                     <QuyTrinhTimeline activeStep={1} />
                 </Slide>,
 
-                // Slide 5
-                <Slide key="5">
+                // 8. Slide 5
+                <Slide key="7">
                     <SlideTitle>Cơ sở lựa chọn lý do tiếp cận</SlideTitle>
                     <div className="flex-grow flex flex-col h-full overflow-hidden pb-4 pt-2">
                         <div className="rounded-2xl shadow-xl border border-slate-200 bg-white overflow-hidden mb-6 flex-grow">
@@ -432,8 +535,8 @@
                     </div>
                 </Slide>,
 
-                // Slide 6
-                <Slide key="6">
+                // 9. Slide 6
+                <Slide key="8">
                     <SlideTitle>Minh họa tiếp cận</SlideTitle>
                     <div className="flex-grow flex flex-col h-full overflow-hidden pb-4">
                         <p className="text-slate-600 italic mb-2">Việc tận dụng thông tin trên CRM và BI cũng như tình hình KT-XH là cơ sở để chọn lý do mở đầu cuộc gọi.</p>
@@ -492,14 +595,41 @@
                     </div>
                 </Slide>,
 
-                // Slide 7
-                <Slide key="7">
+                // 10. Slide 7 (Quy trình 2)
+                <Slide key="9">
                     <SlideTitle>Quy trình tư vấn tái ký</SlideTitle>
                     <QuyTrinhTimeline activeStep={2} />
                 </Slide>,
 
-                // Slide 8
-                <Slide key="8">
+                // 11. Hoạt động 2
+                <Slide key="10">
+                    <SlideTitle>Hoạt động 2 - [Bài tập thực hành 1] (20 phút)</SlideTitle>
+                    <div className="flex flex-col flex-grow justify-center items-center h-full">
+                        <div className="bg-white/90 p-12 rounded-3xl border border-white shadow-2xl max-w-5xl w-full">
+                            <ul className="space-y-8 text-[22px] text-slate-700 font-medium">
+                                <li className="flex gap-5 items-start">
+                                    <div className="bg-brand-blue text-white w-10 h-10 rounded-full flex items-center justify-center shrink-0 shadow-md">1</div>
+                                    <span className="leading-relaxed">Chọn 1 tình huống trong <strong className="text-brand-orange">[Bài thực hành 1]</strong> và viết 3 câu chào tiếp cận dựa vào dữ liệu từ CRM, BI và tình hình xã hội. Lý giải vì sao chọn cách tiếp cận đó.</span>
+                                </li>
+                                <li className="flex gap-5 items-center">
+                                    <div className="bg-brand-orange text-white w-10 h-10 rounded-full flex items-center justify-center shrink-0 shadow-md">2</div>
+                                    <span className="leading-relaxed">Đóng vai 1-1 thực hiện tiếp cận với bạn trong nhóm sau đó đổi vai.</span>
+                                </li>
+                                <li className="flex gap-5 items-center">
+                                    <div className="bg-green-600 text-white w-10 h-10 rounded-full flex items-center justify-center shrink-0 shadow-md">3</div>
+                                    <span className="leading-relaxed">Chia sẻ cảm nhận vị trí vai khách hàng khi nghe câu chào tiếp cận.</span>
+                                </li>
+                                <li className="flex gap-5 items-center">
+                                    <div className="bg-purple-600 text-white w-10 h-10 rounded-full flex items-center justify-center shrink-0 shadow-md">4</div>
+                                    <span className="leading-relaxed">Đại diện chia sẻ bài làm với lớp và lý giải vì sao có lựa chọn đó.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </Slide>,
+
+                // 12. Slide 8
+                <Slide key="11">
                     <SlideTitle>Cách thức khai thác thông tin hiệu quả</SlideTitle>
                     <div className="grid grid-cols-12 gap-8 flex-grow h-full items-center">
                         <div className="col-span-7 h-full flex flex-col justify-center space-y-6">
@@ -553,8 +683,8 @@
                     </div>
                 </Slide>,
 
-                // Slide 9
-                <Slide key="9">
+                // 13. Slide 9
+                <Slide key="12">
                     <SlideTitle>Ví dụ minh họa khai thác (1/2)</SlideTitle>
                     <div className="grid grid-cols-2 gap-8 flex-grow h-full pt-2 pb-6">
                         {/* Box 1 */}
@@ -608,8 +738,8 @@
                     </div>
                 </Slide>,
 
-                // Slide 10
-                <Slide key="10">
+                // 14. Slide 10
+                <Slide key="13">
                     <SlideTitle>Ví dụ minh họa khai thác (2/2)</SlideTitle>
                     <div className="flex flex-col flex-grow items-center justify-center h-full w-full max-w-4xl mx-auto pb-8">
                         <div className="bg-white/95 p-8 rounded-3xl border border-white shadow-2xl w-full relative overflow-hidden">
@@ -630,15 +760,15 @@
                                     <p>"Dạ em biết anh đang test thử iPOS để có thêm lựa chọn. Anh đã tìm hiểu bên đó tới đâu rồi ạ, mình đã dùng thử chưa, nhân viên tư vấn anh tới đâu rồi ạ?</p>
                                     <p>Tuy nhiên anh cho em hỏi nhỏ, bên đó báo giá rẻ hơn là họ đang báo gói bao nhiêu vậy anh?</p>
                                     <p>Gói này là cơ bản hay đã bao gồm cả app quản lý từ xa trên điện thoại và quản lý kho định lượng nguyên liệu cho quán cafe mình chưa ạ?</p>
-                                    <p>Vì nếu đổi phần mềm, nhân viên mình sẽ phải học lại từ đầu, và dữ liệu khách hàng cũ của quán mình cũng sẽ bị mất đó anh."</p>
+                                    <p>Vì nếu đổi phần mềm, nhân viên mình sẽ phải học lại từ đầu, và dữ liệu khách hàng cũ của quán mình cũng sẽ bị mất đó anh. Anh đã tính đến đoạn này chưa ạ?"</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </Slide>,
 
-                // Slide 11
-                <Slide key="11">
+                // 15. Slide 11
+                <Slide key="14">
                     <SlideTitle>Hướng dẫn xử lý theo nhóm vấn đề</SlideTitle>
                     <div className="flex-grow flex flex-col h-full overflow-hidden pb-2 pt-2">
                         <div className="rounded-xl shadow-lg border border-slate-200 bg-white overflow-hidden flex-grow flex flex-col">
@@ -711,8 +841,8 @@
                     </div>
                 </Slide>,
 
-                // Slide 12
-                <Slide key="12">
+                // 16. Slide 12
+                <Slide key="15">
                     <SlideTitle>Thực hành Khai thác & Xử lý tình huống</SlideTitle>
                     <div className="flex flex-col flex-grow justify-center space-y-6 pt-2 pb-6">
                         
@@ -749,14 +879,41 @@
                     </div>
                 </Slide>,
 
-                // Slide 13
-                <Slide key="13">
+                // 17. Hoạt động 3
+                <Slide key="16">
+                    <SlideTitle>Hoạt động 3 - Bài tập thực hành 2 (20 phút)</SlideTitle>
+                    <div className="flex flex-col flex-grow justify-center items-center h-full">
+                        <div className="bg-white/90 p-12 rounded-3xl border border-white shadow-2xl max-w-5xl w-full">
+                            <ul className="space-y-8 text-[22px] text-slate-700 font-medium">
+                                <li className="flex gap-5 items-center">
+                                    <div className="bg-brand-blue text-white w-10 h-10 rounded-full flex items-center justify-center shrink-0 shadow-md">1</div>
+                                    <span className="leading-relaxed">Thảo luận với nhóm phân tích 3 tình huống đề bài.</span>
+                                </li>
+                                <li className="flex gap-5 items-center">
+                                    <div className="bg-brand-orange text-white w-10 h-10 rounded-full flex items-center justify-center shrink-0 shadow-md">2</div>
+                                    <span className="leading-relaxed">Chọn 1 trong 3 tình huống viết câu hỏi khai thác và mô tả hướng xử lý.</span>
+                                </li>
+                                <li className="flex gap-5 items-center">
+                                    <div className="bg-green-600 text-white w-10 h-10 rounded-full flex items-center justify-center shrink-0 shadow-md">3</div>
+                                    <span className="leading-relaxed">Đại diện trình bày câu trả lời trước lớp.</span>
+                                </li>
+                                <li className="flex gap-5 items-center">
+                                    <div className="bg-purple-600 text-white w-10 h-10 rounded-full flex items-center justify-center shrink-0 shadow-md">4</div>
+                                    <span className="leading-relaxed">Lắng nghe phần trình bày và bổ sung ý kiến khác.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </Slide>,
+
+                // 18. Slide 13 (Quy trình 3)
+                <Slide key="17">
                     <SlideTitle>Quy trình tư vấn tái ký</SlideTitle>
                     <QuyTrinhTimeline activeStep={3} />
                 </Slide>,
 
-                // Slide 14
-                <Slide key="14">
+                // 19. Slide 14
+                <Slide key="18">
                     <SlideTitle>Nguyên tắc báo giá & Ưu đãi chốt nhanh</SlideTitle>
                     <div className="grid grid-cols-2 gap-10 flex-grow h-full items-stretch pt-2 pb-6">
                         
@@ -810,8 +967,31 @@
                     </div>
                 </Slide>,
 
-                // Slide 15
-                <Slide key="15">
+                // 20. Hoạt động 4
+                <Slide key="19">
+                    <SlideTitle>Hoạt động 4 - Thực hành tư vấn giá & ưu đãi (15 phút)</SlideTitle>
+                    <div className="flex flex-col flex-grow justify-center items-center h-full">
+                        <div className="bg-white/90 p-12 rounded-3xl border border-white shadow-2xl max-w-5xl w-full">
+                            <ul className="space-y-8 text-[22px] text-slate-700 font-medium">
+                                <li className="flex gap-5 items-start">
+                                    <div className="bg-brand-blue text-white w-10 h-10 rounded-full flex items-center justify-center shrink-0 shadow-md mt-1">1</div>
+                                    <span className="leading-relaxed">Viết kịch bản tư vấn giá và ưu đãi cho 1 trong 3 tình huống đã khai thác & xử lý ở trên.</span>
+                                </li>
+                                <li className="flex gap-5 items-center">
+                                    <div className="bg-brand-orange text-white w-10 h-10 rounded-full flex items-center justify-center shrink-0 shadow-md">2</div>
+                                    <span className="leading-relaxed">Đóng vai 1-1 thực hiện tư vấn giá với bạn trong nhóm và đổi vai.</span>
+                                </li>
+                                <li className="flex gap-5 items-start">
+                                    <div className="bg-green-600 text-white w-10 h-10 rounded-full flex items-center justify-center shrink-0 shadow-md mt-1">3</div>
+                                    <span className="leading-relaxed">Lắng nghe 1 cặp trình bày trước lớp và nhận xét bài tư vấn giá đã áp dụng nguyên tắc cụ thể ra sao.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </Slide>,
+
+                // 21. Slide 15
+                <Slide key="20">
                     <SlideTitle>Tổng kết</SlideTitle>
                     <div className="grid grid-cols-2 gap-12 flex-grow h-full items-center justify-center pb-6">
                         
