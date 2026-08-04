@@ -168,295 +168,220 @@
             const [currentSlide, setCurrentSlide] = React.useState(0);
             
             const slides = [
-                // Title Slide
-                <Slide key="title" isTitle={true}>
+                // Slide 0: Tiêu đề
+                <Slide key="0" isTitle={true}>
                     <div className="flex flex-col justify-center items-center h-full relative z-10 text-center">
                         <motion.h1 
                             initial={{ opacity: 0, y: -50 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="font-black uppercase mb-8 drop-shadow-lg flex flex-col items-center"
+                            className="font-black uppercase mb-8 drop-shadow-lg"
                         >
-                            <span className="text-3xl text-blue-200 mb-6 font-semibold tracking-widest border-b-2 border-brand-orange pb-2">CHUYÊN ĐỀ KỸ NĂNG</span>
-                            <span className="text-[52px] leading-tight text-white block mb-2 px-8">XÁC ĐỊNH MỨC ĐỘ SẴN SÀNG CHI TRẢ &<br/>CHỐT DEAL BẰNG GIÁ TRỊ</span>
+                            <span className="text-[40px] leading-tight block mb-4 text-white">Chia sẻ kỹ năng</span>
+                            <span className="text-[54px] leading-tight text-brand-orange block mb-2 whitespace-nowrap">Xác định mức độ sẵn sàng chi trả</span>
+                            <span className="text-[54px] leading-tight block text-brand-orange">& chốt deal bằng giá trị</span>
                         </motion.h1>
-                        <div className="mt-8">
-                            <span className="bg-gradient-to-r from-brand-orange to-orange-500 text-white px-8 py-3.5 rounded-full font-bold text-xl flex items-center gap-3 w-fit mx-auto shadow-xl shadow-orange-500/30 whitespace-nowrap">
-                                <Icon name="briefcase" /> Dành cho Sale Tái Ký
-                            </span>
-                        </div>
+                        <motion.p 
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.3 }}
+                            className="text-[28px] text-blue-100 mb-12 font-medium"
+                        >
+                            Dành cho nhân viên sale Tái Ký
+                        </motion.p>
                     </div>
                 </Slide>,
 
-                // Slide 1 
+                // Slide 1
                 <Slide key="1">
                     <SlideTitle>Mục tiêu chương trình</SlideTitle>
-                    <div className="grid grid-cols-12 gap-10 flex-grow items-center">
-                        <div className="col-span-8 pr-4 w-full">
-                            <ul className="space-y-6">
-                                <li className="bg-white/70 p-4 rounded-2xl shadow-sm border border-white flex gap-4 items-center">
-                                    <div className="bg-brand-orange text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-xl shrink-0">1</div>
-                                    <span className="text-slate-800 text-[20px] font-medium leading-relaxed">
-                                        <strong>Đánh giá được khả năng chi&nbsp;trả</strong> của khách&nbsp;hàng dựa vào dữ&nbsp;liệu.
-                                    </span>
+                    <div className="grid grid-cols-12 gap-10 flex-grow items-center h-full">
+                        <div className="col-span-7 pr-4 w-full flex flex-col justify-center">
+                            <ul className="space-y-5 text-[21px] text-slate-800 font-medium">
+                                <li className="bg-white/80 p-5 rounded-2xl shadow-sm border border-slate-100 flex gap-4 items-center">
+                                    <div className="bg-brand-blue text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg shrink-0">1</div>
+                                    <span className="leading-snug">Đánh giá được khả năng chi trả của khách hàng dựa vào phân tích dữ liệu.</span>
                                 </li>
-                                <li className="bg-white/70 p-4 rounded-2xl shadow-sm border border-white flex gap-4 items-center">
-                                    <div className="bg-brand-orange text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-xl shrink-0">2</div>
-                                    <span className="text-slate-800 text-[20px] font-medium leading-relaxed">
-                                        <strong>Xác thực được khả năng chi&nbsp;trả thực&nbsp;tế</strong> của khách&nbsp;hàng và yếu tố quyết định khả năng tái&nbsp;ký.
-                                    </span>
+                                <li className="bg-white/80 p-5 rounded-2xl shadow-sm border border-slate-100 flex gap-4 items-center">
+                                    <div className="bg-brand-blue text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg shrink-0">2</div>
+                                    <span className="leading-snug">Xác thực được khả năng chi trả thực tế của khách hàng và các yếu tố quyết định khả năng tái ký.</span>
                                 </li>
-                                <li className="bg-white/70 p-4 rounded-2xl shadow-sm border border-white flex gap-4 items-center">
-                                    <div className="bg-brand-orange text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-xl shrink-0">3</div>
-                                    <span className="text-slate-800 text-[20px] font-medium leading-relaxed">
-                                        <strong>Giải quyết được vấn&nbsp;đề</strong> tác động đến khả năng tái&nbsp;ký.
-                                    </span>
+                                <li className="bg-white/80 p-5 rounded-2xl shadow-sm border border-slate-100 flex gap-4 items-center">
+                                    <div className="bg-brand-blue text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg shrink-0">3</div>
+                                    <span className="leading-snug">Giải quyết được vấn đề tác động đến khả năng tái ký.</span>
                                 </li>
-                                <li className="bg-white/70 p-4 rounded-2xl shadow-sm border border-white flex gap-4 items-center">
-                                    <div className="bg-brand-orange text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-xl shrink-0">4</div>
-                                    <span className="text-slate-800 text-[20px] font-medium leading-relaxed">
-                                        <strong>Thuyết phục khách&nbsp;hàng tái&nbsp;ký nhanh</strong> bằng chứng minh giá&nbsp;trị phù&nbsp;hợp.
-                                    </span>
+                                <li className="bg-white/80 p-5 rounded-2xl shadow-sm border border-slate-100 flex gap-4 items-center">
+                                    <div className="bg-brand-orange text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg shrink-0">4</div>
+                                    <span className="leading-snug font-bold">Thuyết phục khách hàng tái ký nhanh bằng chứng minh giá trị phù hợp</span>
                                 </li>
                             </ul>
                         </div>
-                        <div className="col-span-4 rounded-2xl overflow-hidden shadow-2xl h-[420px] border-4 border-white bg-slate-100 flex items-center justify-center">
+                        <div className="col-span-5 rounded-3xl overflow-hidden shadow-2xl h-[400px] border-4 border-white flex justify-center items-center bg-white">
                             <img 
                                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSeoDUPGZf1yzmC0fvhki8bYJ1NzbnnGWmfORvOS_jfDQ&s=10" 
-                                alt="Target and Success" 
+                                alt="Target and Value" 
                                 className="w-full h-full object-cover"
                             />
                         </div>
                     </div>
                 </Slide>,
 
-                // Slide 2 
+                // Slide 2
                 <Slide key="2">
                     <SlideTitle>Agenda</SlideTitle>
-                    <div className="flex flex-col flex-grow justify-center w-full max-w-5xl mx-auto h-full">
-                        <div className="grid grid-cols-1 gap-6 w-full">
-                            {[
-                                { 
-                                    icon: "headphones", color: "text-brand-blue", bg: "bg-blue-100", border: "border-l-brand-blue", 
-                                    title: "Phần 1: Kinh nghiệm thực chiến", 
-                                    desc: <>Lắng nghe chia sẻ kinh nghiệm <strong className="text-brand-blue">Xác định mức độ sẵn sàng chi&nbsp;trả và Chốt sale bằng giá&nbsp;trị</strong> qua câu chuyện khách&nbsp;hàng thực&nbsp;tế.</> 
-                                },
-                                { 
-                                    icon: "microscope", color: "text-brand-orange", bg: "bg-orange-100", border: "border-l-brand-orange", 
-                                    title: "Phần 2: Đúc kết cá nhân", 
-                                    desc: "Chiêm nghiệm tình huống khách hàng chưa thành công, chỉ ra nguyên nhân và trình bày phương án xử lý." 
-                                },
-                                { 
-                                    icon: "flame", color: "text-green-600", bg: "bg-green-100", border: "border-l-green-500", 
-                                    title: "Phần 3: Cam kết hành động", 
-                                    desc: "Thiết lập mục tiêu & cam kết thực hiện sau chương trình." 
-                                }
-                            ].map((item, i) => (
-                                <div key={i} className={`bg-white/80 backdrop-blur-md border border-white rounded-2xl p-6 flex items-center gap-6 shadow-lg hover:-translate-y-1 transition-transform duration-300 border-l-8 ${item.border}`}>
-                                    <div className={`w-20 h-20 rounded-full flex items-center justify-center shadow-inner shrink-0 ${item.bg} ${item.color}`}>
-                                        <Icon name={item.icon} size={40} />
-                                    </div>
-                                    <div>
-                                        <h3 className={`text-2xl font-bold mb-2 ${item.color}`}>{item.title}</h3>
-                                        <p className="text-[19px] text-slate-700 leading-relaxed">{item.desc}</p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </Slide>,
-
-                // Slide 3 - CÂU HỎI TẠI SAO 
-                <Slide key="question-1">
-                    <div className="flex flex-col justify-center items-center h-full relative z-10 w-full text-center">
-                        <div className="bg-white/60 p-8 rounded-full shadow-2xl mb-8 transform transition hover:scale-105">
-                            <Icon name="target" className="text-brand-blue" size={100} />
-                        </div>
-                        <h2 className="text-[54px] font-black text-brand-blue drop-shadow-md leading-tight max-w-5xl">
-                            Tại sao phải nhận định<br/>
-                            tình trạng của khách&nbsp;hàng?
-                        </h2>
-                    </div>
-                </Slide>,
-
-                // Slide 4 - GỘP 
-                <Slide key="3-4-merged">
-                    <SlideTitle>Mục đích nhận định tình trạng khách hàng</SlideTitle>
-                    <div className="grid grid-cols-2 gap-8 flex-grow h-full pt-2 pb-6">
-                        
-                        {/* Cột 1: Câu hỏi trọng tâm & Needs */}
-                        <div className="bg-white/95 p-6 rounded-3xl border border-white shadow-xl flex flex-col h-full relative overflow-hidden border-t-8 border-t-brand-blue">
-                            <p className="text-[18px] font-bold text-slate-600 mb-2 flex items-center gap-2">
-                                <Icon name="help-circle" className="text-brand-orange" size={24}/>
-                                Để trả lời câu hỏi trọng&nbsp;tâm:
-                            </p>
-                            <h3 className="text-[26px] font-black text-brand-blue leading-tight mb-4">
-                                “Khách hàng cần gì để quyết&nbsp;định <br/>xuống tiền tái&nbsp;ký?”
-                            </h3>
-                            
-                            {/* Danh sách 3 ý dùng dấu check (Cân đối) */}
-                            <div className="space-y-3 flex-grow mt-2">
-                                <div className="flex gap-3 items-center bg-blue-50/60 p-3 rounded-xl border border-blue-100">
-                                    <Icon name="check" className="text-brand-blue shrink-0" size={20}/>
-                                    <p className="text-[16px] text-slate-800 leading-snug">Cần <strong>tính năng phù&nbsp;hợp</strong> giúp kinh doanh tốt&nbsp;hơn.</p>
-                                </div>
-                                <div className="flex gap-3 items-center bg-blue-50/60 p-3 rounded-xl border border-blue-100">
-                                    <Icon name="check" className="text-brand-blue shrink-0" size={20}/>
-                                    <p className="text-[16px] text-slate-800 leading-snug">Cần <strong>duy trì phần mềm ổn&nbsp;định</strong> để an tâm sử&nbsp;dụng.</p>
-                                </div>
-                                <div className="flex gap-3 items-center bg-blue-50/60 p-3 rounded-xl border border-blue-100">
-                                    <Icon name="check" className="text-brand-blue shrink-0" size={20}/>
-                                    <p className="text-[16px] text-slate-800 leading-snug">Cần tận dụng được <strong>nhiều giá trị của phần&nbsp;mềm</strong> so với chi phí bỏ&nbsp;ra.</p>
-                                </div>
-                            </div>
-
-                            <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 mt-4 shadow-sm flex-shrink-0">
-                                <p className="text-[15px] text-slate-700 font-medium leading-relaxed">
-                                    Xác định được yếu tố khiến khách xuống&nbsp;tiền, tác động tới quyết định của khách thì có thể <strong>giải quyết đúng trọng&nbsp;tâm</strong>, không mất nhiều thời gian chăm&nbsp;sóc.
-                                </p>
-                                <span className="text-brand-blue font-bold uppercase mt-3 px-3 py-1 bg-white rounded-lg flex items-center justify-center gap-2 shadow-sm border border-slate-200 w-full text-[16px]"><Icon name="zap" size={18}/> Chốt deal nhanh</span>
-                            </div>
-                        </div>
-
-                        {/* Cột 2: Xác định chi trả */}
-                        <div className="bg-white/95 p-6 rounded-3xl border border-white shadow-xl flex flex-col h-full relative overflow-hidden border-t-8 border-t-brand-orange">
-                            <h3 className="text-[20px] font-bold text-brand-orange flex items-center gap-2 mb-4 leading-snug">
-                                <Icon name="bar-chart-2" size={28}/>
-                                Xác định mức độ sẵn sàng chi&nbsp;trả & đưa hướng tác động phù&nbsp;hợp
-                            </h3>
-                            <p className="text-[16px] text-slate-700 font-medium mb-4 leading-relaxed px-3 border-l-4 border-brand-orange">
-                                Khách&nbsp;hàng nào cũng có khả năng chi&nbsp;trả, vấn đề là <strong>mức độ sẵn&nbsp;sàng</strong> tới đâu và họ có thấy giá trị để xuống&nbsp;tiền không.
-                            </p>
-                            
-                            {/* Boxes ngang cân đối */}
-                            <div className="grid grid-cols-1 gap-3 mb-4 flex-grow">
-                                <div className="bg-green-50 p-4 rounded-xl border border-green-200 flex items-center gap-3 shadow-sm h-full">
-                                    <Icon name="trending-up" className="text-green-600 shrink-0" size={28}/>
-                                    <div>
-                                        <p className="text-[16px] text-green-800 font-bold">Sẵn sàng chi&nbsp;trả</p>
-                                        <p className="text-[15px] text-slate-700">➔ Chốt sale nhanh&nbsp;chóng.</p>
-                                    </div>
-                                </div>
-                                <div className="bg-orange-50 p-4 rounded-xl border border-orange-200 flex items-start gap-3 shadow-sm h-full">
-                                    <Icon name="trending-down" className="text-brand-orange shrink-0 mt-0.5" size={28}/>
-                                    <div>
-                                        <p className="text-[16px] text-brand-orange font-bold">Không sẵn sàng chi&nbsp;trả</p>
-                                        <p className="text-[15px] text-slate-700 leading-snug mt-1">➔ Khai thác nguyên nhân (kinh doanh kém, tự quản lý được, phần&nbsp;mềm lỗi...) để xử&nbsp;lý.</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 italic shadow-sm flex-shrink-0">
-                                <p className="text-[15px] text-slate-700 leading-relaxed">
-                                    <strong>Ví dụ:</strong> FNB đơn giá thấp, tổng doanh thu 16 triệu/tháng ➔ Không đủ chi phí (Kinh doanh rất&nbsp;kém).<br/>
-                                    <strong className="text-brand-blue not-italic mt-2 block">➔ Mức độ sẵn sàng thấp. Cần tác động nhiều hơn vào giá trị phần&nbsp;mềm giúp kinh doanh tốt hơn để thuyết&nbsp;phục.</strong>
+                    <div className="flex flex-col flex-grow justify-center w-full gap-6">
+                        <div className="bg-white/90 border border-white rounded-2xl p-8 shadow-lg flex items-center gap-8 transform transition hover:-translate-y-1">
+                            <div>
+                                <h3 className="text-[26px] font-bold text-brand-blue mb-2">Phần 1: Chia sẻ kinh nghiệm</h3>
+                                <p className="text-[20px] text-slate-700 leading-relaxed">
+                                    Lắng nghe chia sẻ kinh nghiệm Xác định khả năng chi trả và Chốt deal bằng giá trị qua câu chuyện thực tế.
                                 </p>
                             </div>
                         </div>
 
-                    </div>
-                </Slide>,
-
-                // Slide 5 - CÂU HỎI DỮ LIỆU GÌ 
-                <Slide key="question-2">
-                    <div className="flex flex-col justify-center items-center h-full relative z-10 w-full text-center">
-                        <div className="bg-white/60 p-8 rounded-full shadow-2xl mb-8 transform transition hover:scale-105">
-                            <Icon name="database" className="text-brand-blue" size={100} />
+                        <div className="bg-white/90 border border-white rounded-2xl p-8 shadow-lg flex items-center gap-8 transform transition hover:-translate-y-1">
+                            <div>
+                                <h3 className="text-[26px] font-bold text-brand-orange mb-2">Phần 2: Đúc kết cá nhân</h3>
+                                <p className="text-[20px] text-slate-700 leading-relaxed">
+                                    Chiêm nghiệm tình huống khách hàng chưa thành công trong quá khứ, chỉ ra nguyên nhân và trình bày phương án xử lý.
+                                </p>
+                            </div>
                         </div>
-                        <h2 className="text-[50px] font-black text-brand-blue drop-shadow-md leading-tight max-w-4xl">
-                            Cần nắm bắt những dữ liệu gì<br/>
-                            để nhận định được tình trạng khách&nbsp;hàng?
-                        </h2>
-                    </div>
-                </Slide>,
 
-                // Slide Dữ liệu (1/2) 
-                <Slide key="data-1">
-                    <SlideTitle>Dữ liệu cần phân tích (1/2)</SlideTitle>
-                    <div className="flex-grow flex flex-col h-full overflow-hidden pb-4 pt-2">
-                        <div className="rounded-2xl shadow-xl border border-slate-200 bg-white overflow-hidden flex-grow flex flex-col">
-                            <table className="w-full text-left bg-white border-collapse h-full">
-                                <thead>
-                                    <tr>
-                                        <th className="bg-brand-blue text-white p-4 w-[20%] text-[20px] font-bold border-r border-blue-600">Loại dữ liệu</th>
-                                        <th className="bg-brand-blue text-white p-4 w-[40%] text-[20px] font-bold border-r border-blue-600">Cách đọc dữ liệu gợi ý</th>
-                                        <th className="bg-brand-blue text-white p-4 w-[40%] text-[20px] font-bold">Ý nghĩa</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="text-[16px] text-slate-800">
-                                    <tr className="border-b border-slate-200 hover:bg-slate-50 transition-colors">
-                                        <td className="p-5 font-bold text-brand-orange border-r border-slate-200 align-top bg-orange-50/30 text-[18px]">Các chỉ số tổng&nbsp;quan</td>
-                                        <td className="p-5 border-r border-slate-200 align-top leading-relaxed">
-                                            Nhìn vào xếp hạng khách hàng theo ABCD, điểm từ 0-100 trên CRM.
-                                        </td>
-                                        <td className="p-5 align-top leading-relaxed">
-                                            <strong>Điểm A:</strong> Tần suất sử dụng phần&nbsp;mềm thường xuyên, đã sử dụng nhiều tính năng và dịch vụ gia tăng (Kship, K-Finance - khách dùng nhiều tính năng mở rộng phụ thuộc nhiều thì rời bỏ thấp), khách sử dụng ổn định không complain gì, GMV có thể thấp nhưng đã tái ký nhiều&nbsp;lần.<br/>
-                                            <span className="text-brand-blue font-bold block mt-2">➔ Cơ hội tái ký nhiều.</span>
-                                        </td>
-                                    </tr>
-                                    <tr className="hover:bg-slate-50 transition-colors">
-                                        <td className="p-5 font-bold text-brand-orange border-r border-slate-200 align-top bg-orange-50/30 text-[18px]">Tình hình kinh doanh & khả năng phát&nbsp;triển</td>
-                                        <td className="p-5 border-r border-slate-200 align-top leading-relaxed">
-                                            <ul className="list-disc pl-5 space-y-3">
-                                                <li>Nhìn vào GMV, nếu đi lên/đi ngang thì ổn&nbsp;định. Nếu đi xuống thì chưa chắc đã kém, cần xem thêm (có thể ngại dùng, tránh thuế...).</li>
-                                                <li>Nhìn BI xem kênh bán đang dùng, đã tạo thêm kênh chưa.</li>
-                                                <li>Xem Shopee/Fanpage của KH xem buôn bán ổn định không (đăng bài, comment, số đơn...).</li>
-                                            </ul>
-                                        </td>
-                                        <td className="p-5 align-top leading-relaxed">
-                                            Nếu các chỉ số, tín hiệu phản ánh tình hình kinh doanh đều tích cực thì có thể nhận định được tình trạng khách hàng kinh doanh&nbsp;tốt.<br/>
-                                            <span className="text-brand-blue font-bold block mt-2">➔ Mức độ sẵn sàng chi&nbsp;trả cao.</span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <div className="bg-white/90 border border-white rounded-2xl p-8 shadow-lg flex items-center gap-8 transform transition hover:-translate-y-1">
+                            <div>
+                                <h3 className="text-[26px] font-bold text-green-700 mb-2">Phần 3: Cam kết hành động</h3>
+                                <p className="text-[20px] text-slate-700 leading-relaxed">
+                                    Thiết lập mục tiêu cải thiện & cam kết hành động sau chương trình.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </Slide>,
 
-                // Slide Dữ liệu (2/2) 
-                <Slide key="data-2">
-                    <SlideTitle>Dữ liệu cần phân tích (2/2)</SlideTitle>
-                    <div className="flex-grow flex flex-col h-full overflow-hidden pb-4 pt-2">
-                        <div className="rounded-2xl shadow-xl border border-slate-200 bg-white overflow-hidden flex-grow flex flex-col">
-                            <table className="w-full text-left bg-white border-collapse h-full">
-                                <thead>
-                                    <tr>
-                                        <th className="bg-brand-blue text-white p-3 w-[20%] text-[20px] font-bold border-r border-blue-600">Loại dữ liệu</th>
-                                        <th className="bg-brand-blue text-white p-3 w-[40%] text-[20px] font-bold border-r border-blue-600">Cách đọc dữ liệu gợi ý</th>
-                                        <th className="bg-brand-blue text-white p-3 w-[40%] text-[20px] font-bold">Ý nghĩa</th>
+                // Slide 3
+                <Slide key="3">
+                    <div className="flex-grow flex flex-col justify-center items-center h-full w-full">
+                        <div className="bg-gradient-to-br from-brand-blue to-blue-900 p-12 rounded-[2.5rem] shadow-2xl text-center w-full max-w-5xl border border-blue-400/20 transform transition hover:scale-105">
+                            <h2 className="text-[52px] font-black text-white leading-tight uppercase drop-shadow-lg">
+                                TẠI SAO PHẢI NHẬN ĐỊNH<br/>
+                                <span className="text-brand-orange">TÌNH TRẠNG CỦA KHÁCH HÀNG?</span>
+                            </h2>
+                        </div>
+                    </div>
+                </Slide>,
+
+                // Slide 4
+                <Slide key="4">
+                    <SlideTitle>Mục đích nhận định tình trạng của khách hàng</SlideTitle>
+                    <div className="flex flex-col flex-grow h-full justify-between pb-2">
+                        <div className="grid grid-cols-2 gap-8 mb-6 h-full mt-4">
+                            <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-xl flex flex-col">
+                                <h3 className="text-[24px] font-bold text-brand-blue mb-4 pb-3 border-b-2 border-slate-100 flex items-center gap-3">
+                                    <Icon name="target" className="text-brand-orange shrink-0" size={28} />
+                                    Xác định “Khách hàng cần gì để quyết định xuống tiền tái ký?”
+                                </h3>
+                                <ul className="space-y-4 text-[20px] text-slate-700 flex-grow flex flex-col justify-center pl-2">
+                                    <li className="flex gap-3"><span className="text-brand-orange font-bold">•</span> Tính năng phù hợp giúp kinh doanh tốt hơn</li>
+                                    <li className="flex gap-3"><span className="text-brand-orange font-bold">•</span> Phần mềm ổn định để an tâm sử dụng</li>
+                                    <li className="flex gap-3"><span className="text-brand-orange font-bold">•</span> Giá trị của phần mềm lớn hơn chi phí bỏ ra</li>
+                                </ul>
+                            </div>
+                            
+                            <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-xl flex flex-col">
+                                <h3 className="text-[24px] font-bold text-brand-blue mb-4 pb-3 border-b-2 border-slate-100 flex items-center gap-3">
+                                    <Icon name="compass" className="text-brand-blue shrink-0" size={28} />
+                                    Xác định mức độ sẵn sàng chi trả & đưa hướng tác động
+                                </h3>
+                                <ul className="space-y-4 text-[20px] text-slate-700 flex-grow flex flex-col justify-center pl-2">
+                                    <li className="flex gap-3 items-start">
+                                        <span className="text-green-600 font-bold mt-1 shrink-0">→</span> 
+                                        <span>Trường hợp khách sẵn sàng chi trả cần <strong className="text-green-700">chốt deal nhanh</strong></span>
+                                    </li>
+                                    <li className="flex gap-3 items-start">
+                                        <span className="text-brand-orange font-bold mt-1 shrink-0">→</span> 
+                                        <span>Trường hợp khách không sẵn sàng chi trả cần <strong className="text-brand-orange">khai thác kĩ nguyên nhân</strong></span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div className="bg-gradient-to-r from-orange-100 to-orange-50 border-l-8 border-brand-orange p-6 rounded-2xl shadow-md shrink-0">
+                            <p className="text-[22px] font-bold text-slate-800 leading-relaxed text-justify italic">
+                                !!! Ngân sách không phải rào cản. Khách hàng luôn có khả năng chi&nbsp;trả, rào cản thực sự nằm ở mức độ sẵn&nbsp;sàng và niềm tin vào giá trị nhận lại có tương xứng với chi phí hay&nbsp;không.
+                            </p>
+                        </div>
+                    </div>
+                </Slide>,
+
+                // Slide 5
+                <Slide key="5">
+                    <div className="flex-grow flex flex-col justify-center items-center h-full w-full">
+                        <div className="bg-white/90 p-12 rounded-[2.5rem] shadow-2xl text-center w-full max-w-5xl border border-white transform transition hover:scale-105">
+                            <h2 className="text-[44px] font-black text-brand-blue leading-tight drop-shadow-sm">
+                                Cần nắm bắt những dữ liệu gì<br/>
+                                để nhận định được<br/>
+                                <span className="text-brand-orange text-[52px]">tình trạng khách hàng?</span>
+                            </h2>
+                        </div>
+                    </div>
+                </Slide>,
+
+                // Slide 6
+                <Slide key="6">
+                    <SlideTitle>Dữ liệu cần phân tích</SlideTitle>
+                    <div className="flex-grow flex flex-col h-full overflow-hidden pb-4">
+                        <div className="h-full rounded-xl shadow-xl border border-slate-200 bg-white overflow-hidden flex flex-col">
+                            <table className="w-full text-left border-collapse h-full table-fixed flex-grow flex flex-col">
+                                <thead className="block w-full">
+                                    <tr className="bg-brand-blue text-white flex w-full">
+                                        <th className="p-3 w-[22%] text-[16px] font-bold border-r border-blue-700">Nhóm dữ liệu</th>
+                                        <th className="p-3 w-[45%] text-[16px] font-bold border-r border-blue-700">Phương pháp phân tích & gợi ý tiếp cận</th>
+                                        <th className="p-3 w-[33%] text-[16px] font-bold">Ý nghĩa</th>
                                     </tr>
                                 </thead>
-                                <tbody className="text-[16px] text-slate-800">
-                                    <tr className="border-b border-slate-200 hover:bg-slate-50 transition-colors">
-                                        <td className="p-4 font-bold text-brand-orange border-r border-slate-200 align-top bg-orange-50/30 text-[18px]">Quá trình sử dụng phần&nbsp;mềm thực&nbsp;tế</td>
-                                        <td className="p-4 border-r border-slate-200 align-top leading-relaxed">
-                                            <ul className="list-disc pl-5 space-y-2">
-                                                <li>Lịch sử sử dụng: có lỗi/tạo ticket không, vấn đề là gì, tần suất ra sao, giải quyết thế&nbsp;nào.</li>
-                                                <li>Tính năng nào đã/chưa dùng? Tính năng nào dùng nhiều/ít? Tính năng nào quan trọng với mô hình mà khách chưa&nbsp;dùng?</li>
-                                                <li>Đánh giá mức độ hài lòng trong quá trình sử dụng để biết độ sẵn sàng chi&nbsp;trả.</li>
-                                            </ul>
+                                <tbody className="text-[14px] text-slate-800 flex flex-col flex-grow w-full">
+                                    <tr className="border-b border-slate-200 flex flex-grow w-full items-stretch">
+                                        <td className="p-3 font-bold text-brand-blue border-r border-slate-200 bg-slate-50 w-[22%]">1. CÁC CHỈ SỐ ĐÁNH GIÁ TỔNG QUAN</td>
+                                        <td className="p-3 border-r border-slate-200 w-[45%] leading-snug">
+                                            - Rà soát hệ thống xếp hạng khách hàng (phân loại A, B, C, D) và thang điểm chất lượng (0-100) trên CRM.<br/>
+                                            <span className="italic text-slate-600 block mt-1">VD: Nhận diện Khách hàng nhóm A: Tần suất sử dụng thường xuyên; Tích cực khai thác dịch vụ gia tăng (Kship, K-Finance); Quá trình vận hành ổn định, ít khiếu nại, phàn nàn. Tổng giá trị giao dịch (GMV) có thể thấp nhưng lịch sử tái ký đều đặn.</span>
                                         </td>
-                                        <td className="p-4 align-top leading-relaxed">
-                                            <ul className="list-disc pl-5 space-y-2">
-                                                <li>Nguy cơ rời bỏ cao hơn nếu gặp lỗi thường xuyên, ảnh hưởng nhiều nhưng chưa được giải quyết triệt&nbsp;để.</li>
-                                                <li>Nếu chỉ dùng thao tác bán hàng cơ bản ➔ chưa khai thác hết giá&nbsp;trị ➔ nguy cơ rời bỏ cao vì thấy chưa tương xứng chi&nbsp;phí.</li>
-                                                <li><strong className="text-slate-600 italic">VD: Bán Tạp hóa cần quản lý Lô/Date nhưng không dùng, chỉ in bill ➔ Nguy cơ rời bỏ&nbsp;cao.</strong></li>
-                                            </ul>
+                                        <td className="p-3 w-[33%] leading-snug">
+                                            - Phản ánh mức độ gắn kết của khách hàng.<br/>
+                                            - Các chỉ số tổng quan ở mức tích cực (như nhóm A) cho thấy cơ hội tái ký hợp đồng rất cao.
                                         </td>
                                     </tr>
-                                    <tr className="hover:bg-slate-50 transition-colors">
-                                        <td className="p-4 font-bold text-brand-orange border-r border-slate-200 align-top bg-orange-50/30 text-[18px]">Mức độ phụ thuộc PM</td>
-                                        <td className="p-4 border-r border-slate-200 align-top leading-relaxed">
-                                            <ul className="list-disc pl-5 space-y-2">
-                                                <li>Khách có sử dụng nhiều tính năng mở rộng DVGT không (Kship, K-Finance)?</li>
-                                                <li>Khách có dùng Hóa Đơn Điện Tử (HĐĐT) không?</li>
-                                            </ul>
+                                    <tr className="border-b border-slate-200 flex flex-grow w-full items-stretch">
+                                        <td className="p-3 font-bold text-brand-blue border-r border-slate-200 bg-slate-50 w-[22%]">2. TÌNH HÌNH KINH DOANH VÀ TIỀM NĂNG MỞ RỘNG</td>
+                                        <td className="p-3 border-r border-slate-200 w-[45%] leading-snug">
+                                            <strong className="text-slate-900">- Chỉ số GMV:</strong> Xu hướng tăng hoặc đi ngang thể hiện sự ổn định. Nếu giảm, cần đối chiếu thêm vì có thể do khách không nhập liệu.<br/>
+                                            <strong className="text-slate-900">- Dữ liệu BI:</strong> Phân tích các kênh bán hiện tại. Có thể sở hữu nguồn doanh thu chưa ghi nhận trên hệ thống.<br/>
+                                            <strong className="text-slate-900">- Khảo sát thực tế:</strong> Kiểm tra độ sôi động trên Shopee, Fanpage để xác thực tình hình kinh doanh.
                                         </td>
-                                        <td className="p-4 align-top leading-relaxed">
-                                            <ul className="list-disc pl-5 space-y-2">
-                                                <li>Khách dùng nhiều tính năng mở rộng thể hiện tình trạng phụ thuộc hệ sinh thái nhiều ➔ tỉ lệ rời bỏ thấp&nbsp;hơn.</li>
-                                                <li>Khách đã dùng HĐĐT thì thường phải lưu trữ lâu&nbsp;dài ➔ Khả năng tái ký sẽ cao&nbsp;hơn.</li>
-                                            </ul>
+                                        <td className="p-3 w-[33%] leading-snug">
+                                            - Khi các tín hiệu phản ánh tình hình kinh doanh tích cực và ổn định, có thể khẳng định khách hàng đang làm ăn có lãi. Mức độ sẵn sàng chi trả cho phần mềm của họ sẽ rất cao.
+                                        </td>
+                                    </tr>
+                                    <tr className="border-b border-slate-200 flex flex-grow w-full items-stretch">
+                                        <td className="p-3 font-bold text-brand-blue border-r border-slate-200 bg-slate-50 w-[22%]">3. TRẢI NGHIỆM VÀ THỰC TRẠNG SỬ DỤNG PHẦN MỀM</td>
+                                        <td className="p-3 border-r border-slate-200 w-[45%] leading-snug">
+                                            <strong className="text-slate-900">- Lịch sử hỗ trợ:</strong> Rà soát tần suất gặp lỗi, số lượng ticket, mức độ nghiêm trọng và tiến độ xử lý triệt để.<br/>
+                                            <strong className="text-slate-900">- Mức độ sử dụng tính năng:</strong> Đánh giá các tính năng được dùng nhiều nhất/ít nhất. Xác định tính năng cốt lõi khách chưa tận dụng.
+                                        </td>
+                                        <td className="p-3 w-[33%] leading-snug">
+                                            - Rủi ro rời bỏ cao nếu: Khách gặp lỗi thường xuyên chưa được xử lý dứt điểm. Hoặc khách chỉ dùng các tính năng cơ bản, không thấy giá trị tương xứng.<br/>
+                                            <span className="italic text-slate-600 block mt-1">VD: Bán tạp hóa nhưng không dùng quản lý Lô/Date, chỉ in bill => Nguy cơ không tái ký cao.</span>
+                                        </td>
+                                    </tr>
+                                    <tr className="flex flex-grow w-full items-stretch">
+                                        <td className="p-3 font-bold text-brand-blue border-r border-slate-200 bg-slate-50 w-[22%]">4. MỨC ĐỘ PHỤ THUỘC VÀO HỆ SINH THÁI KIOTVIET</td>
+                                        <td className="p-3 border-r border-slate-200 w-[45%] leading-snug">
+                                            - Đo lường mức độ sử dụng các dịch vụ gia tăng và tính năng mở rộng (Kship, K-Finance).<br/>
+                                            - Kiểm tra trạng thái kích hoạt và sử dụng tính năng Hóa đơn điện tử (HĐĐT).
+                                        </td>
+                                        <td className="p-3 w-[33%] leading-snug">
+                                            - Sử dụng nhiều dịch vụ gia tăng đồng nghĩa với mức độ phụ thuộc lớn, giúp giảm thiểu tối đa tỷ lệ rời bỏ.<br/>
+                                            - Khách hàng sử dụng HĐĐT có nhu cầu lưu trữ dữ liệu lâu dài và bắt buộc, do đó tỷ lệ tái ký sẽ cao hơn.
                                         </td>
                                     </tr>
                                 </tbody>
@@ -467,287 +392,304 @@
 
                 // Slide 7
                 <Slide key="7">
-                    <SlideTitle>Nguyên tắc cốt lõi khi xác thực</SlideTitle>
-                    <div className="flex flex-col flex-grow items-center justify-center h-full max-w-5xl mx-auto w-full pb-8">
-                        <div className="space-y-6 w-full">
-                            <div className="bg-white/90 p-6 rounded-2xl shadow-lg border-l-8 border-brand-blue flex items-center gap-6 transform transition hover:translate-x-2">
-                                <div className="bg-blue-100 text-brand-blue p-4 rounded-full shrink-0">
-                                    <Icon name="search" size={32}/>
-                                </div>
-                                <p className="text-[20px] text-slate-700 font-medium leading-relaxed">
-                                    Không tin ngay bề mặt thông tin khách hàng chia sẻ hay dữ liệu BI mà luôn <strong className="text-brand-blue">tìm ra cách xác&nbsp;thực</strong> để khách chia sẻ rõ vấn&nbsp;đề.
-                                </p>
-                            </div>
+                    <SlideTitle>3 Nguyên tắc cốt lõi khi xác thực</SlideTitle>
+                    <div className="grid grid-cols-3 gap-6 flex-grow h-[420px] mt-4">
+                        <div className="bg-white border border-slate-100 rounded-3xl p-8 flex flex-col shadow-xl h-full transform transition hover:-translate-y-2">
+                            <div className="text-[60px] font-black text-brand-blue/20 leading-none mb-3">1</div>
+                            <h3 className="text-[22px] font-bold text-brand-blue mb-4 leading-tight flex items-center gap-2">
+                                <Icon name="check-circle-2" size={24} className="shrink-0" /> Xác thực thông tin đa chiều
+                            </h3>
+                            <ul className="space-y-3 text-[18px] text-slate-700 leading-relaxed mt-2">
+                                <li>- Không phụ thuộc hoàn toàn vào lời khách nói ra hay dữ liệu BI</li>
+                                <li>- Chủ động kiểm chứng để khai thác đúng vấn đề thực tế của khách hàng</li>
+                            </ul>
+                        </div>
 
-                            <div className="bg-white/90 p-6 rounded-2xl shadow-lg border-l-8 border-brand-orange flex items-center gap-6 transform transition hover:translate-x-2">
-                                <div className="bg-orange-100 text-brand-orange p-4 rounded-full shrink-0">
-                                    <Icon name="git-branch" size={32}/>
-                                </div>
-                                <p className="text-[20px] text-slate-700 font-medium leading-relaxed">
-                                    <strong className="text-brand-orange">Đào sâu xác định vấn đề và nguyên nhân cốt&nbsp;lõi</strong> tác động đến khả năng chi&nbsp;trả của khách&nbsp;hàng để có hướng giải quyết phù hợp cho từng nguyên&nbsp;nhân.
-                                </p>
-                            </div>
+                        <div className="bg-white border border-slate-100 rounded-3xl p-8 flex flex-col shadow-xl h-full transform transition hover:-translate-y-2">
+                            <div className="text-[60px] font-black text-brand-orange/20 leading-none mb-3">2</div>
+                            <h3 className="text-[22px] font-bold text-brand-orange mb-4 leading-tight flex items-center gap-2">
+                                <Icon name="check-circle-2" size={24} className="shrink-0" /> Đào sâu nguyên nhân cốt lõi
+                            </h3>
+                            <p className="text-[18px] text-slate-700 leading-relaxed mt-2">
+                                - Xác định chính xác lý do ẩn sâu tác động đến khả năng chi trả để có kịch bản xử lý triệt để.
+                            </p>
+                        </div>
 
-                            <div className="bg-white/90 p-6 rounded-2xl shadow-lg border-l-8 border-green-500 flex items-center gap-6 transform transition hover:translate-x-2">
-                                <div className="bg-green-100 text-green-600 p-4 rounded-full shrink-0">
-                                    <Icon name="scale" size={32}/>
-                                </div>
-                                <p className="text-[20px] text-slate-700 font-medium leading-relaxed">
-                                    Kết hợp <strong className="text-green-600">đánh giá phản&nbsp;ứng</strong> của khách&nbsp;hàng với mức chi phí tái ký phải bỏ&nbsp;ra. Khách kêu ca về giá cả nhưng có thể lý do không phải chỉ là vì giá mà có thể còn do nhiều nguyên nhân&nbsp;khác.
-                                </p>
-                            </div>
+                        <div className="bg-white border border-slate-100 rounded-3xl p-8 flex flex-col shadow-xl h-full transform transition hover:-translate-y-2">
+                            <div className="text-[60px] font-black text-green-600/20 leading-none mb-3">3</div>
+                            <h3 className="text-[22px] font-bold text-green-700 mb-4 leading-tight flex items-center gap-2">
+                                <Icon name="check-circle-2" size={24} className="shrink-0" /> Bóc tách phản ứng chi phí
+                            </h3>
+                            <ul className="space-y-3 text-[18px] text-slate-700 leading-relaxed mt-2">
+                                <li>- Đánh giá kỹ phản ứng của khách hàng với chi phí tái ký.</li>
+                                <li>- Hiểu rằng phàn nàn về chi phí tái ký chưa chắc do ngân&nbsp;sách, mà có thể xuất phát từ những vướng mắc khác chưa được giải&nbsp;quyết.</li>
+                            </ul>
                         </div>
                     </div>
                 </Slide>,
 
-                // Slide 8 
+                // Slide 8
                 <Slide key="8">
-                    <SlideTitle>Tâm thế khi giải quyết vấn đề & Chốt deal</SlideTitle>
-                    <div className="grid grid-cols-2 grid-rows-2 gap-6 flex-grow h-full pt-2 pb-4">
+                    <SlideTitle>4 nguyên tắc giải quyết vấn đề và chốt deal</SlideTitle>
+                    <div className="grid grid-cols-2 gap-8 flex-grow h-full pt-4 pb-4">
+                        <div className="bg-blue-50/80 p-8 rounded-3xl border border-blue-100 shadow-sm flex flex-col justify-center">
+                            <h3 className="text-[24px] font-bold text-brand-blue mb-3 flex items-center gap-3">
+                                <Icon name="check-circle-2" size={26} className="shrink-0" /> 1. Chốt deal linh hoạt
+                            </h3>
+                            <p className="text-[20px] text-slate-700 leading-relaxed pl-10">
+                                Không chờ xử lý xong 100% vấn đề. Báo giá và chốt tái ký ngay khi nhận thấy khách hàng có tín hiệu tiếp nhận tích cực.
+                            </p>
+                        </div>
+                        
+                        <div className="bg-orange-50/80 p-8 rounded-3xl border border-orange-100 shadow-sm flex flex-col justify-center">
+                            <h3 className="text-[24px] font-bold text-brand-orange mb-3 flex items-center gap-3">
+                                <Icon name="check-circle-2" size={26} className="shrink-0" /> 2. Kiên định tìm giải pháp
+                            </h3>
+                            <p className="text-[20px] text-slate-700 leading-relaxed pl-10">
+                                Khách còn kinh doanh là còn cơ hội. Ngân sách không phải rào cản nếu chứng minh được giá trị phần mềm là thiết yếu và xứng đáng.
+                            </p>
+                        </div>
+
+                        <div className="bg-green-50/80 p-8 rounded-3xl border border-green-100 shadow-sm flex flex-col justify-center">
+                            <h3 className="text-[24px] font-bold text-green-700 mb-3 flex items-center gap-3">
+                                <Icon name="check-circle-2" size={26} className="shrink-0" /> 3. Lắng nghe thấu cảm
+                            </h3>
+                            <p className="text-[20px] text-slate-700 leading-relaxed pl-10">
+                                Tuyệt đối giữ thái độ chuyên nghiệp, đặt mình vào vị trí của khách hàng để thấu hiểu trải nghiệm, kể cả trong tình huống gay gắt nhất.
+                            </p>
+                        </div>
+
+                        <div className="bg-purple-50/80 p-8 rounded-3xl border border-purple-100 shadow-sm flex flex-col justify-center">
+                            <h3 className="text-[24px] font-bold text-purple-700 mb-3 flex items-center gap-3">
+                                <Icon name="check-circle-2" size={26} className="shrink-0" /> 4. Tái thiết lập niềm tin
+                            </h3>
+                            <p className="text-[20px] text-slate-700 leading-relaxed pl-10">
+                                Cam kết mạnh mẽ về trách nhiệm đồng hành và chất lượng dịch vụ của KiotViet, giúp khách hàng an tâm cho kỳ sử dụng tiếp theo.
+                            </p>
+                        </div>
+                    </div>
+                </Slide>,
+
+                // Slide 9
+                <Slide key="9">
+                    <SlideTitle>Định hướng khi giải quyết vấn đề (1/2)</SlideTitle>
+                    <div className="flex flex-col flex-grow justify-center w-full gap-6 pb-4">
+                        
+                        <div className="bg-white p-6 rounded-2xl border-l-8 border-brand-blue shadow-md w-full flex items-start gap-4">
+                            <Icon name="check-circle-2" className="text-brand-blue shrink-0 mt-0.5" size={28} />
+                            <div>
+                                <h3 className="text-[22px] font-bold text-brand-blue mb-2">1. Tập trung vào giá trị thực tế</h3>
+                                <p className="text-[20px] text-slate-700">Liên kết lợi ích của phần mềm vào bài toán vận hành và mô hình kinh doanh hiện tại của khách hàng.</p>
+                            </div>
+                        </div>
+
+                        <div className="bg-white p-6 rounded-2xl border-l-8 border-brand-orange shadow-md w-full flex items-start gap-4">
+                            <Icon name="check-circle-2" className="text-brand-orange shrink-0 mt-0.5" size={28} />
+                            <div>
+                                <h3 className="text-[22px] font-bold text-brand-orange mb-3">2. Tư duy cốt lõi: Không vội vã giảm giá</h3>
+                                <ul className="space-y-3 text-[19px] text-slate-700">
+                                    <li><strong className="text-slate-900">- Sàng lọc rào cản:</strong> Khi khách hàng phàn nàn về chi phí, cần đào sâu để tìm ra nguyên nhân từ chối thực sự.</li>
+                                    <li><strong className="text-slate-900">- Bảo toàn giá trị sản phẩm:</strong> Vội vàng giảm giá khi khách đang chê sản phẩm sẽ làm hạ thấp giá trị cốt lõi và phá bỏ nỗ lực xây dựng lại niềm tin.</li>
+                                    <li><strong className="text-slate-900">- Chiến thuật báo giá:</strong> Đưa ra mức giá tái ký → Đánh giá phản ứng → Tiếp tục "đắp" thêm giá trị (thay vì hạ giá) cho đến khi thuyết phục thành công.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div className="bg-white p-6 rounded-2xl border-l-8 border-green-600 shadow-md w-full flex items-start gap-4">
+                            <Icon name="check-circle-2" className="text-green-700 shrink-0 mt-0.5" size={28} />
+                            <div>
+                                <h3 className="text-[22px] font-bold text-green-700 mb-2">3. Thêm giá trị vượt kỳ vọng</h3>
+                                <p className="text-[19px] text-slate-700">
+                                    <strong className="text-slate-900">Chủ động đồng hành như một cố vấn kinh doanh:</strong> Đưa ra giải pháp cải thiện thực tế (VD: Tư vấn tối ưu menu, chiến lược quảng bá, mở rộng kênh bán...) để khách hàng nhận thấy giá trị cộng thêm.
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </Slide>,
+
+                // Slide 10
+                <Slide key="10">
+                    <SlideTitle>Định hướng khi giải quyết vấn đề (2/2)</SlideTitle>
+                    <div className="grid grid-cols-2 gap-10 flex-grow h-full pt-4 pb-8">
+                        <div className="bg-white border border-slate-200 rounded-3xl p-8 shadow-xl flex flex-col">
+                            <h3 className="text-[26px] font-bold text-brand-blue mb-6 pb-4 border-b-2 border-slate-100 flex items-center gap-3">
+                                <Icon name="shield-check" className="text-brand-blue shrink-0" size={32} />
+                                <div>
+                                    Tái thiết lập niềm tin<br/>
+                                    <span className="text-[18px] text-slate-500 font-normal">(Với khách hàng đã thất vọng)</span>
+                                </div>
+                            </h3>
+                            <ul className="space-y-6 text-[20px] text-slate-700 flex-grow pl-2">
+                                <li>
+                                    <strong className="text-brand-blue block mb-1">Khẳng định trách nhiệm & Thiện chí:</strong> 
+                                    Thể hiện rõ sự tận tâm thông qua hành động thực tế.
+                                </li>
+                                <li>
+                                    <strong className="text-brand-blue block mb-1">Phát huy sức mạnh tập thể:</strong> 
+                                    Phối hợp liên phòng ban để hỗ trợ và phải cho khách hàng biết về sự nỗ lực chung này.<br/>
+                                    <span className="italic text-slate-500 text-[18px] block mt-2 leading-snug">
+                                        (VD: Liên hệ nhân viên sale thị trường (DS) qua tận nơi thăm hỏi hoặc thông báo cho khách về việc cả ê-kíp đang cùng trực tiếp xử lý vấn đề).
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div className="bg-white border border-slate-200 rounded-3xl p-8 shadow-xl flex flex-col">
+                            <h3 className="text-[26px] font-bold text-brand-orange mb-6 pb-4 border-b-2 border-slate-100 flex items-center gap-3 whitespace-nowrap">
+                                <Icon name="zap" className="text-brand-orange shrink-0" size={32} />
+                                Ưu tiên giải quyết nút thắt trọng tâm
+                            </h3>
+                            <ul className="space-y-6 text-[20px] text-slate-700 flex-grow pl-2">
+                                <li>
+                                    <strong className="text-brand-orange block mb-1">Giải quyết triệt để:</strong> 
+                                    Nếu khách đang gặp lỗi phần mềm, tập trung xử lý dứt điểm, tạm thời chưa nhắc đến chi phí tái ký.
+                                </li>
+                                <li>
+                                    <strong className="text-brand-orange block mb-1">Cam kết đồng hành:</strong> 
+                                    Nhấn mạnh trách nhiệm hỗ trợ xuyên suốt, đảm bảo hệ thống vận hành trơn tru trong tương lai.
+                                </li>
+                                <li>
+                                    <strong className="text-brand-orange block mb-1">Mở rộng cơ hội:</strong> 
+                                    Khi nút thắt tâm lý được gỡ bỏ → Khách hàng cởi mở tiếp nhận → Sale tiếp tục tạo thêm giá trị (tư vấn vận hành, chia sẻ kinh nghiệm) để chốt deal thành công.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </Slide>,
+
+                // Slide 11 (Cập nhật chiều cao h-[260px] cho 2 box cân xứng, hiển thị toàn bộ text)
+                <Slide key="11">
+                    <SlideTitle>Tư duy quan trọng khi chốt deal</SlideTitle>
+                    <div className="grid grid-cols-2 gap-8 flex-grow h-full pt-2 pb-6 items-stretch">
                         
                         {/* Box 1 */}
-                        <div className="bg-white/95 p-6 rounded-3xl border-t-8 border-t-brand-blue shadow-xl flex flex-col justify-center transform transition hover:-translate-y-1">
-                            <h4 className="text-[21px] font-bold text-brand-blue mb-3 flex items-center gap-2">
-                                <Icon name="zap" className="text-blue-500"/> Chốt deal nhanh chóng
-                            </h4>
-                            <p className="text-[17px] text-slate-700 font-medium leading-relaxed">
-                                Giải quyết được vấn đề của khách là <strong>chốt deal luôn</strong>, không đợi xử lý hết tất cả rồi mới báo giá. Nếu khách thoải mái tiếp nhận là báo giá chốt&nbsp;ngay. Ứng biến linh hoạt, mục tiêu chốt tái ký càng sớm càng&nbsp;tốt.
-                            </p>
+                        <div className="bg-blue-50/50 border border-blue-100 rounded-3xl p-8 shadow-md flex flex-col h-full">
+                            <h3 className="text-[24px] font-bold text-brand-blue mb-4">1. Vượt qua giới hạn lịch sử giao dịch</h3>
+                            <ul className="space-y-4 text-[19px] text-slate-700 flex-grow">
+                                <li>
+                                    <strong className="text-slate-900">Mục tiêu cao nhất:</strong> Luôn hướng tới việc chốt gói dịch vụ cao&nbsp;nhất, không phụ thuộc vào lịch sử mua hàng trước&nbsp;đây.
+                                </li>
+                                <li>
+                                    <strong className="text-slate-900">Tập trung vào hiện tại:</strong> Bỏ qua rào cản về mức giá hợp đồng cũ để khai thác tối đa khả năng chi&nbsp;trả.
+                                </li>
+                            </ul>
+                            
+                            {/* Chiều cao được đặt lên h-[260px] để cân bằng với Box 2 */}
+                            <div className="mt-auto bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm shrink-0 h-[260px] flex flex-col">
+                                <div className="bg-slate-100 px-4 py-2 border-b border-slate-200 font-bold text-slate-700 text-[18px]">Ví dụ:</div>
+                                <div className="p-4 flex flex-col justify-center flex-grow">
+                                    <p className="text-[17px] text-slate-700 italic leading-snug">
+                                        Không tự giới hạn mục tiêu ở mức 1,8 triệu với khách từng mua gói 1,5 triệu, vì tiềm năng thực tế có thể chốt được gói 4&nbsp;triệu.
+                                    </p>
+                                </div>
+                            </div>
                         </div>
 
                         {/* Box 2 */}
-                        <div className="bg-gradient-to-br from-orange-50 to-red-50 p-6 rounded-3xl border-t-8 border-t-brand-orange shadow-xl flex flex-col justify-center relative overflow-hidden transform transition hover:-translate-y-1">
-                            <Icon name="flame" className="absolute -bottom-4 -right-4 text-orange-200 w-32 h-32 opacity-40"/>
-                            <h4 className="text-[21px] font-bold text-brand-orange mb-3 relative z-10 flex items-center gap-2">
-                                <Icon name="heart-pulse"/> "Còn thở còn gỡ"
-                            </h4>
-                            <p className="text-[17px] text-slate-800 font-medium leading-relaxed relative z-10">
-                                Mọi lý do cản trở việc khách tái ký đều có cách giải&nbsp;quyết. Miễn khách còn kinh doanh là vẫn còn cơ hội chốt&nbsp;deal. Khách luôn có tiền ưu tiên cho việc quan trọng và giá trị xứng&nbsp;đáng.
-                            </p>
-                        </div>
-
-                        {/* Box 3 */}
-                        <div className="bg-white/95 p-6 rounded-3xl border-b-8 border-b-green-500 shadow-xl flex flex-col justify-center transform transition hover:-translate-y-1">
-                            <h4 className="text-[21px] font-bold text-green-600 mb-3 flex items-center gap-2">
-                                <Icon name="ear"/> Lắng nghe trọn vẹn
-                            </h4>
-                            <p className="text-[17px] text-slate-700 font-medium leading-relaxed">
-                                Dù khách gay gắt hay khó&nbsp;chịu như thế nào cũng <strong>lắng nghe trọn&nbsp;vẹn</strong> và đứng cùng phía khách&nbsp;hàng để thấu hiểu trải nghiệm của họ.
-                            </p>
-                        </div>
-
-                        {/* Box 4 */}
-                        <div className="bg-blue-50/80 p-6 rounded-3xl border-b-8 border-b-indigo-500 shadow-xl flex flex-col justify-center transform transition hover:-translate-y-1">
-                            <h4 className="text-[21px] font-bold text-indigo-600 mb-3 flex items-center gap-2">
-                                <Icon name="shield-check"/> Xác lập niềm tin mới
-                            </h4>
-                            <p className="text-[17px] text-slate-700 font-medium leading-relaxed">
-                                Luôn hướng tới xác lập một niềm tin mới với khách&nbsp;hàng. Củng cố niềm tin về giá trị phần&nbsp;mềm, cách đồng hành và trách nhiệm hỗ trợ của KiotViet trong suốt quá trình sử dụng sắp&nbsp;tới.
-                            </p>
-                        </div>
-
-                    </div>
-                </Slide>,
-
-                // Slide 9 
-                <Slide key="9">
-                    <SlideTitle>Định hướng khi giải quyết vấn đề (1/2)</SlideTitle>
-                    <div className="flex flex-col flex-grow justify-start pt-2 h-full gap-6">
-                        <div className="bg-brand-blue text-white p-4 rounded-xl shadow-md text-center inline-block w-fit mx-auto px-8">
-                            <h3 className="text-[22px] font-bold uppercase tracking-wide">Tập trung giá trị lợi ích PM bám sát thực tế khách&nbsp;hàng</h3>
-                        </div>
-
-                        <div className="grid grid-cols-2 gap-8 h-full pb-4">
-                            <div className="bg-white/90 p-6 rounded-3xl border border-white shadow-xl flex flex-col h-full relative overflow-hidden border-l-8 border-l-red-500">
-                                <div className="flex items-center gap-3 mb-4">
-                                    <Icon name="alert-triangle" className="text-red-500" size={32}/>
-                                    <h4 className="text-[22px] font-bold text-slate-800">Tư duy: Không vội vàng giảm giá</h4>
-                                </div>
-                                <ul className="space-y-4 text-[17px] text-slate-700 font-medium leading-relaxed flex-grow">
-                                    <li className="flex items-start gap-2">
-                                        <Icon name="x" className="text-red-500 shrink-0 mt-1" size={20}/>
-                                        <span>Khách có vô vàn lý do cản trở (gồm chi phí). Sale cần <strong>sàng lọc lý do cốt lõi trước</strong>.</span>
-                                    </li>
-                                    <li className="flex items-start gap-2">
-                                        <Icon name="x" className="text-red-500 shrink-0 mt-1" size={20}/>
-                                        <span>Nếu vội giảm giá = Hạ giá trị sản&nbsp;phẩm. Khách chê sản phẩm không tốt mà mình giảm giá thì càng khẳng định sản phẩm tệ, không xác lập được niềm tin mới.</span>
-                                    </li>
-                                    <li className="flex items-start gap-2 bg-blue-50 p-3 rounded-lg mt-2">
-                                        <Icon name="refresh-cw" className="text-brand-blue shrink-0 mt-0.5" size={20}/>
-                                        <span className="text-brand-blue">Mỗi lần báo giá xong phải đánh giá phản ứng của khách. Nếu chưa hợp lý ➔ <strong>Tiếp tục đưa thêm giá trị cho đến khi chốt được.</strong></span>
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <div className="bg-white/90 p-6 rounded-3xl border border-white shadow-xl flex flex-col h-full relative overflow-hidden border-l-8 border-l-brand-orange">
-                                <div className="flex items-center gap-3 mb-4">
-                                    <Icon name="gift" className="text-brand-orange" size={32}/>
-                                    <h4 className="text-[22px] font-bold text-slate-800">Mang lại giá trị vượt mong đợi</h4>
-                                </div>
-                                <p className="text-[18px] text-slate-700 font-medium leading-relaxed mb-4">
-                                    Ngay cả khi khách hàng kinh doanh không hiệu quả như kỳ vọng, không xem họ là một người đang kinh doanh kém mà <strong>tập trung tìm giải pháp cải thiện tình hình kinh doanh cùng với họ</strong>.
-                                </p>
-                                <div className="bg-orange-50 p-4 rounded-xl border border-orange-100 flex-grow">
-                                    <p className="text-[17px] text-brand-orange font-bold mb-2">Đó chính là giá trị ngoài mong đợi:</p>
-                                    <ul className="list-disc pl-5 space-y-2 text-[17px] text-slate-700">
-                                        <li>Đưa thêm giải pháp thay đổi menu.</li>
-                                        <li>Tư vấn cách quảng bá gian hàng.</li>
-                                        <li>Tích hợp thêm các kênh bán hàng mới...</li>
-                                    </ul>
+                        <div className="bg-orange-50/50 border border-orange-100 rounded-3xl p-8 shadow-md flex flex-col h-full">
+                            <h3 className="text-[24px] font-bold text-brand-orange mb-4">2. Phân tích rõ ràng giá trị</h3>
+                            <ul className="space-y-4 text-[19px] text-slate-700 flex-grow">
+                                <li>
+                                    Quy đổi các thành phần tặng kèm (Hóa đơn điện tử, thiết bị...) thành số tiền cụ thể, thay vì chỉ liệt kê tính năng chung&nbsp;chung.
+                                </li>
+                                <li>
+                                    <strong className="text-slate-900">Tạo "Món hời":</strong> Giúp khách hàng nhìn thấy rõ khoản tiền lớn họ tiết kiệm được khi mua trọn&nbsp;gói.
+                                </li>
+                            </ul>
+                            
+                            {/* Chiều cao h-[260px] để bao trọn text và cân bằng */}
+                            <div className="mt-auto bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm shrink-0 h-[260px] flex flex-col">
+                                <div className="bg-slate-100 px-4 py-2 border-b border-slate-200 font-bold text-slate-700 text-[18px]">Ví dụ:</div>
+                                <div className="p-4 space-y-3 flex flex-col justify-center flex-grow">
+                                    <div className="text-[17px] text-slate-700 flex gap-3 items-start">
+                                        <Icon name="x-circle" className="text-red-600 shrink-0 mt-0.5" size={20} />
+                                        <span><strong className="text-red-600">Không nói:</strong> <span className="italic">"Gói này bên em tặng kèm 20.000 Hóa đơn điện&nbsp;tử."</span></span>
+                                    </div>
+                                    <div className="text-[17px] text-slate-700 flex gap-3 items-start">
+                                        <Icon name="check-circle-2" className="text-green-600 shrink-0 mt-0.5" size={20} />
+                                        <span><strong className="text-green-600">Nên nói:</strong> <span className="italic">"Nâng cấp lên gói Chuyên nghiệp, anh/chị được tặng ngay 20.000 HĐĐT. Nếu mua lẻ bên ngoài sẽ tốn gần 10 triệu đồng, nhưng KiotViet tài trợ 100% để anh/chị xuất hóa đơn thoải mái cả&nbsp;năm."</span></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </Slide>,
 
-                // Slide 10 
-                <Slide key="10">
-                    <SlideTitle>Định hướng khi giải quyết vấn đề (2/2)</SlideTitle>
-                    <div className="flex flex-col flex-grow justify-center h-full max-w-5xl mx-auto w-full gap-8 pb-6">
-                        
-                        <div className="bg-white/95 p-6 rounded-3xl border-l-8 border-brand-blue shadow-xl">
-                            <h3 className="text-[22px] font-bold text-slate-800 mb-3 flex items-center gap-3">
-                                <Icon name="users" className="text-brand-blue" size={28}/>
-                                Với khách hàng đã thất vọng, cần tạo niềm tin mới
-                            </h3>
-                            <p className="text-[18px] text-slate-700 font-medium leading-relaxed mb-4">
-                                Khiến khách hàng cảm nhận được thiện chí và trách nhiệm. Kêu gọi sức mạnh tổng&nbsp;hợp, phối hợp với các phòng ban để cùng hỗ trợ khách hàng và <strong>chia sẻ để khách biết về sự phối hợp này.</strong>
-                            </p>
-                            <div className="bg-blue-50 p-4 rounded-xl border border-blue-100 italic text-slate-700 text-[17px] leading-relaxed relative">
-                                <Icon name="quote" className="absolute top-2 left-2 text-blue-200/50 w-8 h-8 rotate-180" />
-                                <span className="ml-8 block font-medium">"Nhờ DS đi qua khu vực hỏi thăm khách hàng giúp em..."<br/>(Gọi cả ekip cùng tham gia xử lý và nhấn mạnh với khách hàng cách phối hợp)</span>
-                            </div>
-                        </div>
-
-                        <div className="bg-white/95 p-6 rounded-3xl border-l-8 border-green-500 shadow-xl">
-                            <h3 className="text-[22px] font-bold text-slate-800 mb-3 flex items-center gap-3">
-                                <Icon name="check-square" className="text-green-600" size={28}/>
-                                Ưu tiên xử lý vấn đề trọng tâm
-                            </h3>
-                            <p className="text-[18px] text-slate-700 font-medium leading-relaxed">
-                                Nếu khách đang gặp lỗi PM thì tập trung xử lý lỗi, <strong>chưa nhắc gì đến giá cả</strong>. Nhấn mạnh giá trị về trách nhiệm hỗ trợ xuyên suốt để khách trơn tru sử&nbsp;dụng.<br/><br/>
-                                <span className="text-brand-orange font-bold">➔ Gỡ được nút thắt này khách xuôi và bắt đầu tiếp nhận sự hỗ&nbsp;trợ.</span> Sale tiếp tục tạo thêm giá trị (như tư vấn Menu) để khách cảm thấy giá trị thực sự.
-                            </p>
-                        </div>
-
-                    </div>
-                </Slide>,
-
-                // Slide 11 
-                <Slide key="11">
-                    <SlideTitle>Định hướng khi chốt deal</SlideTitle>
-                    <div className="grid grid-cols-2 gap-8 flex-grow h-full pt-2 pb-6">
-                        <div className="flex flex-col gap-6">
-                            <div className="bg-white/90 p-6 rounded-3xl border border-white shadow-xl border-t-8 border-t-brand-blue">
-                                <h4 className="text-[20px] font-bold text-brand-blue mb-3 flex items-center gap-2">
-                                    <Icon name="trending-up"/> Bán gói càng cao càng tốt
-                                </h4>
-                                <p className="text-[17px] text-slate-700 font-medium leading-relaxed">
-                                    Bất kể trước đó khách mua gói gì. Bỏ qua số tiền giao dịch cũ và tập trung vào mục tiêu chốt sale hiện&nbsp;tại.
-                                </p>
-                                <p className="text-[16px] text-slate-500 italic mt-3 bg-slate-50 p-3 rounded-lg border border-slate-100">
-                                    VD: Khách từng mua 1,5 triệu, nếu sale chỉ đặt mục tiêu 1,8 triệu ➔ Chưa thành công vì khách hoàn toàn có khả năng mua gói 4 triệu.
-                                </p>
-                            </div>
-                            
-                            <div className="bg-white/90 p-6 rounded-3xl border border-white shadow-xl border-t-8 border-t-brand-orange flex-grow">
-                                <h4 className="text-[20px] font-bold text-brand-orange mb-3 flex items-center gap-2">
-                                    <Icon name="calculator"/> Quy đổi giá trị thành tiền
-                                </h4>
-                                <p className="text-[17px] text-slate-700 font-medium leading-relaxed">
-                                    Phân tích & quy đổi giá trị của từng thành phần trong gói giá ngoài tính năng PM (HĐĐT, phần cứng, tính năng mở rộng) để khách thấy rõ lợi ích khổng&nbsp;lồ.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-8 rounded-3xl border border-blue-200 shadow-2xl h-full flex flex-col justify-center relative overflow-hidden">
-                            <Icon name="message-square" className="absolute -top-4 -right-4 text-blue-100 w-40 h-40 opacity-60"/>
-                            
-                            <h4 className="text-[20px] font-bold text-slate-800 mb-6 relative z-10">
-                                Thay vì nói chung chung: <span className="font-normal italic text-slate-600">"Gói này bao gồm 20.000 HĐĐT"</span>, hãy phân tích:
-                            </h4>
-                            
-                            <div className="bg-white p-6 rounded-2xl shadow-md border-l-4 border-brand-blue italic text-[19px] leading-relaxed text-brand-blue font-medium relative z-10">
-                                <Icon name="quote" className="absolute -top-3 -left-3 text-blue-200 w-10 h-10 rotate-180 bg-white rounded-full" />
-                                <span className="ml-4 block">"Chị ơi, đợt này chị nâng lên gói Chuyên Nghiệp là bên em sẽ tặng luôn chị 20.000 HĐĐT, nếu chị mua ngoài là cũng hết gần chục triệu rồi mà đây KiotViet tặng luôn, chị thoải mái dùng xuất cả năm, rất lợi chị ạ."</span>
-                            </div>
-                        </div>
                     </div>
                 </Slide>,
 
                 // Slide 12
-                <Slide key="12">
-                    <div className="flex flex-col justify-center items-center h-full relative z-10 w-full text-center">
-                        <motion.div
-                            initial={{ scale: 0.5, opacity: 0 }}
+                <Slide key="12" isTitle={true}>
+                    <div className="flex flex-col justify-center items-center h-full relative z-10 text-center">
+                        <motion.h2 
+                            initial={{ scale: 0.8, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
-                            transition={{ type: "spring", bounce: 0.5 }}
-                            className="bg-white/80 p-16 rounded-full shadow-2xl mb-8 border-8 border-brand-sky"
+                            className="text-[120px] font-black text-white leading-tight drop-shadow-2xl tracking-widest"
                         >
-                            <h2 className="text-[120px] font-black text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-orange leading-none">
-                                Q & A
-                            </h2>
-                        </motion.div>
-                        <p className="text-3xl text-slate-700 font-bold mt-4">Hỏi đáp & Trao đổi</p>
+                            Q & A
+                        </motion.h2>
                     </div>
                 </Slide>,
 
-                // Slide 13
-                <Slide key="13" isTitle={true}>
-                    <div className="flex flex-col justify-center items-center h-full relative z-10 text-center">
-                        <motion.h1 
-                            initial={{ opacity: 0, y: -50 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className="font-black uppercase mb-8 drop-shadow-lg"
-                        >
-                            <span className="text-[52px] leading-tight text-white block mb-2 px-8">
-                                PHẦN 2: CASE STUDY
-                            </span>
-                        </motion.h1>
-                        <motion.p 
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.3 }}
-                            className="text-2xl text-blue-100 mb-12 font-medium max-w-3xl leading-relaxed"
-                        >
-                            Chiêm nghiệm tình huống khách&nbsp;hàng chưa thành&nbsp;công, chỉ ra nguyên&nbsp;nhân và trình bày phương án xử&nbsp;lý.
-                        </motion.p>
-                        <div className="w-24 h-2 rounded-full bg-brand-orange mt-4"></div>
+                // Slide 13 (Yêu cầu Mở rộng text ngang box -> Tăng max-w-5xl lên w-full)
+                <Slide key="13">
+                    <SlideTitle>Phần 2: Đúc kết cá nhân</SlideTitle>
+                    <div className="flex flex-col flex-grow justify-center items-center h-full w-full">
+                        <div className="bg-white/90 p-12 rounded-3xl border border-white shadow-2xl w-full">
+                            
+                            <div className="mb-8 bg-blue-50 p-6 rounded-2xl border border-blue-100">
+                                <p className="text-[24px] text-brand-blue font-bold flex items-center gap-3">
+                                    <Icon name="activity" size={28} className="text-brand-orange" />
+                                    Hoạt động:
+                                </p>
+                                <p className="text-[22px] text-slate-800 font-medium mt-2 leading-relaxed">
+                                    Nhớ lại một tình huống khách hàng đã tư vấn không thành công trước&nbsp;đây.
+                                </p>
+                            </div>
+
+                            <ul className="space-y-6 text-[22px] text-slate-800 font-medium ml-4">
+                                <li className="flex gap-5 items-start">
+                                    <div className="w-10 h-10 bg-brand-orange text-white rounded-full flex justify-center items-center font-bold text-xl shrink-0 shadow-sm mt-0.5">1</div>
+                                    <span className="leading-snug">Chỉ ra nguyên nhân chủ quan từ phía Sale dẫn tới khách không đồng ý gia&nbsp;hạn.</span>
+                                </li>
+                                <li className="flex gap-5 items-start">
+                                    <div className="w-10 h-10 bg-brand-orange text-white rounded-full flex justify-center items-center font-bold text-xl shrink-0 shadow-sm mt-0.5">2</div>
+                                    <span className="leading-snug">Đưa ra hướng xử lý mới có vận dụng kỹ năng Xác định mức độ chi trả & chốt deal bằng giá&nbsp;trị.</span>
+                                </li>
+                            </ul>
+
+                        </div>
                     </div>
                 </Slide>,
 
                 // Slide 14
                 <Slide key="14">
-                    <div className="flex flex-col justify-center items-center h-full relative z-10 w-full text-center">
-                        <div className="bg-brand-orange text-white p-8 rounded-full shadow-2xl mb-10 transform transition hover:scale-110">
-                            <Icon name="rocket" size={80} />
+                    <div className="flex flex-col justify-center items-center h-full relative z-10 text-center w-full">
+                        <div className="bg-gradient-to-tr from-brand-blue to-blue-800 p-16 rounded-[3rem] shadow-2xl border border-blue-400/30 transform transition hover:scale-105 w-full max-w-5xl">
+                            <h2 className="text-[64px] font-black text-white leading-tight uppercase drop-shadow-lg mb-6">
+                                Phần 3<br/>
+                                <span className="text-brand-orange">Cam kết hành động</span>
+                            </h2>
+                            <div className="w-32 h-2 bg-brand-orange mx-auto rounded-full"></div>
                         </div>
-                        <h2 className="text-[64px] font-black text-brand-blue uppercase tracking-tight">
-                            Cam kết hành động
-                        </h2>
-                        <p className="text-2xl text-slate-600 font-medium mt-6">
-                            Áp dụng ngay các kỹ năng vào công việc thực tế!
-                        </p>
                     </div>
                 </Slide>,
 
-                // Outro Slide
-                <Slide key="outro" isTitle={true}>
+                // Slide 15
+                <Slide key="15" isTitle={true}>
                     <img 
                         src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=1200" 
-                        alt="Teamwork Success" 
-                        className="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-30"
+                        alt="Team Success" 
+                        className="absolute inset-0 w-full h-full object-cover mix-blend-overlay opacity-40"
                     />
                     <div className="relative z-10 text-center max-w-5xl p-8 mx-auto h-full flex flex-col justify-center items-center">
-                        <div className="bg-white/10 backdrop-blur-md border border-white/20 p-12 rounded-3xl shadow-2xl mb-10 w-full transform transition hover:scale-105">
+                        <div className="bg-white/10 backdrop-blur-md border border-white/20 p-12 rounded-3xl shadow-2xl w-full transform transition hover:scale-105">
                             <motion.h2 
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 animate={{ opacity: 1, scale: 1 }}
-                                className="text-[54px] font-black text-white leading-tight drop-shadow-2xl"
+                                className="text-[72px] font-black text-white leading-tight drop-shadow-2xl tracking-wide"
                             >
                                 Chúc các bạn<br/>
-                                <span className="text-brand-orange">áp dụng thành công</span><br/>
-                                và bùng nổ doanh số!
+                                chốt deal thành công!
                             </motion.h2>
                         </div>
                     </div>
@@ -792,7 +734,7 @@
                             disabled={currentSlide === 0}
                             className={`w-8 h-8 flex items-center justify-center rounded-full transition-all backdrop-blur-sm border border-white/40 shadow-sm ${currentSlide === 0 ? 'opacity-30 cursor-not-allowed bg-slate-100 text-slate-500' : 'bg-white/60 text-brand-blue hover:bg-brand-orange hover:text-white hover:border-brand-orange'}`}
                         >
-                            <Icon name="chevron-left" size={18} />
+                            <span className="inline-flex items-center justify-center shrink-0"><i data-lucide="chevron-left" width="18" height="18"></i></span>
                         </button>
                         <div className="text-sm font-semibold text-slate-600 bg-white/50 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/40 shadow-sm min-w-[60px] text-center">
                             {currentSlide + 1} / {slides.length}
@@ -802,7 +744,7 @@
                             disabled={currentSlide === slides.length - 1}
                             className={`w-8 h-8 flex items-center justify-center rounded-full transition-all backdrop-blur-sm border border-white/40 shadow-sm ${currentSlide === slides.length - 1 ? 'opacity-30 cursor-not-allowed bg-slate-100 text-slate-500' : 'bg-white/60 text-brand-blue hover:bg-brand-orange hover:text-white hover:border-brand-orange'}`}
                         >
-                            <Icon name="chevron-right" size={18} />
+                            <span className="inline-flex items-center justify-center shrink-0"><i data-lucide="chevron-right" width="18" height="18"></i></span>
                         </button>
                     </div>
                 </div>
@@ -811,6 +753,9 @@
 
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<Presentation />);
+        
+        // Initialize lucide icons for the static navigation buttons
+        lucide.createIcons();
     </script>
 </body>
 </html>
