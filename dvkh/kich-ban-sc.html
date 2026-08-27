@@ -721,7 +721,7 @@
 
                 // Slide 16: Hoạt động 3
                 <Slide key="16">
-                    <SlideTitle>Hoạt động 3 (15 phút)</SlideTitle>
+                    <SlideTitle>Hoạt động 3 (10 phút)</SlideTitle>
                     <div className="flex flex-col flex-grow justify-center items-center h-full pb-8">
                         <div className="bg-white/90 p-10 rounded-3xl border border-slate-200 shadow-xl max-w-4xl w-full">
                             <div className="flex justify-center gap-6 mb-8">
@@ -731,17 +731,86 @@
                             <ul className="space-y-6 text-[22px] text-slate-700 font-medium w-fit mx-auto">
                                 <li className="flex gap-4 items-center">
                                     <div className="bg-green-100 text-green-600 rounded-full p-1"><Icon name="check" size={24}/></div>
-                                    <span>Thực hiện thảo luận phân tích nhận định tình trạng dữ liệu & lý do tiếp cận 1 bộ MP cho sẵn.</span>
+                                    <span>Thực hiện nhận định tình trạng khách hàng và lý do tiếp cận thông qua phân tích dữ liệu 1 bộ MP cho sẵn.</span>
                                 </li>
                                 <li className="flex gap-4 items-center">
                                     <div className="bg-green-100 text-green-600 rounded-full p-1"><Icon name="check" size={24}/></div>
-                                    <span>Sau đó từng cá nhân điền phân tích vào trang 1 bài tập thực hành.</span>
-                                </li>
-                                <li className="flex gap-4 items-center">
-                                    <div className="bg-green-100 text-green-600 rounded-full p-1"><Icon name="check" size={24}/></div>
-                                    <span>Đại diện nhóm trình bày ý kiến</span>
+                                    <span>Hoàn tất chi tiết lên bài thực hành.</span>
                                 </li>
                             </ul>
+                        </div>
+                    </div>
+                </Slide>,
+
+                // Slide 16b: Nhận định tham khảo
+                <Slide key="16b">
+                    <SlideTitle>Nhận định tham khảo</SlideTitle>
+                    <div className="flex-grow flex flex-col h-full overflow-hidden pb-2">
+                        <p className="text-[16px] font-bold text-brand-orange mb-3 bg-orange-50 inline-block px-4 py-2 rounded-lg border border-orange-100 w-fit">
+                            Mã KH: MP 501182101 | Ngành: Pizza (69 bàn) | Gói: Chuyên nghiệp 2 năm
+                        </p>
+                        <div className="table-wrap h-full bg-white flex flex-col shadow-sm overflow-y-auto custom-scrollbar">
+                            <table className="w-full text-left border-collapse">
+                                <thead>
+                                    <tr className="bg-brand-blue text-white sticky top-0 z-10 shadow-sm">
+                                        <th className="p-2.5 w-[25%] text-[14px] font-bold border-r border-blue-700">Dữ liệu</th>
+                                        <th className="p-2.5 w-[30%] text-[14px] font-bold border-r border-blue-700">Nhận định</th>
+                                        <th className="p-2.5 w-[45%] text-[14px] font-bold">Hướng tiếp cận - khai thác - xử lý</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="text-[13.5px] text-slate-700 leading-snug">
+                                    <tr className="border-b border-slate-200 hover:bg-slate-50">
+                                        <td className="p-2.5 border-r border-slate-200 font-medium">Địa chỉ chưa chi tiết.</td>
+                                        <td className="p-2.5 border-r border-slate-200">Thiếu thông tin.<br/>Khó tiếp cận trực tiếp.</td>
+                                        <td className="p-2.5 text-brand-blue font-medium">Chủ động tra cứu Google Maps/Mạng xã hội để xác định chính xác và chủ động xác nhận trong cuộc gọi/gặp.</td>
+                                    </tr>
+                                    <tr className="border-b border-slate-200 hover:bg-slate-50">
+                                        <td className="p-2.5 border-r border-slate-200 font-medium">69 phòng/bàn, khách mới dùng.</td>
+                                        <td className="p-2.5 border-r border-slate-200">Quy mô lớn, nhân viên chưa quen dễ thao tác sai.</td>
+                                        <td className="p-2.5 text-brand-blue font-medium">Hướng dẫn kỹ Tách/Ghép/Gộp bàn. Tư vấn dùng E-menu để khách tự order, giảm tải nhân sự.</td>
+                                    </tr>
+                                    <tr className="border-b border-slate-200 hover:bg-slate-50">
+                                        <td className="p-2.5 border-r border-slate-200 font-medium">Chỉ có 1 máy in thu ngân & 1 màn hình QR.</td>
+                                        <td className="p-2.5 border-r border-slate-200">Quá tải so với quy mô 69 bàn, chậm order xuống bếp.</td>
+                                        <td className="p-2.5 text-brand-blue font-medium">Bán thêm máy in bếp/bar để tăng tốc độ chế biến và tránh sai sót order.</td>
+                                    </tr>
+                                    <tr className="border-b border-slate-200 hover:bg-slate-50">
+                                        <td className="p-2.5 border-r border-slate-200 font-medium">Có màn hình QR nhưng chưa dùng Add-on QR Payment.</td>
+                                        <td className="p-2.5 border-r border-slate-200">Lãng phí phần cứng, thu ngân vất vả đối soát thủ công.</td>
+                                        <td className="p-2.5 text-brand-blue font-medium">Tư vấn Add-on QR Payment để tự động đối soát, tiết kiệm thời gian và tránh thất thoát.</td>
+                                    </tr>
+                                    <tr className="border-b border-slate-200 hover:bg-slate-50">
+                                        <td className="p-2.5 border-r border-slate-200 font-medium">12 thiết bị đăng nhập nhưng chỉ có 7 User.</td>
+                                        <td className="p-2.5 border-r border-slate-200">Lỗ hổng bảo mật do dùng chung tài khoản, khó truy vết khi phát sinh sai sót.</td>
+                                        <td className="p-2.5 text-brand-blue font-medium">Tư vấn tạo đủ User và thiết lập phân quyền (hủy món, chiết khấu) để kiểm soát rủi ro.</td>
+                                    </tr>
+                                    <tr className="border-b border-slate-200 hover:bg-slate-50">
+                                        <td className="p-2.5 border-r border-slate-200 font-medium">Chưa tạo dữ liệu nhân viên.</td>
+                                        <td className="p-2.5 border-r border-slate-200">Lãng phí tính năng cao cấp của gói Chuyên nghiệp.</td>
+                                        <td className="p-2.5 text-brand-blue font-medium">Hướng dẫn dùng tính năng Chấm công & Tính lương (tính năng sẵn trong gói) để quản lý thuận tiện.</td>
+                                    </tr>
+                                    <tr className="border-b border-slate-200 hover:bg-slate-50">
+                                        <td className="p-2.5 border-r border-slate-200 font-medium">Chưa có thao tác nhập/kiểm kho.</td>
+                                        <td className="p-2.5 border-r border-slate-200">Nguy cơ thất thoát nguyên liệu cao (đặc thù quán Pizza).</td>
+                                        <td className="p-2.5 text-brand-blue font-medium">Hướng dẫn thiết lập định mức nguyên liệu và quy trình quản lý kho định kỳ.</td>
+                                    </tr>
+                                    <tr className="border-b border-slate-200 hover:bg-slate-50">
+                                        <td className="p-2.5 border-r border-slate-200 font-medium">Chưa có dữ liệu khách hàng.</td>
+                                        <td className="p-2.5 border-r border-slate-200">Bỏ lỡ tệp khách quen và khó quản lý công nợ.</td>
+                                        <td className="p-2.5 text-brand-blue font-medium">Hướng dẫn tạo KH thành viên, tích điểm để giữ chân khách và theo dõi công nợ chặt chẽ.</td>
+                                    </tr>
+                                    <tr className="border-b border-slate-200 hover:bg-slate-50">
+                                        <td className="p-2.5 border-r border-slate-200 font-medium">Ticket ghi nhận KH quan tâm mẫu in hóa đơn.</td>
+                                        <td className="p-2.5 border-r border-slate-200">KH chú trọng hình ảnh thương hiệu chuyên nghiệp.</td>
+                                        <td className="p-2.5 text-brand-blue font-medium">Chủ động hỗ trợ thiết kế mẫu in, gợi ý thêm thông tin: Wifi, Lời cảm ơn, QR Zalo OA.</td>
+                                    </tr>
+                                    <tr className="hover:bg-slate-50">
+                                        <td className="p-2.5 border-r border-slate-200 font-medium">Chỉ ghi nhận doanh thu Offline.</td>
+                                        <td className="p-2.5 border-r border-slate-200">Đang chưa khai thác mảng bán mang đi/bán ship.</td>
+                                        <td className="p-2.5 text-brand-blue font-medium">Đặt câu hỏi xác minh hoặc kết hợp quan sát thực tế, nếu quán có bán mang đi cần tư vấn giải pháp KSHIP.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </Slide>,
