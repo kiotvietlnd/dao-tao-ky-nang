@@ -47,9 +47,12 @@
         * { font-family: 'Inter', sans-serif !important; }
 
         /* 5D Animated Gradient Background */
-        body {
+        body, html {
             margin: 0;
-            overflow: hidden;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* Ngăn scroll bar xuất hiện trong iframe */
             background: linear-gradient(-45deg, #e0f2fe, #bae6fd, #fed7aa, #ffedd5, #e0e7ff);
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
@@ -81,8 +84,8 @@
 
         /* Glassmorphism Slide Content */
         .slide-content {
-            width: 1280px;
-            height: 720px;
+            width: 1280px; /* Kích thước gốc */
+            height: 720px; /* Kích thước gốc */
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.6);
@@ -116,7 +119,7 @@
 <body>
     <div class="orb-1"></div>
     <div class="orb-2"></div>
-    <div id="root"></div>
+    <div id="root" class="w-full h-full"></div>
 
     <script type="text/babel" data-presets="react">
         const { motion, AnimatePresence } = window.Motion;
@@ -202,7 +205,30 @@
 
         const Presentation = () => {
             const [currentSlide, setCurrentSlide] = React.useState(0);
+            const [scale, setScale] = React.useState(1);
             
+            // XỬ LÝ THU PHÓNG TỰ ĐỘNG ĐỂ VỪA VỚI IFRAME CỦA LMS
+            React.useEffect(() => {
+                const handleResize = () => {
+                    const windowWidth = window.innerWidth;
+                    const windowHeight = window.innerHeight;
+                    
+                    // Kích thước chuẩn của slide
+                    const targetWidth = 1280;
+                    const targetHeight = 720;
+                    
+                    // Tính toán tỷ lệ, nhân với 0.96 để chừa ra 4% lề, tránh cắt bóng (shadow)
+                    const scaleX = windowWidth / targetWidth;
+                    const scaleY = windowHeight / targetHeight;
+                    
+                    setScale(Math.min(scaleX, scaleY) * 0.96); 
+                };
+
+                handleResize(); // Chạy ngay lần đầu tải
+                window.addEventListener('resize', handleResize);
+                return () => window.removeEventListener('resize', handleResize);
+            }, []);
+
             const slides = [
                 // Title Slide
                 <Slide key="title" isTitle={true}>
@@ -287,7 +313,7 @@
                     </div>
                 </Slide>,
 
-                // 4. Hoạt động 1 (Instructions)
+                // Hoạt động 1 (Instructions)
                 <Slide key="3">
                     <SlideTitle>Hoạt động 1 (8 phút)</SlideTitle>
                     <div className="flex flex-col flex-grow justify-center items-center h-full">
@@ -309,7 +335,7 @@
                     </div>
                 </Slide>,
 
-                // 5. Hoạt động 1 (Fill-in-the-blanks)
+                // Hoạt động 1 (Fill-in-the-blanks)
                 <Slide key="4">
                     <SlideTitle>Hoạt động 1: Hoàn thành mô tả</SlideTitle>
                     <div className="grid grid-cols-3 gap-6 flex-grow h-full items-stretch pt-2 pb-6">
@@ -385,7 +411,7 @@
                     </div>
                 </Slide>,
 
-                // 6. Vai trò - Mục tiêu - Nhiệm vụ (Completed Version)
+                // Vai trò - Mục tiêu - Nhiệm vụ (Completed Version)
                 <Slide key="5">
                     <SlideTitle>Vai trò - Mục tiêu - Nhiệm vụ của Sale Tái Ký</SlideTitle>
                     <div className="grid grid-cols-3 gap-6 flex-grow h-full items-stretch pt-2 pb-6">
@@ -461,7 +487,7 @@
                     </div>
                 </Slide>,
 
-                // 7. Slide 4 (Quy trình 1)
+                // Slide 4 (Quy trình 1)
                 <Slide key="6">
                     <SlideTitle>Quy trình tư vấn tái ký</SlideTitle>
                     <div className="mb-4 bg-blue-50/80 border border-blue-200 p-4 rounded-xl text-center w-fit mx-auto shadow-sm">
@@ -472,7 +498,7 @@
                     <QuyTrinhTimeline activeStep={1} />
                 </Slide>,
 
-                // 8. Slide 5
+                // Slide 5
                 <Slide key="7">
                     <SlideTitle>Cơ sở lựa chọn lý do tiếp cận</SlideTitle>
                     <div className="flex-grow flex flex-col h-full overflow-hidden pb-4 pt-2">
@@ -541,7 +567,7 @@
                     </div>
                 </Slide>,
 
-                // 9. Slide 6
+                // Slide 6
                 <Slide key="8">
                     <SlideTitle>Minh họa tiếp cận</SlideTitle>
                     <div className="flex-grow flex flex-col h-full overflow-hidden pb-4">
@@ -601,13 +627,13 @@
                     </div>
                 </Slide>,
 
-                // 10. Slide 7 (Quy trình 2)
+                // Slide 7 (Quy trình 2)
                 <Slide key="9">
                     <SlideTitle>Quy trình tư vấn tái ký</SlideTitle>
                     <QuyTrinhTimeline activeStep={2} />
                 </Slide>,
 
-                // 11. Hoạt động 2
+                // Hoạt động 2
                 <Slide key="10">
                     <SlideTitle>Hoạt động 2 - [Bài tập thực hành 1] (20 phút)</SlideTitle>
                     <div className="flex flex-col flex-grow justify-center items-center h-full">
@@ -634,7 +660,7 @@
                     </div>
                 </Slide>,
 
-                // 12. Slide 8
+                // Slide 8
                 <Slide key="11">
                     <SlideTitle>Cách thức khai thác thông tin hiệu quả</SlideTitle>
                     <div className="grid grid-cols-12 gap-8 flex-grow h-full items-center">
@@ -689,7 +715,7 @@
                     </div>
                 </Slide>,
 
-                // 13. Slide 9
+                // Slide 9
                 <Slide key="12">
                     <SlideTitle>Ví dụ minh họa khai thác (1/2)</SlideTitle>
                     <div className="grid grid-cols-2 gap-8 flex-grow h-full pt-2 pb-6">
@@ -744,7 +770,7 @@
                     </div>
                 </Slide>,
 
-                // 14. Slide 10
+                // Slide 10
                 <Slide key="13">
                     <SlideTitle>Ví dụ minh họa khai thác (2/2)</SlideTitle>
                     <div className="flex flex-col flex-grow items-center justify-center h-full w-full max-w-4xl mx-auto pb-8">
@@ -773,7 +799,7 @@
                     </div>
                 </Slide>,
 
-                // 15. Slide 11
+                // Slide 11
                 <Slide key="14">
                     <SlideTitle>Hướng dẫn xử lý theo nhóm vấn đề</SlideTitle>
                     <div className="flex-grow flex flex-col h-full overflow-hidden pb-2 pt-2">
@@ -847,7 +873,7 @@
                     </div>
                 </Slide>,
 
-                // 16. Slide 12
+                // Slide 12
                 <Slide key="15">
                     <SlideTitle>Thực hành Khai thác & Xử lý tình huống</SlideTitle>
                     <div className="flex flex-col flex-grow justify-center space-y-6 pt-2 pb-6">
@@ -885,7 +911,7 @@
                     </div>
                 </Slide>,
 
-                // 17. Hoạt động 3
+                // Hoạt động 3
                 <Slide key="16">
                     <SlideTitle>Hoạt động 3 - Bài tập thực hành 2 (20 phút)</SlideTitle>
                     <div className="flex flex-col flex-grow justify-center items-center h-full">
@@ -912,13 +938,13 @@
                     </div>
                 </Slide>,
 
-                // 18. Slide 13 (Quy trình 3)
+                // Slide 13 (Quy trình 3)
                 <Slide key="17">
                     <SlideTitle>Quy trình tư vấn tái ký</SlideTitle>
                     <QuyTrinhTimeline activeStep={3} />
                 </Slide>,
 
-                // 19. Slide 14
+                // Slide 14
                 <Slide key="18">
                     <SlideTitle>Nguyên tắc báo giá & Ưu đãi chốt nhanh</SlideTitle>
                     <div className="grid grid-cols-2 gap-10 flex-grow h-full items-stretch pt-2 pb-6">
@@ -973,7 +999,7 @@
                     </div>
                 </Slide>,
 
-                // 20. Hoạt động 4
+                // Hoạt động 4
                 <Slide key="19">
                     <SlideTitle>Hoạt động 4 - Thực hành tư vấn giá & ưu đãi (15 phút)</SlideTitle>
                     <div className="flex flex-col flex-grow justify-center items-center h-full">
@@ -996,7 +1022,7 @@
                     </div>
                 </Slide>,
 
-                // 21. Slide 15
+                // Slide 15
                 <Slide key="20">
                     <SlideTitle>Tổng kết</SlideTitle>
                     <div className="grid grid-cols-2 gap-12 flex-grow h-full items-center justify-center pb-6">
@@ -1075,21 +1101,32 @@
             }, [nextSlide, prevSlide]);
 
             return (
-                <div className="relative w-screen h-screen flex items-center justify-center">
-                    <AnimatePresence mode="wait">
-                        <motion.div
-                            key={currentSlide}
-                            initial={{ opacity: 0, x: 30, filter: 'blur(5px)' }}
-                            animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-                            exit={{ opacity: 0, x: -30, filter: 'blur(5px)' }}
-                            transition={{ duration: 0.4, ease: "easeOut" }}
-                            className="absolute inset-0 w-full h-full flex items-center justify-center"
-                        >
-                            {slides[currentSlide]}
-                        </motion.div>
-                    </AnimatePresence>
+                <div className="fixed inset-0 w-full h-full flex items-center justify-center overflow-hidden">
+                    
+                    {/* BỘ CHỨA ĐƯỢC SCALE TỰ ĐỘNG */}
+                    <div style={{
+                        width: '1280px',
+                        height: '720px',
+                        transform: `scale(${scale})`,
+                        transformOrigin: 'center center',
+                        position: 'relative' // Fix cố định slide vào tâm iframe
+                    }}>
+                        <AnimatePresence mode="wait">
+                            <motion.div
+                                key={currentSlide}
+                                initial={{ opacity: 0, x: 30, filter: 'blur(5px)' }}
+                                animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+                                exit={{ opacity: 0, x: -30, filter: 'blur(5px)' }}
+                                transition={{ duration: 0.4, ease: "easeOut" }}
+                                className="absolute inset-0 w-full h-full flex items-center justify-center"
+                            >
+                                {slides[currentSlide]}
+                            </motion.div>
+                        </AnimatePresence>
+                    </div>
 
-                    <div className="fixed bottom-6 right-8 flex items-center gap-3 z-50">
+                    {/* NÚT ĐIỀU HƯỚNG MÀN HÌNH */}
+                    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-8 flex items-center gap-3 z-50">
                         <button 
                             onClick={prevSlide}
                             disabled={currentSlide === 0}
