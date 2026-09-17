@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kịch bản CSKH Chủ động & Gia tăng giá trị - KiotViet</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.23.6/babel.min.js"></script>
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            blue: '#1e3a8a',
+                            orange: '#f97316',
+                            sky: '#e0f2fe',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        * { font-family: 'Inter', sans-serif !important; }
+
+        body {
+            margin: 0;
+            background: #f1f5f9;
+        }
+
+        .slide-frame {
+            width: 1280px;
+            height: 720px;
+            position: relative;
+            overflow: hidden;
+            background: #ffffff;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            padding: 40px 60px;
+            border-radius: 1.25rem;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+        }
+
+        .title-slide-content {
+            background: linear-gradient(135deg, #1e3a8a 0%, #172554 100%) !important;
+            color: white !important;
+        }
+
+        .logo-container {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            z-index: 50;
+        }
+        .logo-img { height: 38px; width: auto; }
+        .logo-invert { filter: brightness(0) invert(1); }
+        
+        .table-wrap { overflow: hidden; border-radius: 0.75rem; border: 1px solid #cbd5e1; }
+
+        /* PRINT STYLES CHO PHÉP IN TẤT CẢ SLIDE */
+        @media print {
+            body {
+                background: white !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+            #print-container {
+                display: block !important;
+            }
+            #interactive-container {
+                display: none !important;
+            }
+            .slide-page {
+                page-break-after: always;
+                break-after: page;
+                width: 1280px !important;
+                height: 720px !important;
+                margin: 0 auto;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+
+        @page {
+            size: 1280px 720px;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel" data-presets="react">
+        const Icon = ({ name, size = 22, className = "" }) => {
+            const spanRef = React.useRef(null);
+            React.useEffect(() => {
+                if (spanRef.current) {
+                    spanRef.current.innerHTML = `<i data-lucide="${name}" class="${className}"></i>`;
+                    lucide.createIcons({ root: spanRef.current, attrs: { width: size, height: size } });
+                }
+            }, [name, size, className]);
+            return <span ref={spanRef} className="inline-flex items-center justify-center shrink-0" />;
+        };
+
+        const Logo = ({ isTitle }) => (
+            <div className="logo-container">
+                <img 
+                    src="https://logo.kiotviet.vn/KiotViet-Logo-Horizontal.svg" 
+                    alt="KiotViet Logo" 
+                    className={`logo-img ${isTitle ? 'logo-invert' : ''}`}
+                    referrerPolicy="no-referrer"
+                />
+            </div>
+        );
+
+        const Slide = ({ children, className = "", isTitle = false }) => (
+            <div className={`slide-frame ${isTitle ? 'title-slide-content' : ''} ${className}`}>
+                <Logo isTitle={isTitle} />
+                <div className="relative z-10 flex flex-col h-full w-full">
+                    {children}
+                </div>
+            </div>
+        );
+
+        const SlideTitle = ({ children }) => (
+            <h2 className="text-3xl font-extrabold mb-5 text-brand-blue uppercase border-l-8 border-brand-orange pl-4 tracking-tight shrink-0 whitespace-nowrap">
+                {children}
+            </h2>
+        );
+
+        const getSlides = () => {
+            const checkListItems = [
+                "Nêu lý do tiếp cận liên quan đến tình hình thực tế của khách hàng dựa trên MP (và quan sát)",
+                "Xử lý được từ chối khi tiếp cận",
+                "Thực hiện xác thực nhanh gọn rõ ràng đầy đủ",
+                "Đặt các câu hỏi để khéo léo khai thác được tình trạng thực tế",
+                "Xác nhận đúng vấn đề/ tình trạng & đưa ra hướng xử lý phù hợp",
+                "Lựa chọn, gợi mở tính năng phù hợp tình trạng và đặc thù cửa hàng",
+                "Làm rõ được giá trị lợi ích tính năng mang lại đối với khách hàng",
+                "Khảo sát nhu cầu hỗ trợ thêm và xử lý vấn đề nếu có",
+                "Xác nhận hỗ trợ xong và chào kết thúc đúng quy trình."
+            ];
+
+            return [
+                // Slide 0: Title
+                <Slide key="title" isTitle={true}>
+                    <div className="flex flex-col justify-center items-center h-full text-center">
+                        <h1 className="font-black uppercase mb-6 text-white text-[44px] leading-tight">
+                            KỊCH BẢN CHĂM SÓC KHÁCH HÀNG CHỦ ĐỘNG<br/>
+                            <span className="text-brand-orange">& GIA TĂNG GIÁ TRỊ PHẦN MỀM</span>
+                        </h1>
+                        <p className="text-2xl text-blue-100 mb-8 font-medium">Dành cho nhân viên DVKH SC</p>
+                        <div className="bg-gradient-to-r from-brand-orange to-orange-500 text-white px-8 py-3 rounded-full font-bold text-lg flex items-center gap-3">
+                            <Icon name="graduation-cap" /> Learning & Development Department
+                        </div>
+                    </div>
+                </Slide>,
+
+                // Slide 1: Mục tiêu đào tạo
+                <Slide key="1">
+                    <SlideTitle>Mục tiêu đào tạo</SlideTitle>
+                    <div className="grid grid-cols-12 gap-8 flex-grow items-center pb-4">
+                        <div className="col-span-8 space-y-3">
+                            <p className="text-[20px] font-bold text-brand-blue mb-4">Khóa học giúp nhân viên SC thực hiện trọn vẹn buổi chăm sóc khách hàng T15 theo quy trình:</p>
+                            {[
+                                "Phân tích và sử dụng dữ liệu MP để chuẩn bị cho buổi gặp và tiếp cận hiệu quả",
+                                "Xác minh và nhận diện tình trạng thực tế của khách hàng",
+                                "Thực hiện hướng chăm sóc phù hợp để gia tăng giá trị cho khách hàng",
+                                "Thăm dò nhu cầu hỗ trợ thêm và hoàn tất chăm sóc"
+                            ].map((text, idx) => (
+                                <div key={idx} className="bg-slate-50 p-3.5 rounded-xl border border-slate-200 flex gap-4 items-center">
+                                    <Icon name="check-circle-2" className="text-brand-orange" size={28} />
+                                    <span className="text-slate-800 text-[18px] font-medium">{text}</span>
+                                </div>
+                            ))}
+                        </div>
+                        <div className="col-span-4 flex justify-center items-center">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmP9AOMR7BfF9WRb7cgusQxtyOsEkWbl8hVsohtbKDgw&s=10" alt="Training" className="w-full h-[360px] object-cover rounded-2xl border-2 border-slate-200 shadow-sm" />
+                        </div>
+                    </div>
+                </Slide>,
+
+                // Slide 2: Nguyên tắc tham gia
+                <Slide key="2">
+                    <SlideTitle>Nguyên tắc tham gia</SlideTitle>
+                    <div className="grid grid-cols-3 gap-6 flex-grow items-center pb-6">
+                        {[
+                            { icon: "unlock", title: "Cởi mở", desc: "Không có câu trả lời đúng hay sai, chỉ có cách giải quyết phù hợp trong từng tình huống." },
+                            { icon: "hand-metal", title: "Chủ động", desc: "Tham gia chia sẻ, đặt câu hỏi & thực hành để nhận được phản hồi giúp hoàn thiện kỹ năng." },
+                            { icon: "heart-handshake", title: "Tích cực", desc: "Xây dựng môi trường học tập an toàn, lắng nghe và tôn trọng ý kiến khác biệt." }
+                        ].map((item, i) => (
+                            <div key={i} className="bg-slate-50 border border-slate-200 rounded-2xl p-6 text-center h-[340px] flex flex-col justify-center items-center shadow-sm">
+                                <div className="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center text-brand-orange mb-4">
+                                    <Icon name={item.icon} size={40} />
+                                </div>
+                                <h3 className="text-[24px] font-bold text-brand-blue mb-2">{item.title}</h3>
+                                <p className="text-[17px] text-slate-600 leading-relaxed">{item.desc}</p>
+                            </div>
+                        ))}
+                    </div>
+                </Slide>,
+
+                // Slide 3: Cách thức học
+                <Slide key="3">
+                    <SlideTitle>Cách thức học</SlideTitle>
+                    <div className="grid grid-cols-2 gap-6 flex-grow items-center pb-6">
+                        {[
+                            { icon: "tv", text: "Tiếp nhận hướng dẫn từ giảng viên & Đặt câu hỏi làm rõ vướng mắc nếu có" },
+                            { icon: "edit-3", text: "Thực hiện các nhiệm vụ cá nhân theo yêu cầu, kết hợp sử dụng tài liệu in" },
+                            { icon: "users", text: "Thảo luận & Thực hành đóng vai mô phỏng buổi gặp khách hàng theo cặp/nhóm" },
+                            { icon: "eye", text: "Quan sát & Phản hồi lẫn nhau trong quá trình thực hành" }
+                        ].map((item, i) => (
+                            <div key={i} className="bg-slate-50 p-6 rounded-2xl border border-slate-200 flex items-center gap-5 h-[150px]">
+                                <div className="bg-blue-100 text-brand-blue w-14 h-14 rounded-full flex items-center justify-center shrink-0">
+                                    <Icon name={item.icon} size={30} />
+                                </div>
+                                <span className="font-medium text-[19px] text-slate-700">{item.text}</span>
+                            </div>
+                        ))}
+                    </div>
+                </Slide>,
+
+                // Slide 4: Hoạt động 1
+                <Slide key="4">
+                    <SlideTitle>Hoạt động 1 (15 phút)</SlideTitle>
+                    <div className="flex flex-col flex-grow justify-center pb-6">
+                        <div className="bg-slate-50 p-8 rounded-2xl border border-slate-200 text-center max-w-4xl mx-auto w-full">
+                            <h3 className="text-[22px] font-bold text-brand-blue mb-6">Giới thiệu làm quen với nhóm và cùng trả lời các câu hỏi dưới đây:</h3>
+                            <div className="space-y-4 mb-6 text-left">
+                                <div className="bg-white p-4 rounded-xl border border-slate-200 flex gap-4 items-center">
+                                    <span className="bg-brand-blue text-white w-8 h-8 rounded-full flex items-center justify-center font-bold">1</span>
+                                    <span className="text-[18px] text-slate-800">Trong cuộc gặp CSKH trực tiếp, bạn thường làm những nhiệm vụ gì?</span>
+                                </div>
+                                <div className="bg-white p-4 rounded-xl border border-slate-200 flex gap-4 items-center">
+                                    <span className="bg-brand-orange text-white w-8 h-8 rounded-full flex items-center justify-center font-bold">2</span>
+                                    <span className="text-[18px] text-slate-800">Quá trình CSKH trực tiếp thường gặp phải những khó khăn/rào cản nào từ phía khách hàng?</span>
+                                </div>
+                                <div className="bg-white p-4 rounded-xl border border-slate-200 flex gap-4 items-center">
+                                    <span className="bg-green-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold">3</span>
+                                    <span className="text-[18px] text-slate-800">Đối với bạn, như thế nào là một cuộc gặp CSKH trực tiếp thành công?</span>
+                                </div>
+                            </div>
+                            <p className="text-[18px] font-bold text-brand-orange flex items-center justify-center gap-2">
+                                <Icon name="users" /> Tổng kết lại các ý và cử đại diện chia sẻ
+                            </p>
+                        </div>
+                    </div>
+                </Slide>,
+
+                // Slide 5: Mục tiêu cuộc gọi CSKH
+                <Slide key="5">
+                    <SlideTitle>Mục tiêu cuộc gọi chăm sóc khách hàng chủ động</SlideTitle>
+                    <div className="flex flex-col flex-grow justify-center gap-5 pb-6">
+                        <div className="bg-blue-50 p-5 rounded-xl border-l-4 border-brand-blue">
+                            <p className="text-[20px] text-slate-800">Sau <strong className="text-brand-blue font-bold">15 ngày (T15)</strong> hoàn tất hợp đồng đăng ký phần mềm KiotViet, nhân viên SC thực hiện cuộc gọi/gặp chăm sóc khách hàng chủ động.</p>
+                        </div>
+                        <div className="bg-slate-50 p-5 rounded-xl border border-slate-200">
+                            <p className="text-[20px] text-slate-800">Khách hàng vừa mới sử dụng có thể cần hỗ trợ hướng dẫn và chăm sóc thêm để hiểu các giá trị của phần mềm, thấy việc dùng phần mềm là <strong className="text-brand-orange font-bold">cần thiết, hiệu quả và dễ dàng</strong>.</p>
+                        </div>
+                        <div className="bg-gradient-to-r from-brand-orange to-orange-500 text-white p-6 rounded-xl flex items-center gap-5">
+                            <Icon name="target" size={38} />
+                            <div>
+                                <h4 className="text-[22px] font-bold">Mục tiêu cốt lõi:</h4>
+                                <p className="text-[20px]">Chăm sóc và gợi mở các giá trị để khách hàng thấy được những lợi ích từ phần mềm và duy trì sử dụng.</p>
+                            </div>
+                        </div>
+                    </div>
+                </Slide>,
+
+                // Slide 6: Biểu hiện cuộc gọi tạo giá trị
+                <Slide key="6">
+                    <SlideTitle>Biểu hiện cuộc gọi/gặp CSKH chủ động tạo được giá trị</SlideTitle>
+                    <div className="flex flex-col flex-grow justify-center gap-5 pb-6 max-w-4xl mx-auto w-full">
+                        {[
+                            { num: "1", text: "Khách hàng thao tác được cơ bản trên phần mềm mà không gặp lỗi hay trở ngại.", color: "border-brand-blue text-brand-blue bg-blue-50" },
+                            { num: "2", text: "Khách hàng sẵn sàng áp dụng thêm những tính năng/ dịch vụ Add-on phù hợp mang lại giá trị lợi ích phù hợp với hoạt động kinh doanh thực tế.", color: "border-brand-orange text-brand-orange bg-orange-50" },
+                            { num: "3", text: "Khách hàng sẵn sàng áp dụng và duy trì sử dụng các tính năng phù hợp trong hoạt động kinh doanh thực tế.", color: "border-green-600 text-green-600 bg-green-50" }
+                        ].map((b, i) => (
+                            <div key={i} className={`p-5 rounded-2xl border-l-8 bg-white shadow-sm border border-slate-200 flex items-center gap-5 ${b.color.split(' ')[0]}`}>
+                                <div className={`w-12 h-12 rounded-full flex items-center justify-center font-black text-xl shrink-0 ${b.color.split(' ')[2]} ${b.color.split(' ')[1]}`}>
+                                    {b.num}
+                                </div>
+                                <p className="text-[19px] text-slate-800 font-medium">{b.text}</p>
+                            </div>
+                        ))}
+                    </div>
+                </Slide>,
+
+                // Slide 7: Hoạt động 2
+                <Slide key="7">
+                    <SlideTitle>Hoạt động 2 (10 phút)</SlideTitle>
+                    <div className="flex flex-col flex-grow pb-4">
+                        <p className="text-[17px] font-bold text-slate-800 mb-1">Theo dõi đoạn video và liệt kê ra những nhiệm vụ cụ thể mà nhân viên SC đã thực hiện trong cuộc gặp chăm sóc khách hàng?</p>
+                        <p className="text-[15px] text-brand-orange mb-3 italic">Thảo luận nhóm và hoàn tất bảng quy trình chăm sóc bên dưới</p>
+                        <div className="table-wrap flex-grow bg-white">
+                            <table className="w-full text-left border-collapse h-full">
+                                <thead>
+                                    <tr className="bg-brand-blue text-white">
+                                        <th className="p-3 w-[30%] text-[17px] font-bold border-r border-blue-700">Bước</th>
+                                        <th className="p-3 w-[70%] text-[17px] font-bold">Nhiệm vụ</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="text-[16px] text-brand-blue font-semibold">
+                                    {['1. Tiếp cận', '2. Khai thác tình trạng', '3. Xử lý', '4. Kiểm tra', '5. Chào kết thúc'].map((step, idx) => (
+                                        <tr key={idx} className="border-b border-slate-200 last:border-0 h-[20%]">
+                                            <td className="p-3 border-r border-slate-200 bg-slate-50">{step}</td>
+                                            <td className="p-3"></td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </Slide>,
+
+                // Slide 8: Quy trình 5 bước CSKH
+                <Slide key="8">
+                    <SlideTitle>Quy trình 5 bước CSKH chủ động T15</SlideTitle>
+                    <div className="flex-grow flex flex-col pb-2">
+                        <div className="table-wrap flex-grow bg-white">
+                            <table className="w-full text-left border-collapse h-full text-[13.5px]">
+                                <thead>
+                                    <tr className="bg-brand-blue text-white">
+                                        <th className="p-2 w-[16%] font-bold border-r border-blue-700">BƯỚC</th>
+                                        <th className="p-2 w-[42%] font-bold border-r border-blue-700">NHIỆM VỤ</th>
+                                        <th className="p-2 w-[42%] font-bold">MỤC TIÊU / YÊU CẦU ĐẦU RA</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="text-slate-700">
+                                    <tr className="border-b border-slate-200">
+                                        <td className="p-2 font-bold text-brand-blue bg-slate-50 border-r border-slate-200">1. Tiếp cận</td>
+                                        <td className="p-2 border-r border-slate-200">Chào hỏi, giới thiệu bản thân & Nêu lý do tiếp cận & Xác thực thông tin HĐ.</td>
+                                        <td className="p-2 text-green-700">Khách hàng biết ai đến, thấy mục đích liên quan tới mình và đồng ý trò chuyện.</td>
+                                    </tr>
+                                    <tr className="border-b border-slate-200">
+                                        <td className="p-2 font-bold text-brand-blue bg-slate-50 border-r border-slate-200">2. Khai thác tình trạng</td>
+                                        <td className="p-2 border-r border-slate-200">Đặt câu hỏi khai thác tình trạng thực tế & sử dụng PM dựa trên dữ liệu MP và quan sát. Tiếp nhận khó khăn.</td>
+                                        <td className="p-2 text-green-700">Khách hàng cởi mở chia sẻ về vận hành thực tế và các khó khăn gặp phải.</td>
+                                    </tr>
+                                    <tr className="border-b border-slate-200">
+                                        <td className="p-2 font-bold text-brand-blue bg-slate-50 border-r border-slate-200">3. Xử lý</td>
+                                        <td className="p-2 border-r border-slate-200">Xác nhận, đưa phương án xử lý vướng mắc. Hướng dẫn tính năng phù hợp và gợi mở tính năng gia tăng giá trị.</td>
+                                        <td className="p-2 text-green-700">Khách hàng nắm hướng xử lý, được hướng dẫn tính năng có giá trị và quan tâm tính năng mới.</td>
+                                    </tr>
+                                    <tr className="border-b border-slate-200">
+                                        <td className="p-2 font-bold text-brand-blue bg-slate-50 border-r border-slate-200">4. Kiểm tra</td>
+                                        <td className="p-2 border-r border-slate-200">Khảo sát thêm nhu cầu hỗ trợ khác nếu có.</td>
+                                        <td className="p-2 text-green-700">Khách hàng được giải quyết triệt để vướng mắc hoặc có phương án hỗ trợ rõ ràng.</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="p-2 font-bold text-brand-blue bg-slate-50 border-r border-slate-200">5. Chào kết thúc</td>
+                                        <td className="p-2 border-r border-slate-200">Xác nhận hỗ trợ xong, đánh giá độ hài lòng và chào kết thúc đúng quy trình.</td>
+                                        <td className="p-2 text-green-700">Khách hàng hài lòng, thoải mái và duy trì ấn tượng tốt đẹp với KiotViet.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </Slide>,
+
+                // Slide 9: Chuẩn bị thông tin
+                <Slide key="9">
+                    <SlideTitle>Chuẩn bị thông tin trước khi tiếp cận khách hàng</SlideTitle>
+                    <div className="flex-grow flex flex-col pb-2">
+                        <div className="table-wrap flex-grow bg-white">
+                            <table className="w-full text-left border-collapse h-full text-[13px]">
+                                <thead>
+                                    <tr className="bg-brand-blue text-white">
+                                        <th className="p-2 w-[25%] font-bold border-r border-blue-700">Nhóm thông tin</th>
+                                        <th className="p-2 w-[55%] font-bold border-r border-blue-700">Ghi nhận & nhận định trước khi tiếp cận</th>
+                                        <th className="p-2 w-[20%] font-bold">Mục đích</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="text-slate-700 leading-tight">
+                                    <tr className="border-b border-slate-200">
+                                        <td className="p-2 font-bold text-brand-blue bg-slate-50 border-r border-slate-200">1. Thông tin khách hàng</td>
+                                        <td className="p-2 border-r border-slate-200">Tên KH, Gian hàng, Ngành hàng, Khu vực, Loại HĐ/Thời hạn, Quy mô cửa hàng.</td>
+                                        <td className="p-2 bg-blue-50/50"><strong className="text-brand-orange block">TIẾP CẬN:</strong> Cá nhân hóa trao đổi & xác thực thông tin.</td>
+                                    </tr>
+                                    <tr className="border-b border-slate-200">
+                                        <td className="p-2 font-bold text-brand-blue bg-slate-50 border-r border-slate-200">2. Tình trạng kinh doanh & mức độ sử dụng</td>
+                                        <td className="p-2 border-r border-slate-200">Mức độ sử dụng từ MP, Nhận định sơ bộ (chưa dùng / dùng cơ bản / dùng tốt), các điểm nghi vấn cần làm rõ, lịch sử ticket.</td>
+                                        <td className="p-2 bg-blue-50/50"><strong className="text-brand-orange block">KHAI THÁC:</strong> Khoanh vùng câu hỏi xác minh thực tế.</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="p-2 font-bold text-brand-blue bg-slate-50 border-r border-slate-200">3. Tính năng phù hợp chưa dùng</td>
+                                        <td className="p-2 border-r border-slate-200">Lựa chọn 2 - 3 tính năng/dịch vụ Add-on (VD: Quản lý bàn, Payment QR, KSHIP, Quản lý kho...) kèm giá trị đem lại.</td>
+                                        <td className="p-2 bg-blue-50/50"><strong className="text-brand-orange block">XỬ LÝ:</strong> Chuẩn bị lý do tiếp cận & gợi mở giá trị.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </Slide>,
+
+                // Slide 10: Sẵn sàng tâm thế
+                <Slide key="10">
+                    <SlideTitle>Sẵn sàng tâm thế & công cụ hỗ trợ</SlideTitle>
+                    <div className="grid grid-cols-12 gap-6 flex-grow items-center pb-4">
+                        <div className="col-span-7 space-y-4">
+                            {[
+                                "Thái độ chủ động, thân thiện, tự tin và sẵn lòng hỗ trợ.",
+                                "Trang phục gọn gàng, lịch sự, đúng quy chuẩn hình ảnh KiotViet.",
+                                "Chuẩn bị đầy đủ thiết bị, bản demo tính năng, tài liệu phục vụ hướng dẫn.",
+                                "Quan sát nhanh vận hành thực tế tại cửa hàng để đối chiếu với nhận định MP."
+                            ].map((text, idx) => (
+                                <div key={idx} className="bg-slate-50 p-4 rounded-xl border border-slate-200 flex items-center gap-4">
+                                    <div className="bg-green-100 text-green-700 w-9 h-9 rounded-full flex items-center justify-center shrink-0">
+                                        <Icon name="check" size={20} />
+                                    </div>
+                                    <p className="text-[18px] text-slate-800 font-medium">{text}</p>
+                                </div>
+                            ))}
+                        </div>
+                        <div className="col-span-5 flex justify-center items-center">
+                            <img src="https://cdn4.vieclam24h.vn/AD_4n_Xd1p6_VH_8_Pfye_B9vb1_Uv_KZ_Ylodw6_Oeft_Slf_Es_V_Ttq_ZS_Nl_d8bea875fa.jpeg" alt="Tâm thế" className="w-full h-[360px] object-cover rounded-2xl border-2 border-slate-200 shadow-sm" />
+                        </div>
+                    </div>
+                </Slide>,
+
+                // Slide 11 - 14: Ảnh MP
+                <Slide key="11">
+                    <SlideTitle>Dữ liệu CRM & Merchant Profile (1)</SlideTitle>
+                    <div className="flex-grow flex items-center justify-center bg-slate-100 rounded-xl p-2 mb-2">
+                        <img src="https://i.postimg.cc/QNSkr7Xy/5001170800-TTHD-1.png" alt="MP 1" className="max-h-[500px] object-contain rounded-lg shadow-sm" />
+                    </div>
+                </Slide>,
+                <Slide key="12">
+                    <SlideTitle>Dữ liệu CRM & Merchant Profile (2)</SlideTitle>
+                    <div className="flex-grow flex items-center justify-center bg-slate-100 rounded-xl p-2 mb-2">
+                        <img src="https://i.postimg.cc/pTR8wW3b/5011870800-TTHD-2.png" alt="MP 2" className="max-h-[500px] object-contain rounded-lg shadow-sm" />
+                    </div>
+                </Slide>,
+                <Slide key="13">
+                    <SlideTitle>Dữ liệu CRM & Merchant Profile (3)</SlideTitle>
+                    <div className="flex-grow flex items-center justify-center bg-slate-100 rounded-xl p-2 mb-2">
+                        <img src="https://i.postimg.cc/Yq90LGQV/Coffee-1.png" alt="MP 3" className="max-h-[500px] object-contain rounded-lg shadow-sm" />
+                    </div>
+                </Slide>,
+                <Slide key="14">
+                    <SlideTitle>Dữ liệu CRM & Merchant Profile (4)</SlideTitle>
+                    <div className="flex-grow flex items-center justify-center bg-slate-100 rounded-xl p-2 mb-2">
+                        <img src="https://i.postimg.cc/RV7mFvDy/Coffee-2.png" alt="MP 4" className="max-h-[500px] object-contain rounded-lg shadow-sm" />
+                    </div>
+                </Slide>,
+
+                // Slide 15: Ví dụ chuẩn bị phân tích dữ liệu
+                <Slide key="15">
+                    <SlideTitle>Ví dụ chuẩn bị phân tích dữ liệu MP, CRM</SlideTitle>
+                    <div className="flex-grow flex flex-col pb-2">
+                        <div className="table-wrap flex-grow bg-white text-[13px]">
+                            <table className="w-full text-left border-collapse h-full">
+                                <thead>
+                                    <tr className="bg-brand-blue text-white">
+                                        <th className="p-2 w-[28%] font-bold border-r border-blue-700">Nhóm dữ liệu</th>
+                                        <th className="p-2 w-[72%] font-bold">Chi tiết & Nhận định thực tế</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="text-slate-700">
+                                    <tr className="border-b border-slate-200">
+                                        <td className="p-2 font-bold text-brand-blue bg-slate-50 border-r border-slate-200 align-top">1. Thông tin KH</td>
+                                        <td className="p-2"><strong>KH:</strong> Lê Thị Thùy Dung | <strong>Gian hàng:</strong> Manse (Cà phê) | <strong>Địa chỉ:</strong> 247 Lê Hồng Phong, TP. Hồng Ngự, Đồng Tháp | HĐ 12 tháng.</td>
+                                    </tr>
+                                    <tr className="border-b border-slate-200">
+                                        <td className="p-2 font-bold text-brand-blue bg-slate-50 border-r border-slate-200 align-top">2. Tình trạng sử dụng</td>
+                                        <td className="p-2">Menu đơn giản (đồ uống đóng chai), doanh thu đang tăng. Đã dùng tính năng kiểm kho nhưng chưa thiết lập sơ đồ phòng bàn, chưa dùng quản lý order. Nhận định: <em>Đã dùng cơ bản nhưng chưa khai thác hết giá trị.</em></td>
+                                    </tr>
+                                    <tr>
+                                        <td className="p-2 font-bold text-brand-blue bg-slate-50 border-r border-slate-200 align-top">3. Tính năng gợi ý</td>
+                                        <td className="p-2">
+                                            - <strong>Quản lý phòng bàn:</strong> Order đúng vị trí, tránh nhầm lẫn món khi quán đông.<br/>
+                                            - <strong>Payment - Thanh toán QR:</strong> Tiết kiệm thời gian, tránh sai sót đối soát chuyển khoản.<br/>
+                                            - <strong>Dịch vụ tính giờ:</strong> Phù hợp nếu có kết hợp thuê võng, sạc xe điện...
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </Slide>,
+
+                // Slide 16b: Nhận định tham khảo Pizza
+                <Slide key="16b">
+                    <SlideTitle>Nhận định tham khảo (Quán Pizza 69 bàn)</SlideTitle>
+                    <div className="flex-grow flex flex-col pb-2">
+                        <div className="table-wrap flex-grow bg-white text-[12.5px]">
+                            <table className="w-full text-left border-collapse h-full">
+                                <thead>
+                                    <tr className="bg-brand-blue text-white">
+                                        <th className="p-2 w-[25%] font-bold border-r border-blue-700">Dữ liệu quan sát</th>
+                                        <th className="p-2 w-[28%] font-bold border-r border-blue-700">Nhận định rủi ro</th>
+                                        <th className="p-2 w-[47%] font-bold">Hướng xử lý đề xuất</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="text-slate-700 leading-tight">
+                                    <tr className="border-b border-slate-200"><td className="p-1.5 border-r border-slate-200">69 bàn, khách mới dùng</td><td className="p-1.5 border-r border-slate-200">Dễ nhầm lẫn, nhân viên thao tác sai</td><td className="p-1.5 text-brand-blue">Hướng dẫn tách/ghép bàn, gợi ý E-menu giảm tải nhân viên.</td></tr>
+                                    <tr className="border-b border-slate-200"><td className="p-1.5 border-r border-slate-200">1 máy in bill, chưa máy in bếp</td><td className="p-1.5 border-r border-slate-200">Chậm order xuống bếp, quá tải giờ cao điểm</td><td className="p-1.5 text-brand-blue">Tư vấn lắp thêm máy in bếp để tăng tốc độ chế biến.</td></tr>
+                                    <tr className="border-b border-slate-200"><td className="p-1.5 border-r border-slate-200">Chưa kích hoạt QR Payment</td><td className="p-1.5 border-r border-slate-200">Đối soát thủ công chậm, dễ thất thoát</td><td className="p-1.5 text-brand-blue">Kích hoạt QR Payment tự động thông báo giao dịch thành công.</td></tr>
+                                    <tr className="border-b border-slate-200"><td className="p-1.5 border-r border-slate-200">12 thiết bị / 7 User</td><td className="p-1.5 border-r border-slate-200">Dùng chung User, khó kiểm soát gian lận</td><td className="p-1.5 text-brand-blue">Tạo đủ tài khoản và phân quyền thao tác (hủy món, giảm giá).</td></tr>
+                                    <tr><td className="p-1.5 border-r border-slate-200">Chưa nhập/kiểm kho</td><td className="p-1.5 border-r border-slate-200">Hao hụt nguyên vật liệu Pizza cao</td><td className="p-1.5 text-brand-blue">Hướng dẫn thiết lập định mức nguyên vật liệu món ăn.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </Slide>,
+
+                // Slide 17: Tiếp cận
+                <Slide key="17">
+                    <SlideTitle>Kịch bản tiếp cận thu hút sự chú ý</SlideTitle>
+                    <div className="flex-grow flex flex-col pb-2">
+                        <div className="table-wrap flex-grow bg-white text-[14px]">
+                            <table className="w-full text-left border-collapse h-full">
+                                <thead>
+                                    <tr className="bg-brand-blue text-white">
+                                        <th className="p-3 w-[25%] font-bold border-r border-blue-700">Nhiệm vụ</th>
+                                        <th className="p-3 w-[35%] font-bold border-r border-blue-700">Khung kịch bản</th>
+                                        <th className="p-3 w-[40%] font-bold">Mẫu hội thoại ví dụ</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="text-slate-700">
+                                    <tr className="border-b border-slate-200">
+                                        <td className="p-3 font-bold text-brand-blue bg-slate-50 border-r border-slate-200">Chào hỏi & Giới thiệu</td>
+                                        <td className="p-3 border-r border-slate-200">“Dạ em chào [Tên KH], em là [Tên SC] từ bộ phận DVKH KiotViet ạ.”</td>
+                                        <td className="p-3 text-brand-orange italic font-medium">"Dạ em chào chị Dung, em là Trung từ phòng CSKH của KiotViet ạ."</td>
+                                    </tr>
+                                    <tr className="border-b border-slate-200">
+                                        <td className="p-3 font-bold text-brand-blue bg-slate-50 border-r border-slate-200">Nêu lý do tiếp cận</td>
+                                        <td className="p-3 border-r border-slate-200">“Em thấy [Tín hiệu MP], nên em qua hỗ trợ mình [Hành động/Giá trị]...”</td>
+                                        <td className="p-3 text-brand-orange italic font-medium">"Em thấy quán cà phê của mình dùng được nửa tháng rồi nhưng chưa thiết lập sơ đồ bàn nên em ghé hỗ trợ chị cấu hình để gọi món cho nhanh ạ."</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="p-3 font-bold text-brand-blue bg-slate-50 border-r border-slate-200">Xác thực hợp đồng</td>
+                                        <td className="p-3 border-r border-slate-200">“Trước khi hỗ trợ em xin phép xác nhận thông tin: [Thông tin KH/HĐ] đúng không ạ?”</td>
+                                        <td className="p-3 text-brand-orange italic font-medium">"Hợp đồng của mình đứng tên chị Lê Thị Thùy Dung, sđt 0788750785 cho quán Manse ở 247 Lê Hồng Phong đúng không chị?"</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </Slide>,
+
+                // Slide 18: Xử lý từ chối
+                <Slide key="18">
+                    <SlideTitle>Xử lý các tình huống từ chối tiếp cận</SlideTitle>
+                    <div className="flex flex-col gap-4 flex-grow justify-center pb-4">
+                        {[
+                            { title: "KH bảo không có nhu cầu / Quán đơn giản", quote: "“Quán chị đơn giản bán ly cà phê đâu cần chi tiết em”", action: "Dạ, nếu quán mình chỉ cần tính tiền nhanh gọn thì tính năng Thanh toán QR tự động này cực kỳ tiện, khách quét mã là báo có ngay đỡ phải kiểm tra điện thoại. Em cài nhanh 2 phút là xong ạ." },
+                            { title: "KH thực sự đang bận việc", quote: "“Giờ chị đang bận làm đơn / đón con rồi em”", action: "Dạ vâng em thấy chị đang bận tay, vậy em xin phép hẹn chiều nay khoảng 3h hay sáng mai 9h em quay lại hỗ trợ chị sẽ tiện hơn ạ?" },
+                            { title: "KH muốn làm việc với Sales cũ", quote: "“Có gì chị gọi cu Tiến tư vấn bán máy cho chị là được rồi”", action: "Dạ bạn Tiến chuyên hỗ trợ hợp đồng, còn em là kỹ thuật DVKH sẽ đồng hành cùng chị suốt quá trình dùng. Tiện hôm nay em mang theo bảng mã QR gửi tặng quán mình luôn để chị dùng thử ạ!" }
+                        ].map((item, idx) => (
+                            <div key={idx} className="bg-slate-50 border border-slate-200 rounded-xl p-4 flex gap-4 items-center">
+                                <div className="w-[30%] border-r border-slate-300 pr-4">
+                                    <h4 className="font-bold text-brand-blue text-[16px]">{item.title}</h4>
+                                    <p className="text-slate-500 italic text-[14px] mt-1">{item.quote}</p>
+                                </div>
+                                <div className="w-[70%] pl-2">
+                                    <p className="text-slate-800 text-[15px] font-medium leading-relaxed">{item.action}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </Slide>,
+
+                // Slide 21: 3 Lưu ý khi Khai thác & Xử lý
+                <Slide key="21">
+                    <SlideTitle>3 Lưu ý vàng khi Khai thác & Xử lý</SlideTitle>
+                    <div className="flex flex-col gap-5 flex-grow justify-center pb-6 max-w-4xl mx-auto w-full">
+                        {[
+                            { num: "1", title: "Hỏi đủ và đúng trọng tâm", desc: "Không hỏi dàn trải như đọc khảo sát. Dùng dữ liệu MP để hỏi xác nhận có chủ đích nhằm khoanh vùng vấn đề thực tế." },
+                            { num: "2", title: "Khai thác và Xử lý liền mạch", desc: "Khi khách nói ra vướng mắc, xác nhận ngay và chuyển tiếp sang hành động hướng dẫn giải quyết, không để ngắt quãng." },
+                            { num: "3", title: "Gắn liền với giá trị thực tế", desc: "Luôn nêu lợi ích thiết thực trước khi hướng dẫn tính năng: <Thực trạng cửa hàng → Tính năng phù hợp → Giá trị đem lại → Demo thao tác>." }
+                        ].map((item, i) => (
+                            <div key={i} className="bg-slate-50 p-5 rounded-2xl border border-slate-200 flex items-center gap-5">
+                                <div className="bg-brand-blue text-white w-12 h-12 rounded-full flex items-center justify-center font-bold text-2xl shrink-0">{item.num}</div>
+                                <div>
+                                    <h4 className="text-[19px] font-bold text-brand-blue">{item.title}</h4>
+                                    <p className="text-[16px] text-slate-700 mt-1 leading-relaxed">{item.desc}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </Slide>,
+
+                // Slide 22: Tiến trình khai thác & xử lý gia tăng giá trị
+                <Slide key="22">
+                    <SlideTitle>Tiến trình khai thác & xử lý gia tăng giá trị</SlideTitle>
+                    <div className="flex-grow flex flex-col pb-2">
+                        <div className="table-wrap flex-grow bg-white text-[13px]">
+                            <table className="w-full text-left border-collapse h-full">
+                                <thead>
+                                    <tr className="bg-brand-blue text-white">
+                                        <th className="p-2.5 w-[22%] font-bold border-r border-blue-700">Tình huống</th>
+                                        <th className="p-2.5 w-[38%] font-bold border-r border-blue-700">Khai thác & Xác nhận</th>
+                                        <th className="p-2.5 w-[40%] font-bold">Hướng xử lý tạo giá trị</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="text-slate-700 leading-snug">
+                                    <tr className="border-b border-slate-200">
+                                        <td className="p-2 font-bold text-brand-blue bg-slate-50 border-r border-slate-200">Tư vấn tính năng cơ bản phù hợp</td>
+                                        <td className="p-2 border-r border-slate-200">Quán mình giờ khách đông thường gọi món thế nào ạ? Có khi nào khách gọi đổi món mà bếp làm nhầm không chị?</td>
+                                        <td className="p-2 text-brand-blue">Hướng dẫn dùng sơ đồ phòng bàn để order chính xác vị trí và in phiếu chế biến rõ ràng.</td>
+                                    </tr>
+                                    <tr className="border-b border-slate-200">
+                                        <td className="p-2 font-bold text-brand-blue bg-slate-50 border-r border-slate-200">Gợi mở tính năng giá trị chưa khai thác</td>
+                                        <td className="p-2 border-r border-slate-200">Khách ghé quán mình hay chuyển khoản nhiều không chị? Chị có phải chụp màn hình hoặc kiểm tra điện thoại từng đơn không?</td>
+                                        <td className="p-2 text-brand-blue">Tư vấn màn hình QR Code tự động đồng bộ bill, tiền vào tài khoản thông báo ngay trên phần mềm.</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="p-2 font-bold text-brand-blue bg-slate-50 border-r border-slate-200">Xử lý khi khách gặp lỗi phần mềm</td>
+                                        <td className="p-2 border-r border-slate-200">Lỗi này xuất hiện lúc nào ạ? Chị thao tác in bill hay lúc chọn món? Cho em mượn máy kiểm tra ngay nhé!</td>
+                                        <td className="p-2 text-brand-blue">Xử lý tại chỗ hoặc liên hệ bộ phận kỹ thuật xử lý ngay trong ngày, thông báo thời gian cụ thể cho khách.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </Slide>,
+
+                // Slide 24: Check-list
+                <Slide key="24">
+                    <SlideTitle>Check-list kiểm tra chuẩn CSKH chủ động</SlideTitle>
+                    <div className="flex-grow flex flex-col pb-2">
+                        <div className="table-wrap flex-grow bg-white text-[13.5px]">
+                            <table className="w-full text-left border-collapse h-full">
+                                <thead>
+                                    <tr className="bg-brand-blue text-white">
+                                        <th className="p-2 w-[65%] font-bold border-r border-blue-700 text-center">Tiêu chí đánh giá hành động</th>
+                                        <th className="p-2 w-[15%] font-bold border-r border-blue-700 text-center">Đạt [x]</th>
+                                        <th className="p-2 w-[20%] font-bold text-center">Ghi chú</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="text-slate-800">
+                                    {checkListItems.map((item, idx) => (
+                                        <tr key={idx} className="border-b border-slate-200 hover:bg-slate-50 h-[11%]">
+                                            <td className="p-2 border-r border-slate-200 font-medium">
+                                                <span className="font-bold text-brand-blue mr-2">{idx + 1}.</span>{item}
+                                            </td>
+                                            <td className="p-2 border-r border-slate-200 text-center bg-slate-50/50"></td>
+                                            <td className="p-2 bg-slate-50/50"></td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </Slide>,
+
+                // Slide 26: Đúc kết 3-2-1
+                <Slide key="26">
+                    <SlideTitle>Tổng kết: Mô hình Đúc kết 3 - 2 - 1</SlideTitle>
+                    <div className="flex flex-col gap-5 flex-grow justify-center pb-6 max-w-4xl mx-auto w-full">
+                        <div className="bg-slate-50 rounded-2xl p-5 flex items-center gap-6 border-l-8 border-brand-blue shadow-sm">
+                            <span className="text-[54px] font-black text-brand-blue">3</span>
+                            <p className="text-[20px] font-bold text-slate-800">Điều quan trọng nhất bạn cần ghi nhớ khi CSKH chủ động là gì?</p>
+                        </div>
+                        <div className="bg-slate-50 rounded-2xl p-5 flex items-center gap-6 border-l-8 border-brand-orange shadow-sm">
+                            <span className="text-[54px] font-black text-brand-orange">2</span>
+                            <p className="text-[20px] font-bold text-slate-800">Hành vi bạn cam kết sẽ thay đổi/cải thiện ngay sau buổi học hôm nay?</p>
+                        </div>
+                        <div className="bg-slate-50 rounded-2xl p-5 flex items-center gap-6 border-l-8 border-green-600 shadow-sm">
+                            <span className="text-[54px] font-black text-green-600">1</span>
+                            <p className="text-[20px] font-bold text-slate-800">Hành động cụ thể bạn sẽ áp dụng ngay trong lượt gặp CSKH tiếp theo?</p>
+                        </div>
+                    </div>
+                </Slide>,
+
+                // Slide End
+                <Slide key="end" isTitle={true}>
+                    <div className="text-center flex flex-col justify-center items-center h-full">
+                        <h2 className="text-[56px] font-black text-white leading-tight mb-4">
+                            Chúc các bạn<br/>
+                            <span className="text-brand-orange">chăm sóc khách hàng</span><br/>
+                            thành công!
+                        </h2>
+                        <p className="text-xl text-blue-200 mt-4">KiotViet Learning & Development</p>
+                    </div>
+                </Slide>
+            ];
+        };
+
+        const App = () => {
+            const [currentSlide, setCurrentSlide] = React.useState(0);
+            const slides = getSlides();
+
+            const next = () => setCurrentSlide(p => Math.min(p + 1, slides.length - 1));
+            const prev = () => setCurrentSlide(p => Math.max(p - 1, 0));
+
+            return (
+                <div>
+                    {/* KHU VỰC IN: SẼ HIỆN RA KHI BẤM IN / XUẤT PDF */}
+                    <div id="print-container" className="hidden">
+                        {slides.map((s, idx) => (
+                            <div key={idx} className="slide-page">
+                                {s}
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* KHU VỰC TRÌNH CHIẾU TRỰC TIẾP TRÊN TRÌNH DUYỆT */}
+                    <div id="interactive-container" className="flex flex-col items-center justify-center min-h-screen py-6">
+                        {slides[currentSlide]}
+
+                        <div className="fixed bottom-6 flex items-center gap-4 bg-white/90 backdrop-blur-md px-6 py-2.5 rounded-full border border-slate-300 shadow-lg no-print z-50">
+                            <button onClick={prev} disabled={currentSlide === 0} className="px-3 py-1 bg-slate-100 rounded-full font-bold hover:bg-orange-500 hover:text-white disabled:opacity-30">
+                                ◀ Trước
+                            </button>
+                            <span className="text-slate-700 font-semibold">{currentSlide + 1} / {slides.length}</span>
+                            <button onClick={next} disabled={currentSlide === slides.length - 1} className="px-3 py-1 bg-slate-100 rounded-full font-bold hover:bg-orange-500 hover:text-white disabled:opacity-30">
+                                Tiếp ▶
+                            </button>
+                            <div className="h-5 w-[1px] bg-slate-300 mx-1"></div>
+                            <button 
+                                onClick={() => window.print()}
+                                className="flex items-center gap-2 bg-brand-orange text-white px-4 py-1.5 rounded-full font-bold shadow hover:bg-orange-600"
+                            >
+                                <Icon name="printer" size={18} /> Xuất toàn bộ Slide ra PDF
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
