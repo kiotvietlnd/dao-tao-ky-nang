@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cẩm Nang & Lộ Trình Đào Tạo Kỹ Năng 2027 - KiotViet</title>
+    <meta name="description" content="Hệ thống tra cứu tài liệu và lộ trình đào tạo kỹ năng Telesales TSSGN 2027 KiotViet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome 6.4.0 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif;
+            font-size: 14px; 
+            -webkit-tap-highlight-color: transparent;
+            display: flex; flex-direction: column; min-height: 100vh;
+            color: #334155; background-color: #f0f4f8;
+            overflow-x: hidden;
+        }
+
+        /* Nền chuyển động mượt */
+        .tech-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -10; background: #f0f4f8; }
+        .glow-blob-1, .glow-blob-2 { 
+            position: absolute; width: 50vw; height: 50vw; filter: blur(120px); border-radius: 50%; 
+            transition: background 1.2s ease-in-out; will-change: background, transform; pointer-events: none;
+        }
+        .glow-blob-1 { top: -10%; left: -10%; background: rgba(30, 58, 138, 0.12); } 
+        .glow-blob-2 { bottom: -10%; right: -10%; background: rgba(14, 165, 233, 0.12); }
+
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        @keyframes gradientPan { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        
+        .cyber-text-gradient {
+            background-size: 200% auto;
+            color: transparent;
+            background-clip: text;
+            -webkit-background-clip: text;
+            background-image: linear-gradient(135deg, #1d4ed8 0%, #0284c7 50%, #10b981 100%);
+            animation: gradientPan 8s linear infinite;
+        }
+
+        .glass-panel-ultra {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.88));
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 1);
+            box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05), 0 8px 10px -6px rgba(15, 23, 42, 0.05);
+        }
+
+        .scifi-btn {
+            position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 9px 16px; border-radius: 12px; font-weight: 700; font-size: 13px;
+            background: #0284c7; color: white;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-decoration: none; border: none; cursor: pointer;
+        }
+        .scifi-btn:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 10px 20px -8px rgba(2, 132, 199, 0.5); }
+
+        .script-quote {
+            background: #f8fafc;
+            border-left: 4px solid #0284c7;
+            padding: 12px 16px;
+            border-radius: 0 12px 12px 0;
+            color: #1e293b;
+        }
+        
+        .copy-badge {
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .copy-badge:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body id="top" class="text-slate-700 antialiased">
+
+    <!-- Soft Glow Background -->
+    <div class="tech-bg">
+        <div id="glow-blob-1" class="glow-blob-1"></div>
+        <div id="glow-blob-2" class="glow-blob-2"></div>
+    </div>
+
+    <!-- Sticky Navigation Header -->
+    <header id="main-header" class="sticky top-0 z-50 bg-white/85 backdrop-blur-xl border-b border-slate-200/80 px-4 lg:px-8 py-3 transition-all duration-300">
+        <div class="max-w-7xl mx-auto flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+                <!-- Nút toggle sidebar trên Mobile -->
+                <button id="mobileSidebarToggle" class="lg:hidden p-2 rounded-xl text-slate-600 hover:text-blue-600 hover:bg-slate-100 focus:outline-none">
+                    <i class="fa-solid fa-bars text-lg"></i>
+                </button>
+                <a href="#top" class="flex items-center gap-3">
+                    <img src="https://logo.kiotviet.vn/KiotViet-Logo-Horizontal.svg" alt="KiotViet Logo" class="h-7 md:h-8">
+                    <span class="text-xs uppercase font-extrabold tracking-wider bg-blue-100 text-blue-700 px-2 py-0.5 rounded-md hidden sm:inline-block">TSSGN 2027</span>
+                </a>
+            </div>
+
+            <!-- Ô tìm kiếm thời gian thực -->
+            <div class="relative flex-1 max-w-md">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                    <i class="fa-solid fa-magnifying-glass text-xs"></i>
+                </div>
+                <input type="text" id="searchInput" placeholder="Tìm kiếm nhanh: 3H, 4G, kịch bản, xác thực, chị Trang, giá..." 
+                    class="w-full pl-9 pr-8 py-2 text-xs md:text-sm bg-slate-100/90 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all shadow-inner">
+                <button id="clearSearch" class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600">
+                    <i class="fa-solid fa-xmark text-xs"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Overlay cho Mobile khi mở Sidebar -->
+    <div id="sidebarOverlay" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 hidden lg:hidden"></div>
+
+    <!-- Main Container: Layout 2 cột (Sidebar thu gọn + Main Content rộng) -->
+    <div class="max-w-7xl mx-auto px-3 lg:px-6 py-6 w-full flex-grow flex gap-5 items-start">
+        
+        <!-- SIDEBAR ĐIỀU HƯỚNG THU GỌN 1/2 DIỆN TÍCH (w-44 ~ 176px) -->
+        <aside id="sidebarMenu" class="fixed lg:sticky top-0 lg:top-20 left-0 h-full lg:h-[calc(100vh-6rem)] w-48 lg:w-44 bg-white lg:bg-white/95 lg:backdrop-blur-md z-50 lg:z-10 p-3 rounded-none lg:rounded-xl border-r lg:border border-slate-200/90 shadow-xl lg:shadow-sm overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out flex flex-col justify-between flex-shrink-0">
+            <div class="space-y-3">
+                <div class="flex items-center justify-between pb-2 border-b border-slate-200 lg:hidden">
+                    <div class="font-extrabold text-slate-800 text-xs flex items-center gap-1.5">
+                        <i class="fa-solid fa-list-ul text-blue-600"></i> Mục lục tra cứu
+                    </div>
+                    <button id="closeSidebar" class="text-slate-400 hover:text-slate-600 p-1">
+                        <i class="fa-solid fa-xmark text-sm"></i>
+                    </button>
+                </div>
+
+                <nav class="space-y-2.5 text-[11px] leading-snug">
+                    <!-- Phần 1: Lộ trình đào tạo kỹ năng -->
+                    <div>
+                        <a href="#lo-trinh-tong-quan" class="sidebar-item block px-2 py-1.5 rounded-lg font-bold text-slate-800 hover:text-blue-700 hover:bg-blue-50 transition-colors">
+                            <i class="fa-solid fa-map-location-dot text-blue-600 mr-1"></i>
+                            <span>Phần 1: Lộ trình đào tạo kỹ năng</span>
+                        </a>
+                    </div>
+
+                    <!-- Phần 2: Nội dung đào tạo -->
+                    <div class="space-y-1">
+                        <div class="px-2 py-0.5 text-[10px] font-black uppercase tracking-wider text-slate-800 flex items-center gap-1">
+                            <i class="fa-solid fa-book-open text-blue-600 text-[10px]"></i>
+                            Phần 2: Nội dung đào tạo
+                        </div>
+                        <div class="space-y-0.5 pl-1.5 ml-1.5 border-l border-slate-200 text-slate-600">
+                            <a href="#module-coc-crm" class="sidebar-item block px-1.5 py-1 rounded hover:text-blue-600 hover:bg-blue-50 transition-colors">
+                                1. COC-CRM
+                            </a>
+                            <a href="#module-call-script" class="sidebar-item block px-1.5 py-1 rounded hover:text-blue-600 hover:bg-blue-50 transition-colors">
+                                2. Kịch bản cuộc gọi
+                            </a>
+                            <a href="#module-cam-nang" class="sidebar-item block px-1.5 py-1 rounded hover:text-blue-600 hover:bg-blue-50 transition-colors">
+                                3. Cẩm nang ngành hàng
+                            </a>
+                            <a href="#module-3h" class="sidebar-item block px-1.5 py-1 rounded hover:text-blue-600 hover:bg-blue-50 transition-colors">
+                                4. Khai thác thông tin & Nhu cầu
+                            </a>
+                            <a href="#module-tu-choi" class="sidebar-item block px-1.5 py-1 rounded hover:text-blue-600 hover:bg-blue-50 transition-colors">
+                                5. Thuyết phục & Xử lý từ chối
+                            </a>
+                            <a href="#module-tips-gia" class="sidebar-item block px-1.5 py-1 rounded hover:text-blue-600 hover:bg-blue-50 transition-colors">
+                                6. 3 giai đoạn tư vấn & Nguyên tắc tư vấn giá
+                            </a>
+                            <a href="#module-4g-khgt" class="sidebar-item block px-1.5 py-1 rounded hover:text-blue-600 hover:bg-blue-50 transition-colors">
+                                7. Xây nguồn KHGT
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Phần 3: Phối hợp Coacher & LnD -->
+                    <div>
+                        <a href="#module-vai-tro" class="sidebar-item block px-2 py-1.5 rounded-lg font-bold text-slate-800 hover:text-purple-700 hover:bg-purple-50 transition-colors">
+                            <i class="fa-solid fa-users-gear text-purple-600 mr-1"></i>
+                            <span>Phần 3: Phối hợp Coacher & LnD</span>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+
+            <!-- Link LMS KiotViet góc dưới sidebar -->
+            <div class="pt-2 border-t border-slate-200 text-center">
+                <a href="https://daotao.kiotviet.com" target="_blank" class="text-[10px] text-blue-600 hover:text-blue-800 font-semibold inline-flex items-center gap-1">
+                    <i class="fa-solid fa-graduation-cap"></i> LMS KiotViet
+                </a>
+            </div>
+        </aside>
+
+        <!-- NỘI DUNG CHÍNH (MAIN CONTENT) -->
+        <main class="flex-1 w-full min-w-0 space-y-10">
+            
+            <!-- Hero Section -->
+            <section class="bg-gradient-to-tr from-blue-50/70 via-white to-sky-50/70 rounded-[28px] p-6 lg:p-8 border border-white/70 shadow-lg space-y-3">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100/80 text-blue-800 text-xs font-bold uppercase tracking-wide">
+                    <i class="fa-solid fa-graduation-cap"></i> Tra Cứu Nghiệp Vụ TSSGN
+                </div>
+                <h1 class="text-2xl lg:text-3xl font-black text-slate-800 leading-tight cyber-text-gradient">
+                    LỘ TRÌNH ĐÀO TẠO KỸ NĂNG 2027
+                </h1>
+                <p class="text-slate-600 text-sm lg:text-base leading-relaxed">
+                    Hệ thống hóa toàn bộ kiến thức, quy trình 5 bước tư vấn cuộc gọi chuẩn, bộ câu hỏi 3H, bí quyết xử lý 6 lý do từ chối thường gặp, kỹ năng tư vấn giá và quy trình 4G xây dựng nguồn khách hàng giới thiệu.
+                </p>
+                <div class="pt-2 flex flex-wrap gap-3">
+                    <a href="https://daotao.kiotviet.com" target="_blank" class="scifi-btn">
+                        <i class="fa-solid fa-chalkboard-user"></i> Cổng Đào Tạo KiotViet
+                    </a>
+                    <a href="https://sites.google.com/view/camnangkiotviet/trang-ch%E1%BB%A7" target="_blank" class="scifi-btn bg-slate-800 hover:bg-slate-900">
+                        <i class="fa-solid fa-book-open"></i> Trang Cẩm Nang Ngành Hàng
+                    </a>
+                </div>
+            </section>
+
+            <!-- PHẦN I: TỔNG QUAN LỘ TRÌNH ĐÀO TẠO KỸ NĂNG 2027 -->
+            <section id="lo-trinh-tong-quan" class="search-item glass-panel-ultra rounded-[24px] p-6 lg:p-8 shadow-md">
+                <div class="flex items-center gap-3 border-b border-slate-200 pb-4 mb-6">
+                    <span class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-lg">
+                        I
+                    </span>
+                    <div>
+                        <h2 class="text-xl lg:text-2xl font-extrabold text-slate-800">Phần I: Tổng quan: Lộ trình đào tạo Kỹ năng 2027</h2>
+                        <p class="text-xs text-slate-500">Kế hoạch triển khai đào tạo theo từng giai đoạn phát triển của nhân viên</p>
+                    </div>
+                </div>
+
+                <!-- Bảng lộ trình đào tạo -->
+                <div class="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
+                    <table class="w-full text-left border-collapse text-sm">
+                        <thead>
+                            <tr class="bg-slate-100/80 text-slate-700 font-bold border-b border-slate-200">
+                                <th class="py-3.5 px-4 w-36">Giai đoạn</th>
+                                <th class="py-3.5 px-4">Nội dung đào tạo</th>
+                                <th class="py-3.5 px-4 w-60">Hình thức</th>
+                                <th class="py-3.5 px-4 w-36 text-center">Tình trạng</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200 bg-white">
+                            <!-- 2 tuần đầu: COC -->
+                            <tr class="hover:bg-slate-50/80 transition-colors">
+                                <td class="py-3.5 px-4 font-bold text-blue-700 bg-blue-50/30 align-top">2 tuần đầu</td>
+                                <td class="py-3.5 px-4 font-semibold text-slate-800">Quy định COC</td>
+                                <td class="py-3.5 px-4 text-slate-600">Bài giảng Video + quiz</td>
+                                <td class="py-3.5 px-4 text-center">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                        <i class="fa-solid fa-circle-check text-[10px]"></i> Đã triển khai
+                                    </span>
+                                </td>
+                            </tr>
+                            <!-- 2 tuần đầu: Call Script -->
+                            <tr class="hover:bg-slate-50/80 transition-colors">
+                                <td class="py-3.5 px-4 font-bold text-blue-700 bg-blue-50/30 align-top">2 tuần đầu</td>
+                                <td class="py-3.5 px-4 font-semibold text-slate-800">Kịch bản cuộc gọi - Call Script</td>
+                                <td class="py-3.5 px-4 text-slate-600">
+                                    Bài giảng Video + quiz<br>
+                                    Buổi thực hành cùng GV<br>
+                                    Test Call
+                                </td>
+                                <td class="py-3.5 px-4 text-center">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                        <i class="fa-solid fa-circle-check text-[10px]"></i> Đã triển khai
+                                    </span>
+                                </td>
+                            </tr>
+                            <!-- 2 tuần đầu: Cẩm nang -->
+                            <tr class="hover:bg-slate-50/80 transition-colors">
+                                <td class="py-3.5 px-4 font-bold text-blue-700 bg-blue-50/30 align-top">2 tuần đầu</td>
+                                <td class="py-3.5 px-4 font-semibold text-slate-800">Cẩm nang ngành hàng</td>
+                                <td class="py-3.5 px-4 text-slate-600">Tài liệu tra cứu</td>
+                                <td class="py-3.5 px-4 text-center">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                        <i class="fa-solid fa-circle-check text-[10px]"></i> Đã triển khai
+                                    </span>
+                                </td>
+                            </tr>
+
+                            <!-- Thử việc: Khai thác thông tin -->
+                            <tr class="hover:bg-slate-50/80 transition-colors">
+                                <td class="py-3.5 px-4 font-bold text-amber-700 bg-amber-50/30 align-top">Thử việc</td>
+                                <td class="py-3.5 px-4 font-semibold text-slate-800">Kỹ năng khai thác thông tin & Khơi gợi nhu cầu</td>
+                                <td class="py-3.5 px-4 text-slate-600">
+                                    Bài giảng Video + quiz<br>
+                                    Buổi thực hành cùng GV
+                                </td>
+                                <td class="py-3.5 px-4 text-center">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                        <i class="fa-solid fa-circle-check text-[10px]"></i> Đã triển khai
+                                    </span>
+                                </td>
+                            </tr>
+                            <!-- Thử việc: Tư vấn giải pháp & chốt sale -->
+                            <tr class="hover:bg-slate-50/80 transition-colors">
+                                <td class="py-3.5 px-4 font-bold text-amber-700 bg-amber-50/30 align-top">Thử việc</td>
+                                <td class="py-3.5 px-4 font-semibold text-slate-800">
+                                    Kỹ năng tư vấn giải pháp & chốt sale hiệu quả (tư vấn lợi ích tính năng & giá cả ưu đãi)
+                                </td>
+                                <td class="py-3.5 px-4 text-slate-600">
+                                    Bài giảng Video + quiz<br>
+                                    Buổi thực hành cùng Coacher
+                                </td>
+                                <td class="py-3.5 px-4 text-center">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-600 border border-slate-300">
+                                        <i class="fa-regular fa-clock text-[10px]"></i> Chưa triển khai
+                                    </span>
+                                </td>
+                            </tr>
+
+                            <!-- Chính thức <1 năm: Thuyết phục & xử lý từ chối -->
+                            <tr class="hover:bg-slate-50/80 transition-colors">
+                                <td class="py-3.5 px-4 font-bold text-purple-700 bg-purple-50/30 align-top">Chính thức &lt;1 năm</td>
+                                <td class="py-3.5 px-4 font-semibold text-slate-800">Kỹ năng thuyết phục & xử lý từ chối</td>
+                                <td class="py-3.5 px-4 text-slate-600">
+                                    Bài giảng Video + quiz<br>
+                                    Buổi thực hành cùng GV
+                                </td>
+                                <td class="py-3.5 px-4 text-center">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                        <i class="fa-solid fa-circle-check text-[10px]"></i> Đã triển khai
+                                    </span>
+                                </td>
+                            </tr>
+                            <!-- Chính thức <1 năm: Xây dựng mối quan hệ tạo KHGT -->
+                            <tr class="hover:bg-slate-50/80 transition-colors">
+                                <td class="py-3.5 px-4 font-bold text-purple-700 bg-purple-50/30 align-top">Chính thức &lt;1 năm</td>
+                                <td class="py-3.5 px-4 font-semibold text-slate-800">Kỹ năng xây dựng mối quan hệ với khách hàng tạo nguồn KHGT</td>
+                                <td class="py-3.5 px-4 text-slate-600">Buổi học cùng GV</td>
+                                <td class="py-3.5 px-4 text-center">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                        <i class="fa-solid fa-circle-check text-[10px]"></i> Đã triển khai
+                                    </span>
+                                </td>
+                            </tr>
+                            <!-- Chính thức <1 năm: Phân bổ thời gian CSKH -->
+                            <tr class="hover:bg-slate-50/80 transition-colors">
+                                <td class="py-3.5 px-4 font-bold text-purple-700 bg-purple-50/30 align-top">Chính thức &lt;1 năm</td>
+                                <td class="py-3.5 px-4 font-semibold text-slate-800">Kỹ năng phân bổ thời gian chăm sóc khách hàng theo mức độ tiềm năng</td>
+                                <td class="py-3.5 px-4 text-slate-600">
+                                    Bài giảng Video + quiz<br>
+                                    Buổi thực hành cùng Coacher
+                                </td>
+                                <td class="py-3.5 px-4 text-center">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-600 border border-slate-300">
+                                        <i class="fa-regular fa-clock text-[10px]"></i> Chưa triển khai
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- PHẦN II: NỘI DUNG CHÍNH CÁC CHƯƠNG TRÌNH ĐÃ TRIỂN KHAI -->
+            <div class="border-b border-slate-300 pb-2 pt-4">
+                <h2 class="text-xl lg:text-3xl font-black text-slate-800 flex items-center gap-3">
+                    <span class="w-9 h-9 rounded-lg bg-blue-600 text-white flex items-center justify-center text-sm">II</span>
+                    Phần II: Nội dung chính các chương trình đã triển khai
+                </h2>
+            </div>
+
+            <!-- 1. Đào tạo COC-CRM -->
+            <section id="module-coc-crm" class="search-item glass-panel-ultra rounded-[24px] p-6 lg:p-8 shadow-md border-l-4 border-l-blue-600">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-slate-200">
+                    <h3 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                        <span class="text-blue-600 font-extrabold">1.</span> Đào tạo COC-CRM
+                    </h3>
+                    <a href="https://daotao.kiotviet.com/course/dao-tao-coc-crm" target="_blank" class="inline-flex items-center gap-2 text-xs font-bold text-blue-600 bg-blue-50 px-3 py-1.5 rounded-lg hover:bg-blue-100 transition-colors w-fit">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i> Link khóa học: Đào tạo COC-CRM
+                    </a>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <div class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Mục tiêu:</div>
+                    <p class="text-slate-700 leading-relaxed text-sm">
+                        Giúp nhân viên kinh doanh mới trang bị đầy đủ kiến thức cơ bản cần thiết để tuân thủ đúng quy trình, tránh các lỗi sai phổ biến và nâng cao hiệu quả công việc.
+                    </p>
+                </div>
+            </section>
+
+            <!-- 2. Kịch bản cuộc gọi Call Script -->
+            <section id="module-call-script" class="search-item glass-panel-ultra rounded-[24px] p-6 lg:p-8 shadow-md space-y-6">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-4 border-b border-slate-200">
+                    <div>
+                        <div class="text-xs font-bold uppercase tracking-wider text-blue-600 mb-1">Quy trình cuộc gọi tư vấn</div>
+                        <h3 class="text-xl lg:text-2xl font-extrabold text-slate-800">
+                            2. KỊCH BẢN CUỘC GỌI TƯ VẤN (Call Script)
+                        </h3>
+                    </div>
+                    <a href="https://daotao.kiotviet.com/course/dao-tao-telesales-kich-ban-cuoc-goi" target="_blank" class="inline-flex items-center gap-2 text-xs font-bold text-blue-600 bg-blue-50 px-3.5 py-2 rounded-xl hover:bg-blue-100 transition-colors w-fit">
+                        <i class="fa-solid fa-link"></i> Link khóa học: Kịch bản cuộc gọi
+                    </a>
+                </div>
+
+                <!-- Mục tiêu & Tổng quan -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-blue-50/60 p-4 rounded-xl border border-blue-200">
+                        <div class="font-bold text-blue-900 mb-1 flex items-center gap-2 text-sm">
+                            <i class="fa-solid fa-bullseye text-blue-600"></i> Mục tiêu:
+                        </div>
+                        <p class="text-slate-700 text-sm">
+                            Áp dụng đúng quy trình 5 bước kịch bản cuộc gọi vào trong tình huống tư vấn khách hàng.
+                        </p>
+                    </div>
+                    <div class="bg-amber-50/60 p-4 rounded-xl border border-amber-200">
+                        <div class="font-bold text-amber-900 mb-1 flex items-center gap-2 text-sm">
+                            <i class="fa-solid fa-lightbulb text-amber-600"></i> Tổng quan:
+                        </div>
+                        <p class="text-slate-700 text-sm">
+                            Cuộc gọi tư vấn tại KiotViet được xây dựng xoay quanh việc đồng hành cùng khách hàng giải quyết vấn đề kinh doanh. Khi khách hàng hiểu rõ vấn đề của họ và thấy được giải pháp phù hợp, quyết định mua hàng sẽ trở nên tự nhiên hơn.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Quy trình 5 bước Badge -->
+                <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200">
+                    <div class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">Quy trình 5 bước kịch bản cuộc gọi bao gồm:</div>
+                    <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 text-center text-xs font-bold">
+                        <div class="bg-white p-2.5 rounded-xl border border-slate-200 shadow-sm text-blue-700">1. Kết nối</div>
+                        <div class="bg-white p-2.5 rounded-xl border border-slate-200 shadow-sm text-blue-700">2. Xác thực</div>
+                        <div class="bg-white p-2.5 rounded-xl border border-slate-200 shadow-sm text-blue-700">3. Khai thác thông tin & Nhu cầu</div>
+                        <div class="bg-white p-2.5 rounded-xl border border-slate-200 shadow-sm text-blue-700">4. Tư vấn Giải pháp</div>
+                        <div class="bg-white p-2.5 rounded-xl border border-slate-200 shadow-sm text-blue-700">5. Demo và chốt</div>
+                    </div>
+                    <div class="mt-3 text-xs text-slate-500 italic">
+                        Lưu ý chung: Việc tuân thủ quy trình, đặc biệt là bước xác thực, không chỉ giúp tăng hiệu quả bán hàng mà còn đảm bảo đúng quy định của bộ phận kinh doanh - COC.
+                    </div>
+                </div>
+
+                <!-- BƯỚC 1: KẾT NỐI -->
+                <div class="p-5 rounded-2xl bg-white border border-slate-200 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <h4 class="font-bold text-base text-blue-800 flex items-center gap-2">
+                            <span class="w-6 h-6 rounded-full bg-blue-600 text-white text-xs flex items-center justify-center">1</span>
+                            BƯỚC 1: KẾT NỐI
+                        </h4>
+                        <span class="text-xs bg-slate-100 text-slate-600 px-2.5 py-1 rounded-md font-semibold">15–30 giây đầu tiên</span>
+                    </div>
+                    <p class="text-sm text-slate-600">Đây là giai đoạn tạo ấn tượng ban đầu với khách hàng, thường diễn ra trong 15–30 giây đầu tiên.</p>
+                    <div class="text-sm font-semibold text-slate-800">Nhiệm vụ cần thực hiện:</div>
+                    <ul class="list-disc list-inside text-sm text-slate-600 pl-2 space-y-1">
+                        <li>Chào hỏi khách hàng.</li>
+                        <li>Giới thiệu rõ ràng bạn là ai, đến từ đâu.</li>
+                        <li>Làm rõ mục đích của cuộc gọi.</li>
+                    </ul>
+                    <div class="script-quote space-y-2 text-sm">
+                        <div class="font-bold text-blue-900 flex items-center justify-between">
+                            <span>Ví dụ minh họa:</span>
+                            <button onclick="copyText('sc-b1')" class="copy-badge text-xs font-medium text-blue-600 hover:text-blue-800 bg-white px-2 py-0.5 rounded border border-blue-200">
+                                <i class="fa-regular fa-copy"></i> Copy
+                            </button>
+                        </div>
+                        <div id="sc-b1" class="space-y-1 text-slate-700">
+                            <p><strong>Chào hỏi:</strong> "Dạ em chào chị An/ Chị An ạ? Dạ cho em hỏi có phải chị An đang nghe máy đúng không ạ?"</p>
+                            <p><strong>Giới thiệu:</strong> "Em là X, chuyên viên tư vấn phần mềm quản lý bán hàng KiotViet."</p>
+                            <p><strong>Nêu mục đích:</strong> "Em nhận được thông tin chị đang quan tâm tìm hiểu phần mềm. Em gọi điện để tư vấn hỗ trợ chị sử dụng, chị đang tiện nghe máy chứ ạ?"</p>
+                        </div>
+                    </div>
+                    <div class="text-xs bg-amber-50 text-amber-900 p-3 rounded-xl border border-amber-200">
+                        <strong>Lưu ý:</strong> "Chuyên viên Telesales cần chuẩn bị trước thông tin khách hàng (tên, ngành hàng, khu vực…) để cá nhân hóa cuộc gọi. Điều này giúp thể hiện sự chuyên nghiệp và tăng khả năng khách hàng tiếp tục lắng nghe."
+                    </div>
+                </div>
+
+                <!-- BƯỚC 2: XÁC THỰC -->
+                <div class="p-5 rounded-2xl bg-white border border-slate-200 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <h4 class="font-bold text-base text-blue-800 flex items-center gap-2">
+                            <span class="w-6 h-6 rounded-full bg-blue-600 text-white text-xs flex items-center justify-center">2</span>
+                            BƯỚC 2: XÁC THỰC
+                        </h4>
+                        <span class="text-xs bg-rose-100 text-rose-700 px-2.5 py-1 rounded-md font-bold">Bắt buộc theo COC</span>
+                    </div>
+                    <p class="text-sm text-slate-600">Bước xác thực cần thực hiện ngay sau khi kết nối thành công trong cuộc gọi đầu tiên để đảm bảo theo quy định của bộ phận kinh doanh.</p>
+                    <div class="text-sm font-semibold text-slate-800">Đặt 2 câu hỏi xác thực:</div>
+                    <div class="script-quote space-y-2 text-sm">
+                        <div class="font-bold text-blue-900 flex items-center justify-between">
+                            <span>Nội dung 2 câu hỏi xác thực:</span>
+                            <button onclick="copyText('sc-b2')" class="copy-badge text-xs font-medium text-blue-600 hover:text-blue-800 bg-white px-2 py-0.5 rounded border border-blue-200">
+                                <i class="fa-regular fa-copy"></i> Copy
+                            </button>
+                        </div>
+                        <div id="sc-b2" class="space-y-1.5 text-slate-700">
+                            <p><strong>Câu hỏi xác thực tài khoản:</strong> "Trước đây, anh/chị đã từng tạo tài khoản và đã được bạn chuyên viên tư vấn nào bên em hỗ trợ chưa ạ?"</p>
+                            <p><strong>Câu hỏi xác thực nguồn:</strong> "Không biết anh/chị tìm hiểu KiotViet thông qua bạn bè giới thiệu hay tự tìm hiểu qua trang quảng cáo nào ạ?"</p>
+                        </div>
+                    </div>
+                    <div class="text-xs bg-slate-100 text-slate-600 p-2.5 rounded-lg border border-slate-200">
+                        <strong>Lưu ý:</strong> "Về cách xử lý trong từng tình huống, xem lại chương trình đào tạo về quy trình quy định."
+                    </div>
+                </div>
+
+                <!-- BƯỚC 3: KHAI THÁC THÔNG TIN VÀ NHU CẦU -->
+                <div class="p-5 rounded-2xl bg-white border border-slate-200 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h4 class="font-bold text-base text-blue-800 flex items-center gap-2">
+                            <span class="w-6 h-6 rounded-full bg-blue-600 text-white text-xs flex items-center justify-center">3</span>
+                            BƯỚC 3: KHAI THÁC THÔNG TIN VÀ NHU CẦU
+                        </h4>
+                    </div>
+                    <div class="p-3 bg-blue-50/70 rounded-xl text-xs text-blue-900 font-medium">
+                        <strong>Mục tiêu:</strong><br>
+                        • Hiểu rõ tình trạng kinh doanh hiện tại của khách hàng.<br>
+                        • Xác định khó khăn và nhu cầu thực sự của khách hàng.
+                    </div>
+
+                    <div>
+                        <h5 class="font-bold text-slate-800 text-sm">3.1. Khai thác thông tin</h5>
+                        <p class="text-sm text-slate-600 mt-1">
+                            <strong>Nội dung lý thuyết:</strong> Các nhóm thông tin cần khai thác bao gồm: Ngành hàng, mô hình kinh doanh, quy mô, kinh nghiệm/thâm niên, cách quản lý hiện tại, và những khó khăn đang gặp phải.
+                        </p>
+                        <div class="script-quote my-2 text-sm">
+                            <strong>Ví dụ minh họa:</strong> "Nếu muốn hỏi khai thác về cách thức quản lý cửa hàng của khách hàng, bạn có thể hỏi: Mô hình bán tạp hóa em thấy có tới hàng nghìn mã hàng khác nhau, không biết hiện tại, anh/chị đang quản lý hàng hóa bằng công cụ gì vậy ạ?"
+                        </div>
+                        <div class="text-xs bg-slate-50 p-3 rounded-lg border border-slate-200 space-y-1">
+                            <strong>Lưu ý:</strong>
+                            <ul class="list-disc list-inside text-slate-600 pl-1">
+                                <li>Ưu tiên sử dụng câu hỏi mở.</li>
+                                <li>Hỏi theo mạch hội thoại, không dồn dập.</li>
+                                <li>Dựa vào câu trả lời để dẫn dắt câu hỏi tiếp theo.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h5 class="font-bold text-slate-800 text-sm">3.2. Khơi gợi nhu cầu</h5>
+                        <p class="text-sm text-slate-600 mt-1">
+                            <strong>Nội dung lý thuyết:</strong> Sau khi đã thực hiện tốt nhiệm vụ khai thác thông tin của khách hàng, chúng ta tiếp tục đặt câu hỏi tìm hiểu nhu cầu/mong muốn của khách hàng. Bạn có thể sử dụng mẫu câu hỏi khai thác nhu cầu sau:
+                        </p>
+                        <div class="script-quote my-2 text-sm text-blue-900 font-semibold">
+                            "(Ngoài những khó khăn anh/chị đã chia sẻ) Khi tìm hiểu phần mềm, không biết anh chị mong muốn phần mềm đáp ứng nhu cầu gì cho anh chị ạ?"
+                        </div>
+
+                        <!-- Đoạn hội thoại mẫu: Chị Trang -->
+                        <div class="mt-3 p-4 bg-slate-50 rounded-xl border border-slate-200">
+                            <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-200">
+                                <span class="font-bold text-xs uppercase tracking-wider text-slate-700">
+                                    <i class="fa-solid fa-comments text-blue-600"></i> Đoạn hội thoại ví dụ minh họa (Khách hàng là chị Trang, đang kinh doanh mỹ phẩm tại shop và bán online trên sàn):
+                                </span>
+                                <button onclick="copyText('dialogue-trang')" class="copy-badge text-xs text-blue-600 bg-white px-2 py-0.5 rounded border border-blue-200">
+                                    Copy hội thoại
+                                </button>
+                            </div>
+                            <div id="dialogue-trang" class="space-y-2 text-xs md:text-sm text-slate-700 leading-relaxed font-normal">
+                                <p><strong class="text-blue-700">Chuyên viên:</strong> Để tư vấn kỹ nhất cho mình, chị Trang cho em hỏi thăm một chút thông tin cửa hàng mình chị nhé. Hiện chị đang kinh doanh mặt hàng gì vậy chị?</p>
+                                <p><strong class="text-emerald-700">Khách hàng:</strong> Ừm chị bán mỹ phẩm ở tiệm với bán trên facebook em ạ.</p>
+                                <p><strong class="text-blue-700">Chuyên viên:</strong> Vậy mình kinh doanh lâu chưa chị?</p>
+                                <p><strong class="text-emerald-700">Khách hàng:</strong> Cũng tầm 7, 8 năm rồi đấy.</p>
+                                <p><strong class="text-blue-700">Chuyên viên:</strong> Lâu năm trong nghề rồi chị ha, vậy chắc chị đông khách lắm chị nhỉ? Này chắc phải có mấy nhân viên phụ chị bán hàng mới xuể chị nhỉ?</p>
+                                <p><strong class="text-emerald-700">Khách hàng:</strong> Ừm cũng trộm vía, chị có 3 bạn nhân viên hộ chị, mà vẫn không xuể việc em ạ.</p>
+                                <p><strong class="text-blue-700">Chuyên viên:</strong> Cửa hàng mình lớn đông nhân viên như vậy không biết chị Trang đang quản lý cửa hàng mình như thế nào vậy chị?</p>
+                                <p><strong class="text-emerald-700">Khách hàng:</strong> Chị có 1 bạn trực page với thu ngân bạn điền đơn vào file excel, còn 2 bạn còn lại vừa đóng hàng em ạ.</p>
+                                <p><strong class="text-blue-700">Chuyên viên:</strong> Dạ, nếu chỉ có 1 bạn chuyên điền đơn như vậy có khi nào nhiều đơn quá mình bị lên đơn chậm hay sót đơn của khách không chị ha. Hay chị có thường gặp những khó khăn nào khi quản lý việc kinh doanh vậy ạ?</p>
+                                <p><strong class="text-emerald-700">Khách hàng:</strong> Ừm có khách quen nhắn chị mấy lần vì không thấy ship hàng, chị cũng lo nên đang tìm cách giải quyết, đợt rồi chị còn nhập mấy lô hàng mỹ phẩm mới nên chị cũng đang bù đầu nhập hàng đây.</p>
+                                <p><strong class="text-blue-700">Chuyên viên:</strong> Vâng nhiều khách hàng của em kinh doanh mỹ phẩm chưa dùng phần mềm cũng khó khăn như chị kể. Đặc thù ngành mình các mã hàng rất nhiều, lại có hạn sử dụng nên quản lý excel vất lắm mà muốn theo dõi xuất nhập tồn hàng, kiểm hàng chính xác cũng mất rất nhiều thời gian.</p>
+                                <p><strong class="text-emerald-700">Khách hàng:</strong> Ừm đúng như vậy đấy.</p>
+                                <p><strong class="text-blue-700">Chuyên viên:</strong> Dạ em hiểu 1 vài vấn đề nhức nhối của cửa hàng mình rồi chị Trang ạ. Ngoài những khó khăn chị kể với em ra khi tìm hiểu phần mềm chị mong muốn phần mềm đáp ứng thêm nhu cầu gì cho mình nữa không ạ?</p>
+                                <p><strong class="text-emerald-700">Khách hàng:</strong> Ban đầu chị chỉ muốn là quản lý hàng hóa thôi, mà em hỏi ra thì chị thấy mấy vấn đề kiểu date hạn, trùng đơn cũng quan trọng. À cho chị hỏi cái nợ bên cung cấp bên em có cập nhật được không? Vì chị không có kế toán ấy.</p>
+                                <p><strong class="text-blue-700">Chuyên viên:</strong> Dạ có chị ạ. Nói đến nợ bên cung cấp thì chị có hay cho khách nợ không chị?</p>
+                                <p><strong class="text-emerald-700">Khách hàng:</strong> Có luôn em ạ vì chị cả bán buôn nên cũng có cho nợ với khách sỉ.</p>
+                                <p><strong class="text-blue-700">Chuyên viên:</strong> Dạ vâng ạ vậy em nắm bắt được rồi ạ. Như em vừa được chị Trang chia sẻ hiện cửa hàng mình đang gặp vấn đề về quản lý hàng hóa theo lô date sản phẩm, quản lý đơn hàng, theo dõi công nợ khách hàng và nhà cung cấp ạ. Chị thấy em tóm tắt vậy đúng chưa ạ?</p>
+                                <p><strong class="text-emerald-700">Khách hàng:</strong> Ừ chuẩn rồi em.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BƯỚC 4: TƯ VẤN GIẢI PHÁP -->
+                <div class="p-5 rounded-2xl bg-white border border-slate-200 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <h4 class="font-bold text-base text-blue-800 flex items-center gap-2">
+                            <span class="w-6 h-6 rounded-full bg-blue-600 text-white text-xs flex items-center justify-center">4</span>
+                            BƯỚC 4: TƯ VẤN GIẢI PHÁP
+                        </h4>
+                    </div>
+                    <p class="text-sm text-slate-600">
+                        Sau khi nắm rõ nhu cầu và khó khăn của khách hàng, sales không nên đi ngay vào thao tác chi tiết (Demo) mà cần thể hiện giá trị của sản phẩm trước. Các bạn cần thực hiện thông qua 3 phần nội dung sau:
+                    </p>
+                    
+                    <div class="space-y-3 text-sm">
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                            <div class="font-bold text-slate-800">4.1. Xác nhận lại nhu cầu khách hàng</div>
+                            <p class="text-slate-600 text-xs mt-0.5">Nội dung lý thuyết: Việc xác nhận giúp đảm bảo bạn không bỏ sót thông tin, nhu cầu của khách hàng và thể hiện sự lắng nghe tập trung.</p>
+                            <div class="script-quote my-2 text-xs md:text-sm">
+                                <strong>Ví dụ minh họa:</strong> "Như anh/chị vừa chia sẻ, em xin xác nhận là mình đang gặp khó khăn trong việc theo dõi tồn kho theo hạn sử dụng, quản lý công nợ và cũng muốn có thể quản lý từ xa, đúng không ạ?"
+                            </div>
+                        </div>
+
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                            <div class="font-bold text-slate-800">4.2. Khẳng định lợi ích của KiotViet</div>
+                            <p class="text-slate-600 text-xs mt-0.5">Nội dung lý thuyết: Đưa ra một lời khẳng định ngắn gọn để tạo niềm tin trước khi đi vào chi tiết.</p>
+                            <div class="script-quote my-2 text-xs md:text-sm">
+                                <strong>Kịch bản mẫu:</strong> "Với những yêu cầu mà anh/chị mong đợi thì hiện phần mềm quản lý bán hàng KiotViet đều có thể đáp ứng được rất tốt ạ."
+                            </div>
+                        </div>
+
+                        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                            <div class="font-bold text-slate-800">4.3. Trình bày lợi ích trọng tâm (gắn với vấn đề của khách)</div>
+                            <p class="text-slate-600 text-xs mt-0.5">Nội dung lý thuyết: Hãy tập trung vào các lợi ích/tính năng phần mềm liên quan trực tiếp đến khó khăn khách hàng.</p>
+                            <div class="script-quote my-2 text-xs md:text-sm">
+                                <strong>Ví dụ minh họa:</strong> "Phần mềm KiotViet có tính năng cảnh báo hết hàng tồn kho, khi hàng hóa của mình đạt tới giới hạn tồn, chị sẽ thấy ngay thông báo để có thể kịp thời nhập hàng ngay, không bị thất thoát doanh thu nếu khách mua mà hàng hết lúc nào chưa kịp nhập."
+                            </div>
+                            <div class="text-xs bg-amber-50 text-amber-900 p-2.5 rounded-lg border border-amber-200">
+                                <strong>Lưu ý:</strong> "Tránh giới thiệu lan man, Telesales cần tập trung vào những tính năng liên quan trực tiếp đến mối quan tâm/ khó khăn của khách."
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-xs text-slate-500 italic p-2.5 bg-slate-100 rounded-lg">
+                        Tổng quan bước 4 này sẽ giúp khách hàng hình dung được giá trị phần mềm, đồng thời gia tăng cơ hội thuyết phục được khách hàng dành thời gian để thử thao tác Demo trong bước tiếp theo.
+                    </div>
+                </div>
+
+                <!-- BƯỚC 5: DEMO VÀ CHỐT -->
+                <div class="p-5 rounded-2xl bg-white border border-slate-200 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h4 class="font-bold text-base text-blue-800 flex items-center gap-2">
+                            <span class="w-6 h-6 rounded-full bg-blue-600 text-white text-xs flex items-center justify-center">5</span>
+                            BƯỚC 5: DEMO VÀ CHỐT
+                        </h4>
+                    </div>
+
+                    <!-- 5.1 Demo -->
+                    <div class="space-y-2 text-sm">
+                        <h5 class="font-bold text-slate-800">5.1. Demo</h5>
+                        <p class="text-slate-600">Nội dung lý thuyết: Sau khi khách hàng đã hiểu giá trị của phần mềm, bạn tiến hành hướng dẫn thao tác để họ trải nghiệm trực quan.</p>
+                        <div class="script-quote my-2">
+                            <strong>Kịch bản mẫu:</strong> "Để giúp anh/chị hình dung rõ hơn về lợi ích tính năng của phần mềm, anh/chị cho em ít phút để em hướng dẫn thao tác chi tiết cho anh/chị nhé!"
+                        </div>
+                        <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs space-y-1">
+                            <div class="font-bold text-slate-700">Lưu ý:</div>
+                            <ul class="list-disc list-inside text-slate-600 pl-1 space-y-1">
+                                <li>Với khách hàng lớn tuổi hoặc ít dùng công nghệ, nên dùng các từ như: 'hướng dẫn sử dụng', 'thao tác mẫu' thay vì 'Demo'.</li>
+                                <li>Luôn sẵn sàng công cụ hỗ trợ (UltraViewer/TeamViewer).</li>
+                                <li>Nếu chưa Demo ngay được, cần hẹn lịch cụ thể.</li>
+                                <li>Tuyệt đối không để khách tự tìm hiểu -> luôn đồng hành hướng dẫn cùng khách hàng.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- 5.2 Chốt (Báo giá) -->
+                    <div class="space-y-2 text-sm pt-3 border-t border-slate-200">
+                        <h5 class="font-bold text-slate-800">5.2. Chốt (Báo giá)</h5>
+                        <p class="text-slate-600 whitespace-pre-line">Nội dung lý thuyết: Sau khi đã giới thiệu trực quan thao tác tính năng trên phần mềm, bạn cần tư vấn gói - giá và thúc đẩy khách hàng chốt hợp đồng. Lưu ý khi thực hiện bước này như sau:
+- Gói bán sẽ phụ thuộc vào những thông tin, nhu cầu các bạn đã khai thác từ trước đó. Hãy định hướng luôn 1-2 lựa chọn gói sản phẩm phù hợp nhất với nhu cầu, quy mô và khả năng chi trả của khách hàng.
+- Chương trình khuyến mại:
+  + Chỉ nên đưa khuyến mại khi khách hàng đã hoàn toàn hài lòng về lợi ích và giá trị mà KiotViet mang lại.
+  + Đưa từ từ chương trình khuyến mại.
+  + Nhấn mạnh giá trị và thời hạn của chương trình khuyến mại để thúc đẩy khách hàng ra quyết định.</p>
+
+                        <div class="space-y-2 pt-2">
+                            <div class="script-quote text-xs md:text-sm">
+                                <strong>Ví dụ minh họa:</strong><br>
+                                <strong>Ví dụ tư vấn gói:</strong> "Với quy mô của anh/chị, em thấy gói 2 năm chuyên nghiệp là phù hợp nhất vì đã đáp ứng đầy đủ tính năng và hỗ trợ setup đầy đủ cho cửa hàng."
+                            </div>
+                            <div class="script-quote text-xs md:text-sm bg-blue-50/70 border-l-blue-600">
+                                <div class="flex items-center justify-between font-bold text-blue-900 mb-1">
+                                    <span>Ví dụ đưa khuyến mại:</span>
+                                    <button onclick="copyText('sc-km')" class="copy-badge text-xs font-normal text-blue-600 bg-white px-2 py-0.5 rounded border border-blue-200">Copy</button>
+                                </div>
+                                <div id="sc-km">
+                                    "Đợt này nhân dịp ngày đôi, KiotViet hỗ trợ cho các khách hàng mua gói 2 năm chuyên nghiệp sẽ được tặng máy in hóa đơn và máy quét mã vạch trị giá 2.990.000đ ạ. Chi phí gói này là 7.440.000đ nếu tính ra thì mình chỉ cần phải trả 4.450.000đ cho phần mềm 2 năm sử dụng. Em thử tính nhanh giúp chị thì mỗi tháng đâu đó chỉ có 190.000đ, mỗi ngày chỉ 6.000đ thôi, mà lại hỗ trợ chị toàn bộ các công việc theo dõi quản lý hàng ra hàng vào ở cửa hàng mình. Mức này thực sự rất hợp lý luôn. Gói này bên em sẽ khuyến mại đến hết 13/11 và cũng chỉ giới hạn số lượng khách, chị đăng ký luôn để hưởng luôn ưu đãi này nhé chị…"
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-xs bg-amber-50 text-amber-900 p-2.5 rounded-lg border border-amber-200">
+                            <strong>Lưu ý:</strong> "Trường hợp, sau khi tung chương trình khuyến mại mà khách hàng chưa chốt, cần tìm hiểu nguyên nhân, giải đáp kịp thời và tiếp tục duy trì tương tác để gia tăng cơ hội chuyển đổi."
+                        </div>
+                    </div>
+                </div>
+
+                <!-- KỸ NĂNG TẠO MỐI QUAN HỆ -->
+                <div class="p-5 rounded-2xl bg-gradient-to-r from-blue-50/50 to-indigo-50/50 border border-blue-200 space-y-3">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-handshake-angle text-blue-600 text-lg"></i>
+                        <h4 class="font-bold text-base text-slate-800">KỸ NĂNG TẠO MỐI QUAN HỆ</h4>
+                    </div>
+                    <p class="text-xs md:text-sm text-slate-600">
+                        Áp dụng xuyên suốt trong quá trình tư vấn để tạo sự tin tưởng và thoải mái. Kỹ năng này cần được sử dụng một cách tự nhiên, dựa trên thông tin khách hàng chia sẻ, tránh việc chỉ tập trung vào giới thiệu sản phẩm một cách máy móc.
+                    </p>
+                    <div class="text-sm font-semibold text-slate-800">Các kỹ năng thực hiện:</div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1">
+                        <div class="bg-white p-3.5 rounded-xl border border-slate-200 text-xs space-y-1">
+                            <div class="font-bold text-blue-700 uppercase tracking-wide">Hỏi thăm khách hàng</div>
+                            <p class="text-slate-600"><strong>Ví dụ:</strong> "Hiện tại, chị chỉ kinh doanh cửa hàng thôi hay vừa đi làm vừa tự kinh doanh ạ?"</p>
+                        </div>
+                        <div class="bg-white p-3.5 rounded-xl border border-slate-200 text-xs space-y-1">
+                            <div class="font-bold text-blue-700 uppercase tracking-wide">Khen ngợi</div>
+                            <p class="text-slate-600"><strong>Ví dụ:</strong> "Em thấy trà chanh hiện đang là mô hình kinh doanh rất hot đấy ạ, anh mở cửa hàng thời điểm này là quá chuẩn luôn."</p>
+                        </div>
+                        <div class="bg-white p-3.5 rounded-xl border border-slate-200 text-xs space-y-1">
+                            <div class="font-bold text-blue-700 uppercase tracking-wide">Đồng cảm với khách hàng</div>
+                            <p class="text-slate-600"><strong>Ví dụ:</strong> "Em cũng hay đi trà chanh nên em hiểu các cửa hàng đông khách thì chủ quán vất vả lắm ạ. Anh có đông nhân viên phụ không anh?"</p>
+                        </div>
+                    </div>
+                    <div class="text-xs text-slate-500 italic text-center">
+                        Lưu ý: Kỹ năng này cần được sử dụng một cách tự nhiên, dựa trên thông tin khách hàng chia sẻ, tránh việc chỉ tập trung vào giới thiệu sản phẩm một cách máy móc.
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. Trang Cẩm nang ngành hàng -->
+            <section id="module-cam-nang" class="search-item glass-panel-ultra rounded-[24px] p-6 lg:p-8 shadow-md border-l-4 border-l-emerald-600 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div>
+                    <h3 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                        <span class="text-emerald-600 font-extrabold">3.</span> Trang Cẩm nang ngành hàng
+                    </h3>
+                    <p class="text-xs text-slate-500 mt-1">Cẩm nang phân tích đặc thù hơn 20+ mô hình kinh doanh Retail, F&B, Salon & Khách sạn</p>
+                </div>
+                <a href="https://sites.google.com/view/camnangkiotviet/trang-ch%E1%BB%A7" target="_blank" class="scifi-btn bg-emerald-600 hover:bg-emerald-700 whitespace-nowrap">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i> Truy cập Cẩm Nang Ngành Hàng
+                </a>
+            </section>
+
+            <!-- 4. KỸ NĂNG KHAI THÁC THÔNG TIN & KHƠI GỢI NHU CẦU -->
+            <section id="module-3h" class="search-item glass-panel-ultra rounded-[24px] p-6 lg:p-8 shadow-md space-y-6">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-4 border-b border-slate-200">
+                    <div>
+                        <div class="text-xs font-bold uppercase tracking-wider text-emerald-600 mb-1">Mô hình đặt câu hỏi 3H</div>
+                        <h3 class="text-xl lg:text-2xl font-extrabold text-slate-800">
+                            4. KỸ NĂNG KHAI THÁC THÔNG TIN & KHƠI GỢI NHU CẦU
+                        </h3>
+                    </div>
+                    <a href="https://daotao.kiotviet.com/course/dao-tao-ky-nang-khai-thac-thong-tin-and-khoi-goi-nhu-cau" target="_blank" class="inline-flex items-center gap-2 text-xs font-bold text-blue-600 bg-blue-50 px-3.5 py-2 rounded-xl hover:bg-blue-100 transition-colors w-fit">
+                        <i class="fa-solid fa-link"></i> Link khóa học: Khai thác & Khơi gợi
+                    </a>
+                </div>
+
+                <!-- Mục tiêu -->
+                <div class="p-4 bg-emerald-50/70 rounded-2xl border border-emerald-200">
+                    <h4 class="font-bold text-emerald-950 text-xs uppercase tracking-wider mb-2">Mục tiêu:</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs md:text-sm text-slate-700">
+                        <div class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-600"></i> Nhận diện các sai lầm phổ biến khi đặt câu hỏi khai thác</div>
+                        <div class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-600"></i> Đặt câu hỏi có tiến trình để kết nối và duy trì tương tác</div>
+                        <div class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-600"></i> Phân biệt được nhu cầu và điểm đau</div>
+                        <div class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-600"></i> Sử dụng cẩm nang ngành hàng để khơi gợi đúng đặc trưng</div>
+                    </div>
+                </div>
+
+                <!-- I. 3 Sai lầm phổ biến -->
+                <div class="space-y-3">
+                    <h4 class="font-bold text-slate-800 text-base flex items-center gap-2">
+                        <span class="w-6 h-6 rounded-md bg-rose-100 text-rose-600 text-xs flex items-center justify-center font-bold">I</span>
+                        I. 3 Sai lầm phổ biến
+                    </h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div class="p-4 bg-white rounded-xl border border-slate-200 space-y-1">
+                            <div class="font-bold text-sm text-rose-600 flex items-center gap-1.5">
+                                <i class="fa-solid fa-circle-xmark"></i> Đặt câu hỏi quá chung chung:
+                            </div>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                Ví dụ "Anh/chị đang gặp khó khăn gì không?" khiến khách hàng lười suy nghĩ, ngại đúc kết vấn đề và thường chọn cách im lặng hoặc báo bận.
+                            </p>
+                        </div>
+                        <div class="p-4 bg-white rounded-xl border border-slate-200 space-y-1">
+                            <div class="font-bold text-sm text-rose-600 flex items-center gap-1.5">
+                                <i class="fa-solid fa-circle-xmark"></i> Lạm dụng câu hỏi đóng, câu hỏi mang tính xác nhận:
+                            </div>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                Ví dụ "Shop vẫn đang ghi sổ đúng không chị?" làm mất cơ hội khơi gợi thêm thông tin vì khách thường chỉ trả lời "Có/Không" rồi kết thúc.
+                            </p>
+                        </div>
+                        <div class="p-4 bg-white rounded-xl border border-slate-200 space-y-1">
+                            <div class="font-bold text-sm text-rose-600 flex items-center gap-1.5">
+                                <i class="fa-solid fa-circle-xmark"></i> Hỏi dồn dập như hỏi cung:
+                            </div>
+                            <p class="text-xs text-slate-600 leading-relaxed">
+                                Liên tục đặt các câu hỏi thu thập thông tin một cách máy móc tạo tâm lý phòng thủ, khó chịu cho chủ shop.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- II. Tiến Trình Đặt Câu Hỏi 3H -->
+                <div class="space-y-3 pt-2">
+                    <h4 class="font-bold text-slate-800 text-base flex items-center gap-2">
+                        <span class="w-6 h-6 rounded-md bg-blue-100 text-blue-600 text-xs flex items-center justify-center font-bold">II</span>
+                        II. Tiến Trình Đặt Câu Hỏi 3H
+                    </h4>
+                    <p class="text-xs md:text-sm text-slate-600">
+                        Đây là tiến trình dẫn dắt tâm lý giúp khách hàng tự nhận thức vấn đề và bộc lộ nhu cầu một cách tự nhiên.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div class="p-4 rounded-xl bg-white border border-slate-200 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold text-blue-700 text-sm">H1 - Hiện trạng</span>
+                                <span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded font-semibold">Khách quan</span>
+                            </div>
+                            <p class="text-xs text-slate-600"><strong>Định nghĩa:</strong> Tìm hiểu cách thức khách hàng đang vận hành kinh doanh.</p>
+                            <div class="text-xs font-semibold text-slate-500">Nguyên tắc: Khách quan - Không đánh giá - Không phán xét.</div>
+                            <div class="script-quote text-xs">
+                                <strong>Ví dụ:</strong> "Thường lúc đông khách, các bạn nhân viên sẽ ghi sổ tay hay lưu luôn vào file Excel hả chị? / Chị theo dõi hàng hóa nhập vào bán ra mỗi ngày bằng cách nào ạ?"
+                            </div>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-white border border-slate-200 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold text-amber-700 text-sm">H2 - Hạn chế</span>
+                                <span class="text-[10px] bg-amber-50 text-amber-700 px-2 py-0.5 rounded font-semibold">Bộc lộ bất tiện</span>
+                            </div>
+                            <p class="text-xs text-slate-600"><strong>Định nghĩa:</strong> Khơi gợi để khách hàng tự nói ra những bất tiện, khó khăn với phương pháp hiện tại.</p>
+                            <div class="script-quote text-xs">
+                                <strong>Ví dụ:</strong> "Ghi sổ lúc đông khách như thế thì cuối ngày chốt ca, mình có hay bị lệch lai hay mất thời gian dò lại từng dòng không ạ?"
+                            </div>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-white border border-slate-200 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold text-rose-700 text-sm">H3 - Hậu quả</span>
+                                <span class="text-[10px] bg-rose-50 text-rose-700 px-2 py-0.5 rounded font-semibold">Tiền bạc & Thời gian</span>
+                            </div>
+                            <p class="text-xs text-slate-600"><strong>Định nghĩa:</strong> Quy đổi các hạn chế (H2) ra sự thất thoát về Tiền bạc và Thời gian để tác động mạnh vào tâm lý, tạo tính cấp bách cần giải pháp.</p>
+                            <div class="script-quote text-xs">
+                                <strong>Ví dụ:</strong> "Cứ mỗi ngày lệch vài chục ngàn hoặc rớt 2-3 món đồ là đi tong tiền triệu tiền lãi, chưa kể chị lại mất thời gian buổi tối dò sổ thay vì nghỉ ngơi."
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- III. Phân Biệt Nhu Cầu và Điểm Đau -->
+                <div class="space-y-3 pt-2">
+                    <h4 class="font-bold text-slate-800 text-base flex items-center gap-2">
+                        <span class="w-6 h-6 rounded-md bg-purple-100 text-purple-600 text-xs flex items-center justify-center font-bold">III</span>
+                        III. Phân Biệt Nhu Cầu và Điểm Đau
+                    </h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="p-4 bg-white rounded-xl border border-slate-200 space-y-2">
+                            <div class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full bg-blue-500"></span> Nhu cầu (Phần nổi)
+                            </div>
+                            <p class="text-xs md:text-sm text-slate-600 leading-relaxed">
+                                Là những gì khách hàng trực tiếp nói ra, thường là một giải pháp hoặc tính năng bề mặt (VD: "Anh cần phần mềm quản lý kho chính xác").
+                            </p>
+                        </div>
+                        <div class="p-4 bg-white rounded-xl border border-slate-200 space-y-2">
+                            <div class="font-bold text-slate-800 text-sm flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full bg-rose-500"></span> Điểm đau (Phần chìm)
+                            </div>
+                            <p class="text-xs md:text-sm text-slate-600 leading-relaxed">
+                                Là tổn thất ẩn sâu đằng sau nhu cầu, luôn gắn liền với Cảm xúc (căng thẳng, mệt mỏi) và Tài chính (mất tiền, lãng phí thời gian) (VD: Khách vừa mất trắng thùng sữa vài triệu do hết hạn/thất thoát -> xót ruột, tức giận vì mất tiền oan).
+                            </p>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-blue-50 text-blue-900 rounded-xl text-xs md:text-sm font-semibold border border-blue-200">
+                        <i class="fa-solid fa-key text-blue-600 mr-1"></i> Nguyên tắc cốt lõi: Khách hàng chi tiền để giải quyết Điểm đau, không phải để mua tính năng. Cần xoáy sâu vào điểm đau để chứng minh phần mềm là khoản đầu tư bảo vệ tài sản.
+                    </div>
+                </div>
+
+                <!-- IV. Ứng Dụng Cẩm Nang Ngành Hàng Cùng Tiến Trình 3H -->
+                <div class="space-y-3 pt-2">
+                    <h4 class="font-bold text-slate-800 text-base flex items-center gap-2">
+                        <span class="w-6 h-6 rounded-md bg-amber-100 text-amber-600 text-xs flex items-center justify-center font-bold">IV</span>
+                        IV. Ứng Dụng Cẩm Nang Ngành Hàng Cùng Tiến Trình 3H
+                    </h4>
+                    <p class="text-xs md:text-sm text-slate-600">
+                        Sử dụng đặc thù từng ngành hàng từ Cẩm nang để đặt câu hỏi 3H chuẩn xác, thể hiện sự am hiểu và tính chuyên gia:
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="p-4 bg-white rounded-xl border border-slate-200 space-y-2">
+                            <div class="font-bold text-sm text-blue-800 flex items-center gap-2">
+                                <i class="fa-solid fa-shirt text-blue-600"></i> Ngành Thời trang:
+                            </div>
+                            <ul class="text-xs md:text-sm text-slate-600 space-y-1 pl-2">
+                                <li><strong>Đặc thù:</strong> Quản lý theo Size, Màu sắc, vòng đời sản phẩm ngắn.</li>
+                                <li><strong>Điểm đau:</strong> Ôm hàng tồn, giam vốn.</li>
+                                <li><strong>Giải pháp KiotViet kết nối:</strong> Tính năng quản lý hàng hóa theo thuộc tính và cảnh báo tồn kho.</li>
+                            </ul>
+                        </div>
+
+                        <div class="p-4 bg-white rounded-xl border border-slate-200 space-y-2">
+                            <div class="font-bold text-sm text-orange-800 flex items-center gap-2">
+                                <i class="fa-solid fa-utensils text-orange-600"></i> Ngành F&B (Nhà hàng/Cafe):
+                            </div>
+                            <ul class="text-xs md:text-sm text-slate-600 space-y-1 pl-2">
+                                <li><strong>Đặc thù:</strong> Phục vụ giờ cao điểm, kiểm soát định mức nguyên vật liệu.</li>
+                                <li><strong>Điểm đau:</strong> Ghi sai order -> khách bực bội bỏ đi; sai định mức -> đổ bỏ nguyên liệu, thất thoát lợi nhuận.</li>
+                                <li><strong>Giải pháp KiotViet kết nối:</strong> Tính năng order qua thiết bị (Tablet/Điện thoại) và quản lý định mức nguyên vật liệu.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. KỸ NĂNG THUYẾT PHỤC VÀ XỬ LÝ TỪ CHỐI -->
+            <section id="module-tu-choi" class="search-item glass-panel-ultra rounded-[24px] p-6 lg:p-8 shadow-md space-y-6">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-4 border-b border-slate-200">
+                    <div>
+                        <div class="text-xs font-bold uppercase tracking-wider text-rose-600 mb-1">Quy trình 3 bước & 6 lý do từ chối</div>
+                        <h3 class="text-xl lg:text-2xl font-extrabold text-slate-800">
+                            5. KỸ NĂNG THUYẾT PHỤC VÀ XỬ LÝ TỪ CHỐI
+                        </h3>
+                    </div>
+                    <a href="https://daotao.kiotviet.com/course/dao-tao-ky-nang-thuyet-phuc-and-xu-ly-tu-choi" target="_blank" class="inline-flex items-center gap-2 text-xs font-bold text-blue-600 bg-blue-50 px-3.5 py-2 rounded-xl hover:bg-blue-100 transition-colors w-fit">
+                        <i class="fa-solid fa-link"></i> Link khóa học: Xử lý từ chối
+                    </a>
+                </div>
+
+                <!-- Mục tiêu -->
+                <div class="p-4 bg-rose-50/70 rounded-2xl border border-rose-200">
+                    <h4 class="font-bold text-rose-950 text-xs uppercase tracking-wider mb-2">Mục tiêu:</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs md:text-sm text-slate-700">
+                        <div class="flex items-center gap-2"><i class="fa-solid fa-check text-rose-600"></i> Xử lý từ chối của khách hàng theo tiến trình 3 bước</div>
+                        <div class="flex items-center gap-2"><i class="fa-solid fa-check text-rose-600"></i> Sẵn sàng xử lý 6 lý do thường gặp</div>
+                    </div>
+                </div>
+
+                <!-- I. Tư Duy Đúng Về Lời Từ Chối -->
+                <div class="space-y-3">
+                    <h4 class="font-bold text-slate-800 text-base flex items-center gap-2">
+                        <span class="w-6 h-6 rounded-md bg-blue-100 text-blue-600 text-xs flex items-center justify-center font-bold">I</span>
+                        I. Tư Duy Đúng Về Lời Từ Chối
+                    </h4>
+                    <div class="p-4 bg-white rounded-xl border border-slate-200 space-y-2 text-xs md:text-sm text-slate-700">
+                        <p>• Từ chối không phải là dấu chấm hết: Đó là lúc cuộc thương lượng thực sự bắt đầu.</p>
+                        <p>• Từ chối là dấu hiệu khách hàng đang cân nhắc: Khách còn nói nghĩa là còn quan tâm, còn thắc mắc, và cần thêm niềm tin. Khách im lặng mới là mất cơ hội.</p>
+                        <p>• Bản chất: Khách hàng không từ chối người bán, họ chỉ đang từ chối một phương án chưa phù hợp. Mỗi lý do đưa ra là một yêu cầu ngầm về một giải pháp tốt hơn.</p>
+                    </div>
+                </div>
+
+                <!-- II. Quy Trình 3 Bước Xử Lý Từ Chối Hiệu Quả -->
+                <div class="space-y-3 pt-2">
+                    <h4 class="font-bold text-slate-800 text-base flex items-center gap-2">
+                        <span class="w-6 h-6 rounded-md bg-emerald-100 text-emerald-600 text-xs flex items-center justify-center font-bold">II</span>
+                        II. Quy Trình 3 Bước Xử Lý Từ Chối Hiệu Quả
+                    </h4>
+                    <p class="text-xs md:text-sm text-slate-600">
+                        Thay vì phản xạ tự nhiên là vội vã phản bác và tranh luận (gây ra phản ứng đối đầu), hãy áp dụng quy trình 3 bước:
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div class="p-4 rounded-xl bg-white border border-slate-200 space-y-2">
+                            <div class="font-bold text-blue-700 text-sm">Bước 1: Tiếp nhận (Hạ hàng rào phòng thủ)</div>
+                            <p class="text-xs text-slate-600"><strong>Mục đích:</strong> Lấy lại thế chủ động, thể hiện sự đồng cảm, tôn trọng để khách hàng thấy bạn đang đứng về phía họ.</p>
+                            <ul class="text-xs text-slate-600 space-y-1">
+                                <li><strong>Hành động 1:</strong> Lắng nghe trọn vẹn, tuyệt đối không ngắt lời. Sử dụng các từ đệm ("Dạ...", "À...") để thể hiện sự tập trung.</li>
+                                <li><strong>Hành động 2:</strong> Ghi nhận và phản hồi ngắn gọn sự đồng cảm.</li>
+                            </ul>
+                            <div class="script-quote text-xs space-y-0.5">
+                                <div><strong>Ví dụ:</strong></div>
+                                <div>- "Em hiểu băn khoăn của anh/chị ạ"</div>
+                                <div>- "Em hiểu mình đang cần cân đối lại chi phí."</div>
+                            </div>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-white border border-slate-200 space-y-2">
+                            <div class="font-bold text-blue-700 text-sm">Bước 2: Hỏi sâu (Làm rõ nguyên nhân thực sự)</div>
+                            <p class="text-xs text-slate-600"><strong>Mục đích:</strong> Không tin ngay vào lý do bề nổi, dùng câu hỏi để tìm ra "nút thắt" hoặc nỗi lo thực sự ẩn giấu bên trong.</p>
+                            <ul class="text-xs text-slate-600 space-y-1">
+                                <li><strong>Hành động 1:</strong> Đặt câu hỏi đào sâu.<br>
+                                <em>(Khi khách chê giá cao) "Chị thấy giá cao so với bên nào, hay đang chưa khớp với ngân sách dự kiến của mình ạ?"</em></li>
+                                <li><strong>Hành động 2:</strong> Khoanh vùng xác nhận vấn đề cốt lõi trước khi giải thích.<br>
+                                <em>"Ngoài vấn đề về giá, anh/chị có còn lo lắng gì về cách vận hành mới không ạ?" -> Giúp việc thuyết phục ở bước sau đi đúng trọng tâm.</em></li>
+                            </ul>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-white border border-slate-200 space-y-2">
+                            <div class="font-bold text-blue-700 text-sm">Bước 3: Đưa giải pháp (Lập luận sắc bén)</div>
+                            <p class="text-xs text-slate-600"><strong>Mục đích:</strong> Lựa chọn giải pháp phù hợp với "nút thắt" vừa tìm được và chứng minh bằng con số, dẫn chứng thực tế.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- III. Hướng Xử Lý 6 Lý Do Từ Chối Thường Gặp -->
+                <div class="space-y-3 pt-2">
+                    <h4 class="font-bold text-slate-800 text-base flex items-center gap-2">
+                        <span class="w-6 h-6 rounded-md bg-rose-100 text-rose-600 text-xs flex items-center justify-center font-bold">III</span>
+                        III. Hướng Xử Lý 6 Lý Do Từ Chối Thường Gặp
+                    </h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        
+                        <!-- 1. Thiếu tính năng -->
+                        <div class="p-4 bg-white rounded-xl border border-slate-200 space-y-2">
+                            <div class="font-bold text-sm text-slate-800 flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-rose-500"></span> Thiếu tính năng:
+                            </div>
+                            <ul class="text-xs md:text-sm text-slate-600 space-y-1 pl-3 list-disc">
+                                <li>Xác định mức độ cấp thiết (sống còn hay "có thì tốt").</li>
+                                <li>Nhấn mạnh ưu điểm cốt lõi của KiotViet giải quyết bài toán hiện tại.</li>
+                                <li>Đề xuất giải pháp "đường vòng" (tổ hợp thao tác thay thế) hoặc ghi nhận chân thành để gửi đội Phát triển sản phẩm.</li>
+                            </ul>
+                        </div>
+
+                        <!-- 2. So sánh với đối thủ -->
+                        <div class="p-4 bg-white rounded-xl border border-slate-200 space-y-2">
+                            <div class="font-bold text-sm text-slate-800 flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-rose-500"></span> So sánh với đối thủ:
+                            </div>
+                            <ul class="text-xs md:text-sm text-slate-600 space-y-1 pl-3 list-disc">
+                                <li>Hỏi thăm mức độ tìm hiểu của khách về đối thủ (nếu chưa chốt -> vẫn còn lấn cấn).</li>
+                                <li>Xoáy sâu vào thế mạnh độc tôn của KiotViet: Thương hiệu, độ ổn định server, và đặc biệt là hệ thống 3 kênh chăm sóc khách hàng sau bán.</li>
+                            </ul>
+                        </div>
+
+                        <!-- 3. Giá cao / Không đủ ngân sách -->
+                        <div class="p-4 bg-white rounded-xl border border-slate-200 space-y-2">
+                            <div class="font-bold text-sm text-slate-800 flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-rose-500"></span> Giá cao / Không đủ ngân sách:
+                            </div>
+                            <ul class="text-xs md:text-sm text-slate-600 space-y-1 pl-3 list-disc">
+                                <li>Sử dụng kỹ thuật "Chia nhỏ chi phí": Chia theo ngày/tháng (chỉ bằng cốc trà đá, tiền mạng...) hoặc quy đổi ra giá trị sản phẩm khách đang bán.</li>
+                                <li>So sánh phí phần mềm với số tiền thất thoát mỗi ngày do quản lý thủ công (Nhấn mạnh "chi phí cơ hội" nào lớn hơn).</li>
+                                <li><strong>Lưu ý:</strong> Xin và tung Voucher chỉ là "chiêu cuối" để thúc đẩy ra quyết định khi khách thực sự khó khăn tài chính, không tung ra quá sớm.</li>
+                            </ul>
+                        </div>
+
+                        <!-- 4. Muốn hỏi ý kiến người thân/đồng kinh doanh -->
+                        <div class="p-4 bg-white rounded-xl border border-slate-200 space-y-2">
+                            <div class="font-bold text-sm text-slate-800 flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-rose-500"></span> Muốn hỏi ý kiến người thân/người đồng kinh doanh:
+                            </div>
+                            <ul class="text-xs md:text-sm text-slate-600 space-y-1 pl-3 list-disc">
+                                <li>Tìm hiểu xem họ cần hỏi về Giá hay Tính năng.</li>
+                                <li>Chủ động đề xuất một buổi hẹn tư vấn trực tiếp có mặt cả 2 người, tránh để khách tự truyền đạt lại gây "tam sao thất bản" hoặc bị bàn lùi.</li>
+                            </ul>
+                        </div>
+
+                        <!-- 5. Chưa thấy cần thiết / Dùng sổ sách vẫn ổn -->
+                        <div class="p-4 bg-white rounded-xl border border-slate-200 space-y-2">
+                            <div class="font-bold text-sm text-slate-800 flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-rose-500"></span> Chưa thấy cần thiết / Dùng sổ sách vẫn ổn:
+                            </div>
+                            <ul class="text-xs md:text-sm text-slate-600 space-y-1 pl-3 list-disc">
+                                <li>Không bán phần mềm, bán "sự tối ưu kiểm soát".</li>
+                                <li>Khơi gợi "điểm đau" và nhấn mạnh hậu quả của hiện trạng (như thất thoát hàng, nhầm lẫn tiền bạc) để làm nổi bật sự cấp thiết phải thay đổi.</li>
+                            </ul>
+                        </div>
+
+                        <!-- 6. Sợ công nghệ phức tạp / Sợ khó dùng -->
+                        <div class="p-4 bg-white rounded-xl border border-slate-200 space-y-2">
+                            <div class="font-bold text-sm text-slate-800 flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-rose-500"></span> Sợ công nghệ phức tạp / Sợ khó dùng:
+                            </div>
+                            <ul class="text-xs md:text-sm text-slate-600 space-y-1 pl-3 list-disc">
+                                <li>Khẳng định: "Thao tác trên KiotViet dễ hơn ghi sổ".</li>
+                                <li>Đưa dẫn chứng: Khách hàng lớn tuổi vẫn dùng tốt sau 15 phút. So sánh việc dùng KiotViet dễ như lướt Facebook, dùng Smartphone.</li>
+                                <li>Cam kết hỗ trợ 1-1 đồng hành cho đến khi khách thành thạo.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6. 3 GIAI ĐOẠN TƯ VẤN & TIPS TƯ VẤN GIÁ -->
+            <section id="module-tips-gia" class="search-item glass-panel-ultra rounded-[24px] p-6 lg:p-8 shadow-md space-y-6">
+                <div class="pb-3 border-b border-slate-200">
+                    <div class="text-xs font-bold uppercase tracking-wider text-blue-600 mb-1">Căn cứ & Nguyên tắc báo giá</div>
+                    <h3 class="text-xl lg:text-2xl font-extrabold text-slate-800">
+                        6. 3 giai đoạn tư vấn & tips tư vấn giá
+                    </h3>
+                </div>
+
+                <!-- Quy trình 3 giai đoạn tư vấn -->
+                <div class="space-y-3">
+                    <h4 class="font-bold text-slate-800 text-base">Quy trình 3 giai đoạn tư vấn</h4>
+                    <p class="text-xs md:text-sm text-slate-600">
+                        Quy trình tư vấn không cố định về số lượng cuộc gọi nhưng luôn phải đảm bảo đi qua 3 giai đoạn cốt lõi:
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div class="p-4 bg-white rounded-xl border border-slate-200 space-y-2">
+                            <div class="font-bold text-blue-700 text-sm">Giai đoạn 1: Tiếp cận - Giải pháp & Tư vấn giá</div>
+                            <ul class="text-xs text-slate-600 space-y-1 list-disc pl-3">
+                                <li>Khai thác thông tin cơ bản và xác định cụ thể mong muốn/vấn đề của khách hàng.</li>
+                                <li>Trình bày giải pháp đúng nhu cầu và demo tính năng dựa trên giải pháp đó.</li>
+                                <li>Báo giá sau khi đã giải quyết hết nhu cầu và đặt lịch hẹn tiếp theo nếu chưa chốt được.</li>
+                            </ul>
+                        </div>
+
+                        <div class="p-4 bg-white rounded-xl border border-slate-200 space-y-2">
+                            <div class="font-bold text-blue-700 text-sm">Giai đoạn 2: Đánh giá và duy trì nhu cầu</div>
+                            <ul class="text-xs text-slate-600 space-y-1 list-disc pl-3">
+                                <li>Nhắc lại lịch hẹn và mục đích cuộc gọi đã thống nhất để khách hàng thoải mái.</li>
+                                <li>Đo lường nhu cầu dựa trên phản hồi của khách.</li>
+                                <li>Khai thác lý do từ chối (nếu có) và thực hiện thuyết phục.</li>
+                            </ul>
+                        </div>
+
+                        <div class="p-4 bg-white rounded-xl border border-slate-200 space-y-2">
+                            <div class="font-bold text-blue-700 text-sm">Giai đoạn 3: Chốt hợp đồng</div>
+                            <ul class="text-xs text-slate-600 space-y-1 list-disc pl-3">
+                                <li>Xác nhận lại việc giải quyết hết các vấn đề và nhắc lại báo giá.</li>
+                                <li>Chủ động đưa ra quy trình thanh toán và chốt thời hạn (deadline) ưu đãi.</li>
+                                <li>Trấn an khách hàng sau khi hoàn tất hợp đồng.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nguyên tắc tư vấn giá và lựa chọn gói sản phẩm -->
+                <div class="space-y-3 pt-2">
+                    <h4 class="font-bold text-slate-800 text-base">Nguyên tắc tư vấn giá và lựa chọn gói sản phẩm</h4>
+                    <div class="p-3 bg-blue-50/70 rounded-xl text-xs md:text-sm text-slate-700">
+                        <span class="font-bold text-blue-900">Căn cứ báo giá:</span> Việc báo giá cần dựa trên 3 căn cứ:
+                        <ul class="list-disc list-inside mt-1 space-y-0.5">
+                            <li>Nhu cầu & vấn đề</li>
+                            <li>Quy mô, khu vực, ngành hàng</li>
+                            <li>Mức độ quan tâm của khách hàng.</li>
+                        </ul>
+                    </div>
+                    <div class="p-4 bg-white rounded-xl border border-slate-200 space-y-2 text-xs md:text-sm text-slate-700">
+                        <div class="font-bold text-slate-800 uppercase tracking-wide text-xs">5 nguyên tắc tư vấn giá:</div>
+                        <ol class="list-decimal list-inside space-y-1.5 pl-1">
+                            <li>Giai đoạn đầu chỉ báo giá niêm yết (có thể kèm phần cứng).</li>
+                            <li>Chỉ tập trung phân tích gói muốn bán, tránh đưa quá nhiều con số khiến khách hàng khó nhớ.</li>
+                            <li>Luôn thăm dò phản ứng của khách sau mỗi lần đưa ưu đãi.</li>
+                            <li>Khuyến mãi chỉ là công cụ giúp khách quyết định nhanh hơn, không phải lý do duy nhất để mua.</li>
+                            <li>Luôn cài cắm thông điệp hợp lý kèm deadline hoặc số lượng giới hạn khi đưa khuyến mãi.</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 7. XÂY DỰNG NGUỒN KHGT -->
+            <section id="module-4g-khgt" class="search-item glass-panel-ultra rounded-[24px] p-6 lg:p-8 shadow-md space-y-6">
+                <div class="pb-3 border-b border-slate-200">
+                    <div class="text-xs font-bold uppercase tracking-wider text-emerald-600 mb-1">Mô hình 4G phát triển nguồn khách hàng</div>
+                    <h3 class="text-xl lg:text-2xl font-extrabold text-slate-800">
+                        7. XÂY DỰNG NGUỒN KHGT
+                    </h3>
+                </div>
+
+                <div class="p-4 bg-emerald-50/70 rounded-2xl border border-emerald-200 text-xs md:text-sm space-y-1">
+                    <div class="font-bold text-emerald-950 uppercase tracking-wide">Mục tiêu khóa học giúp nhân viên có thể:</div>
+                    <ul class="list-disc list-inside text-slate-700 pl-1 space-y-0.5">
+                        <li>Hiểu được mấu chốt để có nguồn KHGT</li>
+                        <li>Nhận diện nguyên nhân khách không giới thiệu</li>
+                        <li>Thực hiện được quy trình xây nguồn khách hàng giới thiệu</li>
+                    </ul>
+                    <div class="pt-1 text-slate-500 font-semibold">Hình thức: Đào tạo trực tiếp</div>
+                </div>
+
+                <!-- Bảng: Nguyên nhân không có nguồn KHGT -->
+                <div class="space-y-3">
+                    <h4 class="font-bold text-slate-800 text-base">Nguyên nhân không có nguồn KHGT</h4>
+                    <div class="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
+                        <table class="w-full text-left border-collapse text-xs md:text-sm">
+                            <thead>
+                                <tr class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                                    <th class="py-3 px-3.5 w-1/4">Nguyên nhân</th>
+                                    <th class="py-3 px-3.5 w-1/4">Biểu hiện của Sale</th>
+                                    <th class="py-3 px-3.5 w-1/4">Cảm nhận của khách hàng</th>
+                                    <th class="py-3 px-3.5 w-1/4">Hậu quả đối với Sales</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200 bg-white">
+                                <tr class="hover:bg-slate-50">
+                                    <td class="py-3 px-3.5 font-bold text-slate-800 align-top">Thiếu chăm sóc sau bán</td>
+                                    <td class="py-3 px-3.5 text-slate-600 align-top">
+                                        - Không hỏi thăm sau khi khách cài đặt / sử dụng phần mềm.<br>
+                                        - Không chủ động kiểm tra xem khách có dùng hiệu quả không.<br>
+                                        - Chỉ liên hệ khi có vấn đề phát sinh hoặc khi cần bán thêm.
+                                    </td>
+                                    <td class="py-3 px-3.5 text-slate-600 align-top">
+                                        - Cảm giác “mua xong là xong”, không được quan tâm.<br>
+                                        - Mất niềm tin vào mức độ hỗ trợ của nhân viên.<br>
+                                        - Không có động lực giới thiệu người quen.<br>
+                                        - Khách không dùng được PM nên khó chịu, chuyển sang dùng PM khác
+                                    </td>
+                                    <td class="py-3 px-3.5 text-rose-700 align-top">
+                                        - Mất cơ hội mở rộng nguồn KHGT.
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="py-3 px-3.5 font-bold text-slate-800 align-top">Chưa tạo được ấn tượng và lòng tin ban đầu</td>
+                                    <td class="py-3 px-3.5 text-slate-600 align-top">
+                                        - Giới thiệu sản phẩm máy móc, thiếu câu chuyện hoặc trải nghiệm thực tế.<br>
+                                        - Không thể hiện sự am hiểu ngành nghề của khách hàng.<br>
+                                        - Không lắng nghe đủ nhu cầu của khách, chỉ tập trung chốt đơn.
+                                    </td>
+                                    <td class="py-3 px-3.5 text-slate-600 align-top">
+                                        - Cảm thấy nhân viên “bán hàng” hơn là “tư vấn”.<br>
+                                        - Không tin tưởng để chia sẻ sâu hoặc giới thiệu bạn bè.<br>
+                                        - Ấn tượng ban đầu về sale mờ nhạt.
+                                    </td>
+                                    <td class="py-3 px-3.5 text-rose-700 align-top">
+                                        - Khó tạo sự khác biệt với các telesale khác.<br>
+                                        - Không xây được hình ảnh chuyên nghiệp trong mắt khách hàng.
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="py-3 px-3.5 font-bold text-slate-800 align-top">Không chủ động duy trì và phát triển mối quan hệ</td>
+                                    <td class="py-3 px-3.5 text-slate-600 align-top">
+                                        - Không tương tác với khách qua Zalo / Facebook / Fanpage.<br>
+                                        - Không cập nhật tính năng mới, chương trình ưu đãi cho khách cũ.<br>
+                                        - Không duy trì nhắc nhớ, tin nhắn cảm ơn, chia sẻ hữu ích.
+                                    </td>
+                                    <td class="py-3 px-3.5 text-slate-600 align-top">
+                                        - Cảm giác bị “bỏ rơi” sau bán hàng.<br>
+                                        - Quên mất chuyên viên đã từng hỗ trợ mình.<br>
+                                        - Không có lý do để nhắc đến hoặc giới thiệu với người khác.
+                                    </td>
+                                    <td class="py-3 px-3.5 text-rose-700 align-top">
+                                        - KH có giới thiệu nhưng sale khác tiếp cận.<br>
+                                        - Mất thiện cảm từ khách hàng cũ.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Bảng: Quy trình 4G xây nguồn KHGT -->
+                <div class="space-y-3 pt-2">
+                    <h4 class="font-bold text-slate-800 text-base">Quy trình 4G xây nguồn KHGT</h4>
+                    <div class="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
+                        <table class="w-full text-left border-collapse text-xs md:text-sm">
+                            <thead>
+                                <tr class="bg-blue-50 text-blue-900 font-bold border-b border-blue-200">
+                                    <th class="py-3 px-3.5 w-36">Bước</th>
+                                    <th class="py-3 px-3.5 w-48">Mục đích</th>
+                                    <th class="py-3 px-3.5">Cách thực hiện</th>
+                                    <th class="py-3 px-3.5 w-60">Kết quả mong đợi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200 bg-white">
+                                <tr class="hover:bg-slate-50">
+                                    <td class="py-3 px-3.5 font-bold text-blue-700 align-top">Gây ấn tượng</td>
+                                    <td class="py-3 px-3.5 text-slate-700 align-top">Tạo thiện cảm và lòng tin ngay từ ban đầu</td>
+                                    <td class="py-3 px-3.5 text-slate-600 align-top">
+                                        - Tự tin trong lời nói, thân thiện khi hỗ trợ, am hiểu sâu nghiệp vụ.<br>
+                                        - Lắng nghe thật sự để hiểu đúng nhu cầu, ghi nhớ câu chuyện của khách.<br>
+                                        - Chia sẻ bài học thực tế về kinh nghiệm quản lý từ khách hàng cũ.
+                                    </td>
+                                    <td class="py-3 px-3.5 text-emerald-700 font-semibold align-top">Khách hàng nhớ và tin tưởng chuyên viên tư vấn</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="py-3 px-3.5 font-bold text-blue-700 align-top">Giữ kết nối</td>
+                                    <td class="py-3 px-3.5 text-slate-700 align-top">Duy trì liên hệ và sự hài lòng sau khi bán hàng</td>
+                                    <td class="py-3 px-3.5 text-slate-600 align-top">
+                                        - Hỗ trợ cài đặt nhanh chóng, đảm bảo khách sử dụng trơn tru<br>
+                                        - Sau khi ký hđ, trong 1 tháng tiếp theo phải giữ tần suất tương tác liên tục<br>
+                                        - Ghi nhận phản hồi của khách, xử lý nhanh mọi vướng mắc.<br>
+                                        - Ghi chú lịch sử trao đổi và duy trì liên hệ qua Zalo/Facebook.
+                                    </td>
+                                    <td class="py-3 px-3.5 text-emerald-700 font-semibold align-top">Khách hàng thấy được sự quan tâm thật lòng và chu đáo của sale.</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50">
+                                    <td class="py-3 px-3.5 font-bold text-blue-700 align-top">Gia tăng giá trị</td>
+                                    <td class="py-3 px-3.5 text-slate-700 align-top">Cho khách hàng thêm giá trị ngoài dịch vụ sản phẩm</td>
+                                    <td class="py-3 px-3.5 text-slate-600 align-top">
